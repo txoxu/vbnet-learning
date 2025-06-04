@@ -3,43 +3,27 @@ Imports System.Data
 
 Module Program
     Sub Main(args As String())
-        Console.WriteLine("一つ目の数字を入力してください")
-        Dim number1 As String = Console.ReadLine()
-        Dim num1 As Integer
+        ' 年齢確認プログラム
+        Console.WriteLine("年齢を入力してください")
 
-        If Not Integer.TryParse(number1, num1) Then
-            Console.WriteLine("num1の変換に失敗")
+        Dim age As String = Console.ReadLine()
+        Dim ag As Integer
+
+        If Integer.TryParse(age, ag) Then
+            Console.WriteLine("変換に成功")
+        Else
+            Console.WriteLine("数字ではありません")
         End If
 
-        Console.WriteLine("二つ目の数字を入力してください")
-        Dim number2 As String = Console.ReadLine()
-        Dim num2 As Integer
-
-        If Not Integer.TryParse(number2, num2) Then
-            Console.WriteLine("num2の変換に失敗")
+        If 0 <= ag AndAlso ag <= 11 Then
+            Console.WriteLine("子供ですね")
+        ElseIf ag >= 18 Then
+            Console.WriteLine("大人ですね")
+        Else
+            Console.WriteLine("未成年ですね")
         End If
 
-        Console.WriteLine("計算式を入力してください")
-        Dim ob As Object = Console.ReadLine()
-        Dim result As Double
-
-        Select Case ob
-
-            Case "+"
-                result = num1 + num2
-            Case "-"
-                result = num1 - num2
-            Case "*"
-                result = num1 * num2
-            Case "/"
-                If num2 = 0 Then
-                    Console.WriteLine("ゼロで割れません")
-                Else
-                    result = num1 / num2
-                End If
-
-        End Select
-
-        Console.WriteLine(result)
+        Console.WriteLine("Enterキーで終了します")
+        Console.ReadLine()
     End Sub
 End Module
