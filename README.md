@@ -30,6 +30,13 @@
   - 繰り返し（`For`, `While`）
   - DataTable によるデータ操作
 
+- 補足
+	- 配列
+	- 関数とサブルーチン
+	- ファイルの読み書き
+	- 例外処理
+- chatGPTによるSTEP1全体の復習課題へ
+
 ---
 
 ### STEP 2. Windows Forms（WinForms）を使ったUI作成入門（6/9～6/14）

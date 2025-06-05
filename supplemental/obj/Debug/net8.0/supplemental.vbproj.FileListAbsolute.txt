@@ -1,0 +1,15 @@
+C:\Users\king-\vbnet-learning\supplemental\obj\Debug\net8.0\supplemental.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\king-\vbnet-learning\supplemental\obj\Debug\net8.0\supplemental.AssemblyInfoInputs.cache
+C:\Users\king-\vbnet-learning\supplemental\obj\Debug\net8.0\supplemental.AssemblyInfo.vb
+C:\Users\king-\vbnet-learning\supplemental\obj\Debug\net8.0\supplemental.vbproj.CoreCompileInputs.cache
+C:\Users\king-\vbnet-learning\supplemental\obj\Debug\net8.0\supplemental.sourcelink.json
+C:\Users\king-\vbnet-learning\supplemental\bin\Debug\net8.0\supplemental.exe
+C:\Users\king-\vbnet-learning\supplemental\bin\Debug\net8.0\supplemental.deps.json
+C:\Users\king-\vbnet-learning\supplemental\bin\Debug\net8.0\supplemental.runtimeconfig.json
+C:\Users\king-\vbnet-learning\supplemental\bin\Debug\net8.0\supplemental.dll
+C:\Users\king-\vbnet-learning\supplemental\bin\Debug\net8.0\supplemental.pdb
+C:\Users\king-\vbnet-learning\supplemental\obj\Debug\net8.0\supplemental.dll
+C:\Users\king-\vbnet-learning\supplemental\obj\Debug\net8.0\refint\supplemental.dll
+C:\Users\king-\vbnet-learning\supplemental\obj\Debug\net8.0\supplemental.pdb
+C:\Users\king-\vbnet-learning\supplemental\obj\Debug\net8.0\supplemental.genruntimeconfig.cache
+C:\Users\king-\vbnet-learning\supplemental\obj\Debug\net8.0\ref\supplemental.dll
