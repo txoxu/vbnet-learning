@@ -1,0 +1,42 @@
+name: 📘 ドキュメントベースIssue
+description: 概要・目的・完了条件ベースでIssueを作成するためのテンプレート
+title: "[doc] <ここにタイトルを記入>"
+labels: ["documentation"]
+assignees: ["txoxu"]
+
+body:
+  - type: textarea # 入力タイプ
+    id: overview # github-actionで使用する一意のid
+    attributes:
+      label: 🔖 概要 # issue題名
+      description: このIssueの概要を簡潔に記載してください。 # 記載内容説明
+      placeholder: 例）画面ごとのコンポーネント設計を整理し、方針を統一する。 # 例
+    validations:
+      required: true # 入力欄が必須か
+
+  - type: textarea
+    id: purpose
+    attributes:
+      label: 🎯 目標
+      description: このIssueを通じて達成したい目標を記載してください。
+      placeholder: 例）開発の再利用性と効率性を高めるため。
+    validations:
+      required: true
+
+  - type: textarea
+    id: done
+    attributes:
+      label: ✅ 完了条件
+      description: このIssueが完了と判断できる条件を明確にしてください。
+      placeholder: 例) -[] 実装や議論に必要な前提情報が揃っている
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 📝 備考（任意）
+      description: その他メモや関係リンクなどあれば記載してください。
+      placeholder: 例）関連IssueやFigma、NotionなどのURL
+    validations:
+      required: false
