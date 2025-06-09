@@ -9,41 +9,50 @@
 
 ---
 
-## ✅ 進捗状況
+## ✅ 現在の進捗
 
 - Visual Studio のセットアップ ✅
 - GitHub 連携 ✅
-- Console アプリによる基礎文法の体験中（ReadLine, TryParse, 条件分岐, DataTable 等）
+- **STEP1：Console アプリでのVB.NET基礎文法を完了 ✅**
+  - `ReadLine`, `TryParse`, `条件分岐`, `繰り返し`, `関数`, `例外処理`, `List`, `ファイルI/O` など一通り実践
+  - ChatGPTによる**復習課題（お気に入り食べ物管理アプリ）**も提出済み
 
 ---
 
 ## 🗂 学習ステップ（全6ステップ）
 
-### STEP 1. 開発環境とVB.NETの基礎整理（6/1～6/7）
+### ✅ STEP 1. 開発環境とVB.NETの基礎整理（6/1～6/7）
 
 - Visual Studio の基本操作に慣れる
-- GitHub Issue を使ったタスク管理の確認
+- GitHub Issue を使ったタスク管理を確認
 - Consoleアプリによる以下の基礎習得：
   - 入出力（`ReadLine`, `WriteLine`）
   - 型変換（`TryParse`）
   - 条件分岐（`If`, `Select Case`）
   - 繰り返し（`For`, `While`）
-  - DataTable によるデータ操作
+  - エラー処理（`Try-Catch-Finally`）
+  - 関数とサブルーチン（`Sub`, `Function`, `ByRef`, `ByVal`）
+  - コレクション操作（`List(Of T)`）
+  - ファイルの読み書き（`StreamWriter`, `StreamReader`）
 
-- 補足
-	- 配列
-	- 関数とサブルーチン
-	- ファイルの読み書き
-	- 例外処理
-- chatGPTによるSTEP1全体の復習課題へ
+📘 **補足学習：**
+- 配列操作（`Array`）
+- `Object`型と型変換
+- エラー別の例外クラス（`FormatException`, `DivideByZeroException` など）
 
----
+🎯 最終課題：**お気に入りの食べ物管理アプリ（総合課題）**  
+→ 名前と年齢の入力、好きな食べ物のリスト化と保存、検索、計算処理までを含んだ統合プログラム
+
 
 ### STEP 2. Windows Forms（WinForms）を使ったUI作成入門（6/9～6/14）
 
 - WinForms テンプレートからアプリを作成
 - ボタン・テキストボックス・ラベルなど基本的なUI部品の使い方
 - イベント駆動のプログラム設計（例：`Button.Click`）
+- csvファイルの読み込み、編集保存
+	- txtファイルも読み込めるようにする
+	- キーワードから検索して絞り込めるようにする
+	- 一つの列を検索対象に限定する
 
 🎯 目標：**VB.NETでUI操作に慣れる**
 

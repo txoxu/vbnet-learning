@@ -32,7 +32,7 @@ Module Program
 
     End Sub
 
-    Sub foodLists(ByRef foods As Object)
+    Sub foodLists(ByRef foods As List(Of String))
         Console.WriteLine("好きな食べ物を３つ入力してください")
 
         For i As Integer = 0 To 2
@@ -54,6 +54,7 @@ Module Program
             Dim line As String
             While Not reader.EndOfStream
                 line = reader.ReadLine()
+                Console.WriteLine(line)
             End While
             Console.WriteLine("読み込みが確認できました")
         End Using
