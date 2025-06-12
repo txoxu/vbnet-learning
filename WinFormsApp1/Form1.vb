@@ -1,93 +1,123 @@
 ﻿Imports System.IO
+Imports System.Data
 
 Public Class Form1
-    Private originalRows As New List(Of String())
-    Private Sub btnSelectCsv_Click(sender As Object, e As EventArgs) Handles btnSelectCsv.Click
-        Dim ofd As New OpenFileDialog()
-        ofd.Filter = "CSVファイル(*.csv)|*.csv|テキストファイル(*.txt)|*.txt"
-        ofd.Title = "CSVファイルを選択してください"
 
-        If ofd.ShowDialog() = DialogResult.OK Then
-            Dim filePath As String = ofd.FileName
-            LoadCsv(filePath)
+    '課題１
+    Private Sub btnProcess_Click(sender As Object, e As EventArgs) Handles btnProcess.Click
+        Dim txts As String = txtInput.Text
+        process_load(txts)
+    End Sub
+
+    Private Sub process_load(ByRef txts As String)
+        'trim
+        Dim trimTxt As String = txts.Trim()
+        lstOutput.Items.Add(trimTxt)
+
+        'replace
+        Dim replaceTxt As String = txts.Replace(" ", "_").Replace("　", "_")
+        lstOutput.Items.Add(replaceTxt)
+
+        'split
+        Dim splitTxt() As String = txts.Split(","c)
+        For Each txt As String In splitTxt
+            lstOutput.Items.Add(txt)
+        Next
+
+
+        'join
+        Dim joinTxt As String = String.Join(" | ", splitTxt.Select(Function(s) s.Trim()))
+        lstOutput.Items.Add(joinTxt)
+    End Sub
+
+
+    '課題２
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim lists As New List(Of String())
+        lists.Add(textInput.Text.Split(","c)) '文字列stringー＞配列へstring()
+        For i As Integer = 0 To lists.Count - 1
+            DataGridView1.Rows.Add(lists(i))
+        Next
+    End Sub
+
+    Private Sub list_load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DataGridView1.Columns.Add("Name", "名前")
+        DataGridView1.Columns.Add("name", "読み方")
+        DataGridView1.Columns.Add("age", "年齢")
+    End Sub
+
+
+    '課題3
+
+    Dim table As New DataTable()
+    Dim currentFilePath As String = ""
+    Private Sub btnCsvRead_Click(sender As Object, e As EventArgs) Handles btnCsvRead.Click
+        Dim dialog As New OpenFileDialog()
+        dialog.Filter = "csvファイル(*.csv)|*.csv"
+
+        If dialog.ShowDialog() = DialogResult.OK Then
+            currentFilePath = dialog.FileName
+            table.Clear()
+            Dim lines = File.ReadAllLines(currentFilePath, System.Text.Encoding.UTF8)
+
+
+            For Each line As String In lines
+                Dim fields = line.Split(","c)
+                If fields.Length = 3 Then
+                    table.Rows.Add(fields)
+                End If
+            Next
         End If
     End Sub
 
-    Private Sub LoadCsv(filePath As String)
-        DataGridView1.Columns.Clear()
-        DataGridView1.Rows.Clear()
 
-        Dim lines() As String = File.ReadAllLines(filePath)
-        If lines.Length = 0 Then Return
+    Private Sub form_load(sender As Object, e As EventArgs) Handles MyBase.Load
+        table.Columns.Add("名前")
+        table.Columns.Add("読み方")
+        table.Columns.Add("年齢")
 
-        Dim headers() As String = lines(0).Split(","c)
-        For Each header As String In headers
-            DataGridView1.Columns.Add(header.Trim().Replace(" ", "").Replace("　", ""), header.Trim().Replace(" ", "").Replace("　", ""))
-        Next
-
-        originalRows.Clear()
-
-        For i As Integer = 1 To lines.Length - 1
-            Dim rowData() As String = lines(i).Split(","c)
-            Dim trimmedRowData() As String = rowData.Select(Function(cell) cell.Trim()).ToArray()
-            DataGridView1.Rows.Add(trimmedRowData)
-            originalRows.Add(trimmedRowData)
-        Next
+        DataGridView.DataSource = table
     End Sub
 
-    Private Sub btnSaveCsv_Click(sender As Object, e As EventArgs) Handles btnSaveCsv.Click
-        If DataGridView1.Columns.Count = 0 Then
-            MessageBox.Show("保存するデータがありません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+    Private Sub searchText_TextChanged(sender As Object, e As EventArgs) Handles searchText.TextChanged
+
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim keyword As String = searchText.Text.Trim()
+
+        If keyword = "" Then
+            table.DefaultView.RowFilter = ""
+        Else
+            table.DefaultView.RowFilter = $"名前 like '%{keyword}%' or 読み方 like '%{keyword}%'"
+        End If
+    End Sub
+
+    Private Sub DataGridView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView.CellContentClick
+
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        If currentFilePath = "" Then
+            MessageBox.Show("ファイルが読み込まれていません")
             Return
         End If
 
-        Dim sfd As New SaveFileDialog()
-        sfd.Filter = "CSVファイル(*.csv)|*.csv"
-        sfd.Title = "保存先を選択してください"
-        sfd.FileName = "output.csv"
-
-        If sfd.ShowDialog() = DialogResult.OK Then
-            Dim savePath As String = sfd.FileName
-            SaveCsv(savePath)
-            MessageBox.Show("CSVファイルを保存しました", "完了", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End If
+        Try
+            Using writer As New StreamWriter(currentFilePath, False, System.Text.Encoding.UTF8)
+                For Each row As DataRow In table.Rows
+                    Dim line As String = String.Join(",", row.ItemArray)
+                    writer.WriteLine(line)
+                Next
+            End Using
+            MessageBox.Show("上書き保存しました")
+        Catch ex As Exception
+            MessageBox.Show("保存中にエラーが発生しました:" & ex.Message)
+        End Try
     End Sub
 
-    Private Sub SaveCsv(filePath As String)
-        Using sw As New StreamWriter(filePath, False, System.Text.Encoding.UTF8)
-            Dim headers As New List(Of String)
-            For Each col As DataGridViewColumn In DataGridView1.Columns
-                headers.Add(col.HeaderText)
-            Next
-            sw.WriteLine(String.Join(",", headers))
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
 
-
-            For Each row As DataGridViewRow In DataGridView1.Rows
-                If Not row.IsNewRow Then
-                    Dim cells As New List(Of String)
-                    For Each cell As DataGridViewCell In row.Cells
-                        Dim cellValue As String = If(cell.Value IsNot Nothing, cell.Value.ToString(), "")
-                        If cellValue.Contains(",") OrElse cellValue.Contains("""") OrElse cellValue.Contains(vbCr) OrElse cellValue.Contains(vbLf) Then
-                            cellValue = """" & cellValue.Replace("""", """""") & """"
-                        End If
-                        cells.Add(cellValue)
-                    Next
-                    sw.WriteLine(String.Join(",", cells))
-                End If
-            Next
-        End Using
     End Sub
-
-    Private Sub searchBtn_Click(sender As Object, e As EventArgs) Handles searchBtn.Click
-        Dim keyword As String = searchBox.Text.Trim()
-        DataGridView1.Rows.Clear()
-
-        For Each row As String() In originalRows
-
-            If row(0).Contains(keyword) Then
-                DataGridView1.Rows.Add(row)
-            End If
-        Next
-    End Sub
-
 End Class
