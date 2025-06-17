@@ -127,6 +127,8 @@ Public Class Form1
             searchResult.Columns.Add(column.HeaderText)
         Next
 
+        Dim searchCount As Integer = 0
+
         'datagridviewからrowに格納し繰り返し処理
         For Each row As DataGridViewRow In dgvEmployees.Rows
             If Not row.IsNewRow Then
@@ -141,13 +143,21 @@ Public Class Form1
                     Next
                     '検索結果用の表に追加
                     searchResult.Rows.Add(newRow)
+                    searchCount += 1
                 End If
             End If
         Next
+
+        If searchCount > 0 Then
+            lblStatus.Text = ("検索結果は" & searchCount & "件です")
+        Else
+            lblStatus.Text = "検索結果は０です"
+        End If
         'searchResultをバインド
         dgvEmployees.DataSource = searchResult
     End Sub
 
+    '検索結果のリセット
     Private Sub btnClearSearch_Click(sender As Object, e As EventArgs) Handles btnClearSearch.Click
         data.Clear()
 
@@ -161,5 +171,21 @@ Public Class Form1
             End If
         Next
         dgvEmployees.DataSource = data
+        lblStatus.Text = "検索結果をリセットしました"
+    End Sub
+
+    '行削除機能
+    Private Sub btnDeleteRow_Click(sender As Object, e As EventArgs) Handles btnDeleteRow.Click
+        'dgvEnployeesで行を選択
+        If dgvEmployees.SelectedRows.Count > 0 Then
+            For Each row As DataGridViewRow In dgvEmployees.SelectedRows
+                If Not row.IsNewRow Then
+                    dgvEmployees.Rows.Remove(row)
+                End If
+            Next
+            lblStatus.Text = "行を削除しました"
+        Else
+            lblStatus.Text = "行を削除できませんでした"
+        End If
     End Sub
 End Class

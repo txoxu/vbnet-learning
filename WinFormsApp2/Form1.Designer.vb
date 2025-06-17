@@ -90,7 +90,7 @@ Partial Class Form1
         ' 
         ' btnDeleteRow
         ' 
-        btnDeleteRow.Location = New Point(661, 352)
+        btnDeleteRow.Location = New Point(343, 324)
         btnDeleteRow.Name = "btnDeleteRow"
         btnDeleteRow.Size = New Size(94, 29)
         btnDeleteRow.TabIndex = 7
