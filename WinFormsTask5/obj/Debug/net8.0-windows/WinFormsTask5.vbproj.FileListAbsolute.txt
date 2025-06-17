@@ -1,0 +1,17 @@
+C:\Users\king-\vbnet-learning\WinFormsTask5\bin\Debug\net8.0-windows\WinFormsTask5.exe
+C:\Users\king-\vbnet-learning\WinFormsTask5\bin\Debug\net8.0-windows\WinFormsTask5.deps.json
+C:\Users\king-\vbnet-learning\WinFormsTask5\bin\Debug\net8.0-windows\WinFormsTask5.runtimeconfig.json
+C:\Users\king-\vbnet-learning\WinFormsTask5\bin\Debug\net8.0-windows\WinFormsTask5.dll
+C:\Users\king-\vbnet-learning\WinFormsTask5\bin\Debug\net8.0-windows\WinFormsTask5.pdb
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\WinFormsTask5.Form1.resources
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\WinFormsTask5.vbproj.GenerateResource.cache
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\WinFormsTask5.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\WinFormsTask5.AssemblyInfoInputs.cache
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\WinFormsTask5.AssemblyInfo.vb
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\WinFormsTask5.vbproj.CoreCompileInputs.cache
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\WinFormsTask5.sourcelink.json
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\WinFormsTask5.dll
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\refint\WinFormsTask5.dll
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\WinFormsTask5.pdb
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\WinFormsTask5.genruntimeconfig.cache
+C:\Users\king-\vbnet-learning\WinFormsTask5\obj\Debug\net8.0-windows\ref\WinFormsTask5.dll
