@@ -5,6 +5,7 @@ Public Class Form1
 
     Dim table As New DataTable()
     Dim currentFilePath As String = ""
+
     Private Sub btnCsvRead_Click(sender As Object, e As EventArgs) Handles btnCsvRead.Click
         Dim dialog As New OpenFileDialog()
         dialog.Filter = "csvファイル(*.csv)|*.csv"

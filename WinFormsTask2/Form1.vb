@@ -1,8 +1,10 @@
 ﻿Public Class Form1
     '課題２ 複数行テキストの分割とDataGridView表示
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim lists As New List(Of String())
-        lists.Add(textInput.Text.Split(","c)) '文字列stringー＞配列へstring()
+
+        lists.Add(task2Controller.SplitCsvLine(textInput.Text)) '文字列stringー＞配列へstring()
+
         For i = 0 To lists.Count - 1
             DataGridView1.Rows.Add(lists(i))
         Next
