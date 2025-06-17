@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("supplemental"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4156fd8846cb54248a776d0ac308c0e57c611b79"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38d9b3e123b64e5fdd023fec365a41db5cf1cbe9"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("supplemental"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("supplemental"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")> 

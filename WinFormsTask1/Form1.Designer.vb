@@ -29,7 +29,7 @@ Partial Class Form1
         ' 
         ' txtInput
         ' 
-        txtInput.Location = New Point(171, 36)
+        txtInput.Location = New Point(170, 37)
         txtInput.Name = "txtInput"
         txtInput.Size = New Size(125, 27)
         txtInput.TabIndex = 0
