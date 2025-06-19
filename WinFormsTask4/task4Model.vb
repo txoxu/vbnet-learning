@@ -1,3 +1,3 @@
-Public Class task4Model
-    Public Shared Property Table2 As New DataTable()
+Public Class Task4Model
+    Public Shared Property MemberTable As New DataTable()
 End Class

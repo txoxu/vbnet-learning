@@ -1,4 +1,4 @@
-Public Class task2Controller
+Public Class Task2Controller
     Public Shared Function SplitCsvLine(input As String) As String()
         Return input.Split(","c)
     End Function

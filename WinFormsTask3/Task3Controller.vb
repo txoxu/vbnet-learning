@@ -39,14 +39,14 @@ Public Class Task3Controller
             End Using
             MessageBox.Show("上書き保存しました")
         Catch ex As Exception
-            MessageBox.Show("保存中にエラーが発生しました")
+            MessageBox.Show("保存中にエラーが発生しました" & ex.Message)
 
         End Try
     End Sub
 
-    Public Shared Sub SaveCsvNewFile(filPath As String, DataGridView As DataGridView)
+    Public Shared Sub SaveCsvNewFile(filePath As String, DataGridView As DataGridView)
         Try
-            Using writer As New StreamWriter(filPath, False, System.Text.Encoding.UTF8)
+            Using writer As New StreamWriter(filePath, False, System.Text.Encoding.UTF8)
                 For Each row As DataGridViewRow In DataGridView.Rows
                     If Not row.IsNewRow Then
                         Dim values As New List(Of String)

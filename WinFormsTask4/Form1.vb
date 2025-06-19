@@ -9,18 +9,18 @@ Public Class Form1
         dialog.Filter = "CSVファイル(*.csv) | *.csv"
 
         If dialog.ShowDialog() = DialogResult.OK Then
-            task4Controller.LoadCsv(dialog.FileName)
+            Task4Controller.LoadCsv(dialog.FileName)
         End If
     End Sub
 
-    Private Sub form_Load2(sender As Object, ex As EventArgs) Handles MyBase.Load
-        With task4Model.Table2
+    Private Sub Form1_Load(sender As Object, ex As EventArgs) Handles MyBase.Load
+        With Task4Model.MemberTable
             .Columns.Add("名前")
             .Columns.Add("読み方")
             .Columns.Add("年齢")
         End With
 
-        DataGridView2.DataSource = task4Model.Table2
+        DataGridView2.DataSource = Task4Model.MemberTable
 
         ComboBox1.Items.Add("選択してください")
         ComboBox1.Items.Add("名前")
@@ -38,7 +38,7 @@ Public Class Form1
         Dim age As String = TextBox3.Text.Trim()
 
 
-        If task4Controller.CsvNewRow(name, nameTran, age) Then
+        If Task4Controller.AddMember(name, nameTran, age) Then
             TextBox1.Clear()
             TextBox2.Clear()
             TextBox3.Clear()
@@ -50,13 +50,14 @@ Public Class Form1
     '削除機能
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         Dim dt As DataTable = CType(DataGridView2.DataSource, DataTable)
-        task4Controller.CsvDeleteRow(dt, DataGridView2)
+        Task4Controller.CsvDeleteRow(dt, DataGridView2)
         dt.AcceptChanges()
     End Sub
 
     '並び替え
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
-        Dim colName As String = If(ComboBox1.SelectedItem.ToString() = "名前", "読み方", "年齢")
-        task4Controller.SortData(DataGridView2, colName)
+        Dim colName As String = ComboBox1.SelectedItem.ToString()
+
+        Task4Controller.SortData(DataGridView2, colName)
     End Sub
 End Class
