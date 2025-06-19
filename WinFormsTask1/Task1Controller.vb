@@ -1,4 +1,17 @@
 Public Class Task1Controller
+
+    Public Shared Function ProcessAll(input As String) As List(Of String)
+        Dim result As New List(Of String)
+
+
+        result.Add(TrimText(input))
+        result.Add(ReplaceTxt(input))
+        Dim splitResults = SplitTxt(input)
+        result.AddRange(splitResults)
+        result.Add(JoinTxt(splitResults))
+
+        Return result
+    End Function
     'trim
     Public Shared Function TrimText(input As String) As String
         Return input.Trim()

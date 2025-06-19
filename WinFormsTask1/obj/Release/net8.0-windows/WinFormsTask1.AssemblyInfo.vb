@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("WinFormsTask1"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Release"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b42d8697ce8b54dad6c4623b16f685457f48e465"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38c5856c284354bd28209e017fbb77d7ddbffafd"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("WinFormsTask1"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("WinFormsTask1"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _

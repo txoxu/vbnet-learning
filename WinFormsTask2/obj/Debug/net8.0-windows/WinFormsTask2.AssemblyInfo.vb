@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("WinFormsTask2"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+93bbb53c56e67b5dac8ebbae81045572f432cec1"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38c5856c284354bd28209e017fbb77d7ddbffafd"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("WinFormsTask2"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("WinFormsTask2"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _
