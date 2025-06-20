@@ -1,3 +1,11 @@
 .vs/
-bin/
-obj/
+WinFormsTask1/obj/
+WinFormsTask1/bin/
+WinFormsTask2/obj/
+WinFormsTask2/bin/
+WinFormsTask3/obj/
+WinFormsTask3/bin/
+WinFormsTask4/obj/
+WinFormsTask4/bin/
+WinFormsTask5/obj/
+WinFormsTask5/bin/

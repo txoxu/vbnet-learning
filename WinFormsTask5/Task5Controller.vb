@@ -4,57 +4,78 @@ Imports System.Text
 
 Public Class Task5Controller
     Public Shared Sub CsvLoad(DialogPath As String)
-        'CSVファイル名を格納
-        Task5Model.FilePath = DialogPath
-        '前回選択したファイルがあった場合のための初期化
-        Task5Model.Data.Clear()
-        'ファイルをUTF8で書き込み、格納
-        Dim lines = File.ReadAllLines(DialogPath, System.Text.Encoding.UTF8)
-        '行ごとに繰り返し処理
-        For Each line As String In lines
-            '「,」を加えて格納
-            Dim fields As String() = line.Split(","c)
-            'もし、1行の長さが８のときdataに追加
-            If fields.Length = 8 Then
-                Task5Model.Data.Rows.Add(fields)
-            End If
-        Next
+        Try
+            'CSVファイル名を格納
+            Task5Model.FilePath = DialogPath
+            '前回選択したファイルがあった場合のための初期化
+            Task5Model.Data.Clear()
+            'ファイルをUTF8で書き込み、格納
+            Dim lines = File.ReadAllLines(DialogPath, System.Text.Encoding.UTF8)
+            '行ごとに繰り返し処理
+            For Each line As String In lines
+                '「,」を加えて格納
+                Dim fields As String() = line.Split(","c)
+                'もし、1行の長さが８のときdataに追加
+                If fields.Length = 8 Then
+                    Task5Model.Data.Rows.Add(fields)
+                End If
+            Next
+        Catch ex As Exception
+            Throw New ApplicationException("読み込みに失敗しました：" & ex.Message, ex)
+        End Try
     End Sub
 
     Public Shared Sub CsvSave(CsvContent As StringBuilder, dgvEmployees As DataGridView)
-        '行ごとに繰り返し処理を実行
-        For Each row As DataGridViewRow In dgvEmployees.Rows
-            '新しい行がない場合に処理
-            If Not row.IsNewRow Then
-                '行の一つ一つのセルごとに繰り返し処理を実行
-                For Each cell As DataGridViewCell In row.Cells
-                    '「,」事に区切る
-                    CsvContent.Append(cell.Value.ToString() & ",")
-                Next
-                '最後のセルの「,」を削除
-                CsvContent.Length -= 1
-                '格納を決定
-                CsvContent.AppendLine()
-            End If
-        Next
+        Try
+            '行ごとに繰り返し処理を実行
+            For Each row As DataGridViewRow In dgvEmployees.Rows
+                '新しい行がない場合に処理
+                If Not row.IsNewRow Then
+                    '行の一つ一つのセルごとに繰り返し処理を実行
+                    For Each cell As DataGridViewCell In row.Cells
+                        '「,」事に区切る
+                        CsvContent.Append(cell.Value.ToString() & ",")
+                    Next
+                    '最後のセルの「,」を削除
+                    CsvContent.Length -= 1
+                    '格納を決定
+                    CsvContent.AppendLine()
+                End If
+            Next
+            File.WriteAllText(Task5Model.FilePath, CsvContent.ToString(), System.Text.Encoding.UTF8)
+        Catch ex As Exception
+            Throw New ApplicationException("CSVファイルの保存中にエラーが発生しました。：" & ex.Message, ex)
+        End Try
+    End Sub
+
+    Public Shared Sub CsvNewSave(savePath As String, dgvEmployees As DataGridView)
+        Try
+
+            'ファイルのデータを格納
+            Dim csvContent As New Text.StringBuilder()
+
+            '各行を繰り返し処理
+            For Each row As DataGridViewRow In dgvEmployees.Rows
+                If Not row.IsNewRow Then
+                    Dim rowData As New List(Of String)
+                    For Each cell As DataGridViewCell In row.Cells
+                        If cell.Value IsNot Nothing Then
+                            rowData.Add(cell.Value.ToString())
+                        Else
+                            rowData.Add("")
+                        End If
+                    Next
+                    csvContent.AppendLine(String.Join(",", rowData))
+                End If
+            Next
+            System.IO.File.WriteAllText(savePath, csvContent.ToString(), System.Text.Encoding.UTF8)
+        Catch ex As Exception
+            Throw New ApplicationException("名前を付けて保存に失敗しました" & ex.Message, ex)
+        End Try
 
     End Sub
 
-    Public Shared Sub CsvNewSave(csvContent As StringBuilder, dgvEmployees As DataGridView)
-
-        '各行を繰り返し処理
-        For Each row As DataGridViewRow In dgvEmployees.Rows
-            If Not row.IsNewRow Then
-                Dim rowData As New List(Of String)
-                For Each cell As DataGridViewCell In row.Cells
-                    rowData.Add(cell.Value.ToString())
-                Next
-                csvContent.AppendLine(String.Join(",", rowData))
-            End If
-        Next
-    End Sub
-
-    Public Shared Sub CsvSearch(searchResult As DataTable, dgvEmployees As DataGridView, num As String, searchCount As Integer)
+    Public Shared Sub CsvSearch(searchResult As DataTable, dgvEmployees As DataGridView, num As String, ByRef searchCount As Integer)
         'searchResultにカラムを反映
         For Each column As DataGridViewColumn In dgvEmployees.Columns
             searchResult.Columns.Add(column.HeaderText)
@@ -79,15 +100,6 @@ Public Class Task5Controller
             End If
         Next
 
-    End Sub
-
-    Public Shared Sub CsvSearchReset(lines As String())
-        For Each line As String In lines
-            Dim fields As String() = line.Split(","c)
-            If fields.Length = 8 Then
-                Task5Model.Data.Rows.Add(fields)
-            End If
-        Next
     End Sub
 
     Public Shared Function CsvRowDelete(dgvEmployees As DataGridView)
