@@ -7,7 +7,7 @@ Public Class Task1Controller
         AddHandler _view.btnProcess.click, AddressOf onProcessClicked
     End Sub
 
-    Public Shared Function OnProcessClicked(sender As Object, e As EventArgs)
+    Public Shared Sub OnProcessClicked(sender As Object, e As EventArgs)
         Dim input As String = _view.txtInput.Text
         Dim result As New List(Of String)
 
@@ -20,7 +20,7 @@ Public Class Task1Controller
 
         _view.lstOutput.items.clear()
         _view.lstOutput.items.addRange(result.ToArray())
-    End Function
+    End Sub
     'trim
     Public Shared Function TrimText(input As String) As String
         Return input.Trim()
