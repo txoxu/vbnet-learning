@@ -2,65 +2,74 @@ Imports System.IO
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
 
 Public Class Task3Controller
-    Public Shared Sub LoadCsvFile(filePath As String)
-        Task3Model.CurrentFilePath = filePath
-        Task3Model.Table.Clear()
+    Private Shared _view As Form1
 
-        Dim lines = File.ReadLines(filePath, System.Text.Encoding.UTF8)
-
-        For Each line As String In lines
-            Dim fields = line.Split(","c)
-            If fields.Length = 3 Then
-                Task3Model.Table.Rows.Add(fields)
-            End If
-        Next
+    Public Shared Sub Initialize(view As Form1)
+        _view = view
+        AddHandler _view.btnCsvRead.Click, AddressOf onLoadCsvClicked
+        AddHandler _view.btnOverWriteSave.Click, AddressOf SaveCsvClicked
+        AddHandler _view.btnNewWriteSave.Click, AddressOf SaveCsvNewClicked
+        AddHandler _view.btnSearch.Click, AddressOf SearchFilter
     End Sub
 
-    Public Shared Sub ApplySearchFilter(ByRef table As DataTable, keyword As String)
+    Private Shared Sub onLoadCsvClicked(sender As Object, e As EventArgs)
+        Using ofd As New OpenFileDialog()
+            ofd.Filter = "csvファイル(*.csv)|*.csv"
+            If ofd.ShowDialog() = DialogResult.OK Then
+                Dim dt = Task3Model.LoadCsv(ofd.FileName)
+                If dt Is Nothing Then
+                    MessageBox.Show("ファイルの読み込みに失敗しました")
+                    Return
+                End If
+                _view.DataGridView.DataSource = dt
+                _view.CurrentFilePath = ofd.FileName
+            End If
+        End Using
+    End Sub
+
+    Public Shared Sub SearchFilter(sender As Object, e As EventArgs)
+        Dim keyword As String = _view.searchText.Text.Trim()
+        Dim dt As DataTable = CType(_view.DataGridView.DataSource, DataTable)
+
         If keyword.Trim() = "" Then
-            table.DefaultView.RowFilter = ""
+            dt.DefaultView.RowFilter = ""
         Else
-            table.DefaultView.RowFilter = $"名前 like '%{keyword}%' or 読み方 like '%{keyword}%'"
+            dt.DefaultView.RowFilter = $"名前 like '%{keyword}%' or 読み方 like '%{keyword}%'"
         End If
     End Sub
 
-    Public Shared Sub SaveCsvFile(filePath As String)
-        If String.IsNullOrWhiteSpace(filePath) Then
+    Public Shared Sub SaveCsvClicked(sender As Object, e As EventArgs)
+        If String.IsNullOrWhiteSpace(_view.CurrentFilePath) Then
             MessageBox.Show("ファイルが読み込まれていません")
             Return
         End If
 
-        Try
-            Using writer As New StreamWriter(filePath, False, System.Text.Encoding.UTF8)
-                For Each row As DataRow In Task3Model.Table.Rows
-                    Dim line As String = String.Join(",", row.ItemArray)
-                    writer.WriteLine(line)
-                Next
-            End Using
+        Dim dt As DataTable = CType(_view.DataGridView.DataSource, DataTable)
+        Dim errorMsg As String = ""
+        Dim success = Task3Model.SaveCsv(_view.CurrentFilePath, dt, errorMsg)
+        If success Then
             MessageBox.Show("上書き保存しました")
-        Catch ex As Exception
-            MessageBox.Show("保存中にエラーが発生しました" & ex.Message)
-
-        End Try
+        Else
+            MessageBox.Show("上書き保存に失敗しました" & vbCrLf & errorMsg)
+        End If
     End Sub
 
-    Public Shared Sub SaveCsvNewFile(filePath As String, DataGridView As DataGridView)
-        Try
-            Using writer As New StreamWriter(filePath, False, System.Text.Encoding.UTF8)
-                For Each row As DataGridViewRow In DataGridView.Rows
-                    If Not row.IsNewRow Then
-                        Dim values As New List(Of String)
-                        For i As Integer = 0 To DataGridView.Columns.Count - 1
-                            values.Add(row.Cells(i).Value?.ToString())
-                        Next
-                        writer.WriteLine(String.Join(",", values))
-                    End If
-                Next
-            End Using
-            MessageBox.Show("保存しました")
-        Catch ex As Exception
-            MessageBox.Show("保存できませんでした" & ex.Message)
-        End Try
+    Public Shared Sub SaveCsvNewClicked(sender As Object, e As EventArgs)
+        Dim dialog As New SaveFileDialog()
+        dialog.Filter = "CSVファイル(*.csv)|*.csv"
+        dialog.Title = "名前を付けて保存"
+        Dim dt As DataTable = CType(_view.DataGridView.DataSource, DataTable)
+
+        If dialog.ShowDialog() = DialogResult.OK Then
+            Dim errorMsg As String = ""
+            Dim success = Task3Model.SaveNewCsv(dialog.FileName, dt, errorMsg)
+            If success Then
+                MessageBox.Show("名前を付けて保存しました")
+            Else
+                MessageBox.Show("保存に失敗しました" & vbCrLf & errorMsg)
+            End If
+        End If
+
     End Sub
 
 End Class
