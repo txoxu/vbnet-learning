@@ -31,11 +31,18 @@ Public Class Task3Controller
         Dim keyword As String = _view.searchText.Text.Trim()
         Dim dt As DataTable = CType(_view.DataGridView.DataSource, DataTable)
 
-        If keyword.Trim() = "" Then
+        If keyword = "" Then
             dt.DefaultView.RowFilter = ""
-        Else
-            dt.DefaultView.RowFilter = $"–¼‘O like '%{keyword}%' or “Ç‚Ý•û like '%{keyword}%'"
+            Return
         End If
+
+        Dim conditions As New List(Of String)
+        For Each col As DataColumn In dt.Columns
+            conditions.Add($"[{col.ColumnName}] Like '%{keyword}%'")
+        Next
+
+        dt.DefaultView.RowFilter = String.Join(" OR ", conditions)
+
     End Sub
 
     Public Shared Sub SaveCsvClicked(sender As Object, e As EventArgs)

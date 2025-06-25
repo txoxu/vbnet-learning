@@ -2,44 +2,94 @@ Imports System.IO
 Imports System.Reflection.Metadata.Ecma335
 
 Public Class Task4Controller
-    Public Shared Sub LoadCsv(filePath As String)
-        Task4Model.MemberTable.Clear()
+    Private Shared _view As Form1
+    Private Shared _addForm As FormAdd
 
-        Dim lines = File.ReadAllLines(filePath, System.Text.Encoding.UTF8)
-
-        For Each line As String In lines
-            Dim fields = line.Split(","c)
-            If fields.Length = 3 Then
-                Task4Model.MemberTable.Rows.Add(fields)
-            End If
-        Next
+    Public Shared Sub Initialize(view As Form1)
+        _view = view
+        AddHandler _view.btnCsv.Click, AddressOf onLoadCsvClicked
+        AddHandler _view.btnAdd.Click, AddressOf OnAddButtonClicked
+        AddHandler _view.btnDelete.Click, AddressOf OnDeleteClicked
+        AddHandler _view.btnSearch.Click, AddressOf OnSearchClicked
     End Sub
 
-    Public Shared Function AddMember(name As String, nameTran As String, age As String)
-        If String.IsNullOrWhiteSpace(name) OrElse String.IsNullOrWhiteSpace(nameTran) OrElse String.IsNullOrWhiteSpace(age) Then
-            Return False
+    Public Shared Sub InitializeAddForm(view As FormAdd)
+        _addForm = view
+
+        AddHandler _addForm.btn.Click, AddressOf OnAddClicked
+    End Sub
+    Public Shared Sub onLoadCsvClicked(sender As Object, e As EventArgs)
+        Using ofd As New OpenFileDialog()
+            ofd.Filter = "csvファイル(*.csv)|*.csv"
+            If ofd.ShowDialog() = DialogResult.OK Then
+                Dim dt = Task4Model.LoadCsv(ofd.FileName)
+
+                Dim headers = Task4Model.CurrentHeaders
+                _view.SetComboBoxHeaders(headers)
+
+                If dt Is Nothing Then
+                    MessageBox.Show("ファイルの読み込みに失敗しました")
+                    Return
+                End If
+                _view.DataGridView2.DataSource = dt
+                _view.DataGridView2.ReadOnly = True
+                _view.DataGridView2.AllowUserToAddRows = False
+                _view.DataGridView2.AllowUserToDeleteRows = False
+            End If
+        End Using
+    End Sub
+
+    Private Shared Sub OnAddClicked(sender As Object, e As EventArgs)
+        Dim dt = CType(_view.DataGridView2.DataSource, DataTable)
+        Dim newRow = dt.NewRow()
+
+        For i As Integer = 0 To Task4Model.CurrentHeaders.Count - 1
+            Dim header = Task4Model.CurrentHeaders(i)
+            Dim value = _addForm.textBoxes(i).text.trim()
+            newRow(header) = value
+        Next
+
+        dt.Rows.Add(newRow)
+        MessageBox.Show("新しい行を追加しました")
+        _addForm.Close()
+    End Sub
+
+    Private Shared Sub OnAddButtonClicked(sender As Object, e As EventArgs)
+        Dim formAdd As New FormAdd()
+        InitializeAddForm(formAdd)
+        formAdd.ShowDialog()
+    End Sub
+
+    Private Shared Sub OnDeleteClicked(sender As Object, e As EventArgs)
+        Dim dt = TryCast(_view.DataGridView2.DataSource, DataTable)
+        If dt Is Nothing Then
+            MessageBox.Show("データが読み込まれていません")
+            Return
         End If
 
-        Task4Model.MemberTable.Rows.Add(name, nameTran, age)
-        Return True
-    End Function
+        If _view.DataGridView2.SelectedRows.Count = 0 Then
+            MessageBox.Show("削除する行を選択してください")
+            Return
+        End If
 
-    Public Shared Sub CsvDeleteRow(dt As DataTable, DataGridView2 As DataGridView)
-        For Each row As DataGridViewRow In DataGridView2.SelectedRows
+        For Each row As DataGridViewRow In _view.DataGridView2.SelectedRows
             If Not row.IsNewRow Then
-                Dim drv As DataRowView = TryCast(row.DataBoundItem, DataRowView)
-                If drv IsNot Nothing Then
-                    dt.Rows(row.Index).Delete()
-                End If
+                _view.DataGridView2.Rows.Remove(row)
             End If
         Next
-    End Sub
 
-    Public Shared Sub SortData(dgv As DataGridView, colName As String)
+        MessageBox.Show("選択した行を削除しました")
+    End Sub
+    Private Shared Sub OnSearchClicked(sender As Object, e As EventArgs)
+        Dim dt = CType(_view.DataGridView2.DataSource, DataTable)
+        If dt Is Nothing Then Return
+
+        Dim colName As String = _view.ComboBox1.SelectedItem.ToString()
+
         If colName = "選択してください" Then
-            Task4Model.MemberTable.DefaultView.Sort = ""
-        ElseIf dgv.Columns.Contains(colName) Then
-            dgv.Sort(dgv.Columns(colName), ComponentModel.ListSortDirection.Ascending)
+            dt.DefaultView.Sort = ""
+        ElseIf dt.Columns.Contains(colName) Then
+            dt.DefaultView.Sort = $"{colName} ASC"
         End If
     End Sub
 End Class
