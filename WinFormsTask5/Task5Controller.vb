@@ -24,32 +24,58 @@ Public Class Task5Controller
         AddHandler _view.btnSearch.Click, AddressOf onSearchClicked
         AddHandler _view.btnClear.Click, AddressOf onSearchClearClicked
         AddHandler _view.btnOpenModal.Click, AddressOf onModalOpenClicked
+        AddHandler _view.btnEdit.Click, AddressOf onEditClicked
     End Sub
 
     Public Shared Function GetBoundDataTable() As DataTable
         Return TryCast(_view.DataGridView.DataSource, DataTable)
     End Function
 
+    Public Shared Sub onEditClicked(sender As Object, e As EventArgs)
+        If _view.DataGridView.DataSource Is Nothing Then
+            MessageBox.Show("CSVファイルを読み込んでください")
+        ElseIf _view.DataGridView.SelectedRows.Count = 0 Then
+            MessageBox.Show("編集する行を選択してください")
+        Else
+            Dim formAdd As New FormAdd()
+            formAdd.Mode = FormMode.Edit
+
+            Dim selectedRow As DataGridViewRow = _view.DataGridView.SelectedRows(0)
+            Dim dt = GetBoundDataTable()
+            formAdd.selectedDataRow = dt.Rows(selectedRow.Index)
+            addInitialize(formAdd)
+            formAdd.ShowDialog()
+        End If
+
+    End Sub
+
     Public Shared Sub onCloseClicked(sender As Object, e As EventArgs)
         _addView.Close()
     End Sub
     Public Shared Sub onAddClicked(sender As Object, e As EventArgs)
         Dim dt = GetBoundDataTable()
-        Dim newRow = dt.NewRow()
 
-        For i As Integer = 0 To Task5Model.CurrentHeaders.Count - 1
-            'csvファイルを読み込むときにtrimしているのでここではしない
-            Dim header = Task5Model.CurrentHeaders(i)
-            Dim value = _addView.textBoxes(i).Text.Trim()
-            newRow(header) = value
-        Next
-
-        dt.Rows.Add(newRow)
-        MessageBox.Show("新しく追加しました")
+        If _addView.Mode = FormMode.Add Then
+            Dim newRow = dt.NewRow()
+            For i As Integer = 0 To Task5Model.CurrentHeaders.Count - 1
+                Dim header = Task5Model.CurrentHeaders(i)
+                Dim value = _addView.textBoxes(i).Text.Trim()
+                newRow(header) = value
+            Next
+            dt.Rows.Add(newRow)
+            MessageBox.Show("新しく追加しました")
+        ElseIf _addView.Mode = FormMode.Edit Then
+            For i As Integer = 0 To Task5Model.CurrentHeaders.Count - 1
+                Dim header = Task5Model.CurrentHeaders(i)
+                Dim value = _addView.textBoxes(i).Text.Trim()
+                _addView.selectedDataRow(header) = value
+            Next
+        End If
     End Sub
     Public Shared Sub onModalOpenClicked(sender As Object, e As EventArgs)
         If _view.DataGridView.DataSource IsNot Nothing Then
             Dim formAdd As New FormAdd()
+            formAdd.Mode = FormMode.Add
             addInitialize(formAdd)
             formAdd.ShowDialog()
         Else

@@ -32,6 +32,7 @@ Partial Class Form1
         searchText = New TextBox()
         lblStatus = New Label()
         btnOpenModal = New Button()
+        btnEdit = New Button()
         CType(DataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -73,7 +74,7 @@ Partial Class Form1
         ' 
         ' btnSearch
         ' 
-        btnSearch.Location = New Point(12, 361)
+        btnSearch.Location = New Point(76, 348)
         btnSearch.Name = "btnSearch"
         btnSearch.Size = New Size(94, 29)
         btnSearch.TabIndex = 4
@@ -82,7 +83,7 @@ Partial Class Form1
         ' 
         ' btnClear
         ' 
-        btnClear.Location = New Point(12, 396)
+        btnClear.Location = New Point(76, 383)
         btnClear.Name = "btnClear"
         btnClear.Size = New Size(94, 29)
         btnClear.TabIndex = 5
@@ -100,9 +101,9 @@ Partial Class Form1
         ' 
         ' searchText
         ' 
-        searchText.Location = New Point(12, 317)
+        searchText.Location = New Point(32, 315)
         searchText.Name = "searchText"
-        searchText.Size = New Size(125, 27)
+        searchText.Size = New Size(186, 27)
         searchText.TabIndex = 8
         searchText.Text = "検索"
         ' 
@@ -114,20 +115,30 @@ Partial Class Form1
         lblStatus.Size = New Size(0, 20)
         lblStatus.TabIndex = 9
         ' 
-        ' btnAdd
+        ' btnOpenModal
         ' 
-        btnOpenModal.Location = New Point(545, 271)
+        btnOpenModal.Location = New Point(279, 315)
         btnOpenModal.Name = "btnOpenModal"
         btnOpenModal.Size = New Size(94, 29)
         btnOpenModal.TabIndex = 10
         btnOpenModal.Text = "新規追加"
         btnOpenModal.UseVisualStyleBackColor = True
         ' 
+        ' btnEdit
+        ' 
+        btnEdit.Location = New Point(403, 315)
+        btnEdit.Name = "btnEdit"
+        btnEdit.Size = New Size(94, 29)
+        btnEdit.TabIndex = 11
+        btnEdit.Text = "編集"
+        btnEdit.UseVisualStyleBackColor = True
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(btnEdit)
         Controls.Add(btnOpenModal)
         Controls.Add(lblStatus)
         Controls.Add(searchText)
@@ -155,5 +166,6 @@ Partial Class Form1
     Friend WithEvents searchText As TextBox
     Friend WithEvents lblStatus As Label
     Friend WithEvents btnOpenModal As Button
+    Friend WithEvents btnEdit As Button
 
 End Class
