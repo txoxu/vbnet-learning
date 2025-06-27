@@ -1,6 +1,14 @@
 Public Class Task1Controller
 
-    Public Shared Function ProcessAll(input As String) As List(Of String)
+    Private Shared _view As Form1
+
+    Public Shared Sub Initialize(view As Form1)
+        _view = view
+        AddHandler _view.btnProcess.click, AddressOf onProcessClicked
+    End Sub
+
+    Public Shared Sub OnProcessClicked(sender As Object, e As EventArgs)
+        Dim input As String = _view.txtInput.Text
         Dim result As New List(Of String)
 
 
@@ -10,8 +18,9 @@ Public Class Task1Controller
         result.AddRange(splitResults)
         result.Add(JoinTxt(splitResults))
 
-        Return result
-    End Function
+        _view.lstOutput.items.clear()
+        _view.lstOutput.items.addRange(result.ToArray())
+    End Sub
     'trim
     Public Shared Function TrimText(input As String) As String
         Return input.Trim()

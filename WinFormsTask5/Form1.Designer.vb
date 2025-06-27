@@ -22,88 +22,90 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        dgvEmployees = New DataGridView()
-        btnLoadCsv = New Button()
-        btnSaveCsv = New Button()
-        btnSaveAsCsv = New Button()
+        DataGridView = New DataGridView()
+        btnCsv = New Button()
+        btnOverWriteSave = New Button()
+        btnNewWriteSave = New Button()
         btnSearch = New Button()
-        btnClearSearch = New Button()
-        btnDeleteRow = New Button()
-        textSearch = New TextBox()
+        btnClear = New Button()
+        btnDelete = New Button()
+        searchText = New TextBox()
         lblStatus = New Label()
-        CType(dgvEmployees, ComponentModel.ISupportInitialize).BeginInit()
+        btnOpenModal = New Button()
+        btnEdit = New Button()
+        CType(DataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
-        ' dgvEmployees
+        ' DataGridView
         ' 
-        dgvEmployees.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvEmployees.Location = New Point(12, 12)
-        dgvEmployees.Name = "dgvEmployees"
-        dgvEmployees.RowHeadersWidth = 51
-        dgvEmployees.Size = New Size(766, 253)
-        dgvEmployees.TabIndex = 0
+        DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridView.Location = New Point(12, 12)
+        DataGridView.Name = "DataGridView"
+        DataGridView.RowHeadersWidth = 51
+        DataGridView.Size = New Size(766, 253)
+        DataGridView.TabIndex = 0
         ' 
-        ' btnLoadCsv
+        ' btnCsv
         ' 
-        btnLoadCsv.Location = New Point(561, 271)
-        btnLoadCsv.Name = "btnLoadCsv"
-        btnLoadCsv.Size = New Size(122, 29)
-        btnLoadCsv.TabIndex = 1
-        btnLoadCsv.Text = "CSV読み込み"
-        btnLoadCsv.UseVisualStyleBackColor = True
+        btnCsv.Location = New Point(12, 271)
+        btnCsv.Name = "btnCsv"
+        btnCsv.Size = New Size(122, 29)
+        btnCsv.TabIndex = 1
+        btnCsv.Text = "CSV読み込み"
+        btnCsv.UseVisualStyleBackColor = True
         ' 
-        ' btnSaveCsv
+        ' btnOverWriteSave
         ' 
-        btnSaveCsv.Location = New Point(694, 271)
-        btnSaveCsv.Name = "btnSaveCsv"
-        btnSaveCsv.Size = New Size(94, 29)
-        btnSaveCsv.TabIndex = 2
-        btnSaveCsv.Text = "上書き保存"
-        btnSaveCsv.UseVisualStyleBackColor = True
+        btnOverWriteSave.Location = New Point(154, 271)
+        btnOverWriteSave.Name = "btnOverWriteSave"
+        btnOverWriteSave.Size = New Size(94, 29)
+        btnOverWriteSave.TabIndex = 2
+        btnOverWriteSave.Text = "上書き保存"
+        btnOverWriteSave.UseVisualStyleBackColor = True
         ' 
-        ' btnSaveAsCsv
+        ' btnNewWriteSave
         ' 
-        btnSaveAsCsv.Location = New Point(661, 306)
-        btnSaveAsCsv.Name = "btnSaveAsCsv"
-        btnSaveAsCsv.Size = New Size(132, 29)
-        btnSaveAsCsv.TabIndex = 3
-        btnSaveAsCsv.Text = "名前をつけて保存"
-        btnSaveAsCsv.UseVisualStyleBackColor = True
+        btnNewWriteSave.Location = New Point(266, 271)
+        btnNewWriteSave.Name = "btnNewWriteSave"
+        btnNewWriteSave.Size = New Size(132, 29)
+        btnNewWriteSave.TabIndex = 3
+        btnNewWriteSave.Text = "名前をつけて保存"
+        btnNewWriteSave.UseVisualStyleBackColor = True
         ' 
         ' btnSearch
         ' 
-        btnSearch.Location = New Point(131, 361)
+        btnSearch.Location = New Point(76, 348)
         btnSearch.Name = "btnSearch"
         btnSearch.Size = New Size(94, 29)
         btnSearch.TabIndex = 4
         btnSearch.Text = "検索"
         btnSearch.UseVisualStyleBackColor = True
         ' 
-        ' btnClearSearch
+        ' btnClear
         ' 
-        btnClearSearch.Location = New Point(22, 361)
-        btnClearSearch.Name = "btnClearSearch"
-        btnClearSearch.Size = New Size(94, 29)
-        btnClearSearch.TabIndex = 5
-        btnClearSearch.Text = "検索リセット"
-        btnClearSearch.UseVisualStyleBackColor = True
+        btnClear.Location = New Point(76, 383)
+        btnClear.Name = "btnClear"
+        btnClear.Size = New Size(94, 29)
+        btnClear.TabIndex = 5
+        btnClear.Text = "検索リセット"
+        btnClear.UseVisualStyleBackColor = True
         ' 
-        ' btnDeleteRow
+        ' btnDelete
         ' 
-        btnDeleteRow.Location = New Point(343, 324)
-        btnDeleteRow.Name = "btnDeleteRow"
-        btnDeleteRow.Size = New Size(94, 29)
-        btnDeleteRow.TabIndex = 7
-        btnDeleteRow.Text = "行削除"
-        btnDeleteRow.UseVisualStyleBackColor = True
+        btnDelete.Location = New Point(427, 271)
+        btnDelete.Name = "btnDelete"
+        btnDelete.Size = New Size(94, 29)
+        btnDelete.TabIndex = 7
+        btnDelete.Text = "行削除"
+        btnDelete.UseVisualStyleBackColor = True
         ' 
-        ' textSearch
+        ' searchText
         ' 
-        textSearch.Location = New Point(22, 308)
-        textSearch.Name = "textSearch"
-        textSearch.Size = New Size(125, 27)
-        textSearch.TabIndex = 8
-        textSearch.Text = "社員検索"
+        searchText.Location = New Point(32, 315)
+        searchText.Name = "searchText"
+        searchText.Size = New Size(186, 27)
+        searchText.TabIndex = 8
+        searchText.Text = "検索"
         ' 
         ' lblStatus
         ' 
@@ -113,35 +115,57 @@ Partial Class Form1
         lblStatus.Size = New Size(0, 20)
         lblStatus.TabIndex = 9
         ' 
+        ' btnOpenModal
+        ' 
+        btnOpenModal.Location = New Point(279, 315)
+        btnOpenModal.Name = "btnOpenModal"
+        btnOpenModal.Size = New Size(94, 29)
+        btnOpenModal.TabIndex = 10
+        btnOpenModal.Text = "新規追加"
+        btnOpenModal.UseVisualStyleBackColor = True
+        ' 
+        ' btnEdit
+        ' 
+        btnEdit.Location = New Point(403, 315)
+        btnEdit.Name = "btnEdit"
+        btnEdit.Size = New Size(94, 29)
+        btnEdit.TabIndex = 11
+        btnEdit.Text = "編集"
+        btnEdit.UseVisualStyleBackColor = True
+        ' 
         ' Form1
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(btnEdit)
+        Controls.Add(btnOpenModal)
         Controls.Add(lblStatus)
-        Controls.Add(textSearch)
-        Controls.Add(btnDeleteRow)
-        Controls.Add(btnClearSearch)
+        Controls.Add(searchText)
+        Controls.Add(btnDelete)
+        Controls.Add(btnClear)
         Controls.Add(btnSearch)
-        Controls.Add(btnSaveAsCsv)
-        Controls.Add(btnSaveCsv)
-        Controls.Add(btnLoadCsv)
-        Controls.Add(dgvEmployees)
+        Controls.Add(btnNewWriteSave)
+        Controls.Add(btnOverWriteSave)
+        Controls.Add(btnCsv)
+        Controls.Add(DataGridView)
         Name = "Form1"
         Text = "Form1"
-        CType(dgvEmployees, ComponentModel.ISupportInitialize).EndInit()
+        CType(DataGridView, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
 
-    Friend WithEvents dgvEmployees As DataGridView
-    Friend WithEvents btnLoadCsv As Button
-    Friend WithEvents btnSaveCsv As Button
-    Friend WithEvents btnSaveAsCsv As Button
+    Friend WithEvents DataGridView As DataGridView
+    Friend WithEvents btnCsv As Button
+    Friend WithEvents btnOverWriteSave As Button
+    Friend WithEvents btnNewWriteSave As Button
     Friend WithEvents btnSearch As Button
-    Friend WithEvents btnClearSearch As Button
-    Friend WithEvents btnDeleteRow As Button
-    Friend WithEvents textSearch As TextBox
+    Friend WithEvents btnClear As Button
+    Friend WithEvents btnDelete As Button
+    Friend WithEvents searchText As TextBox
     Friend WithEvents lblStatus As Label
+    Friend WithEvents btnOpenModal As Button
+    Friend WithEvents btnEdit As Button
 
 End Class

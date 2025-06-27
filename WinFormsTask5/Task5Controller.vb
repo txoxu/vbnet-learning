@@ -1,118 +1,192 @@
+Imports System.ComponentModel
 Imports System.DirectoryServices
 Imports System.IO
 Imports System.Text
 
 Public Class Task5Controller
-    Public Shared Sub CsvLoad(DialogPath As String)
-        Try
-            'CSVファイル名を格納
-            Task5Model.FilePath = DialogPath
-            '前回選択したファイルがあった場合のための初期化
-            Task5Model.Data.Clear()
-            'ファイルをUTF8で書き込み、格納
-            Dim lines = File.ReadAllLines(DialogPath, System.Text.Encoding.UTF8)
-            '行ごとに繰り返し処理
-            For Each line As String In lines
-                '「,」を加えて格納
-                Dim fields As String() = line.Split(","c)
-                'もし、1行の長さが８のときdataに追加
-                If fields.Length = 8 Then
-                    Task5Model.Data.Rows.Add(fields)
-                End If
-            Next
-        Catch ex As Exception
-            Throw New ApplicationException("読み込みに失敗しました：" & ex.Message, ex)
-        End Try
+    Private Shared _view As Form1
+    Private Shared _addView As FormAdd
+
+    Public Shared Sub addInitialize(view As FormAdd)
+        _addView = view
+
+        AddHandler _addView.btnAdd.Click, AddressOf onAddClicked
+        AddHandler _addView.btnClose.Click, AddressOf onCloseClicked
     End Sub
 
-    Public Shared Sub CsvSave(CsvContent As StringBuilder, dgvEmployees As DataGridView)
-        Try
-            '行ごとに繰り返し処理を実行
-            For Each row As DataGridViewRow In dgvEmployees.Rows
-                '新しい行がない場合に処理
-                If Not row.IsNewRow Then
-                    '行の一つ一つのセルごとに繰り返し処理を実行
-                    For Each cell As DataGridViewCell In row.Cells
-                        '「,」事に区切る
-                        CsvContent.Append(cell.Value.ToString() & ",")
-                    Next
-                    '最後のセルの「,」を削除
-                    CsvContent.Length -= 1
-                    '格納を決定
-                    CsvContent.AppendLine()
-                End If
-            Next
-            File.WriteAllText(Task5Model.FilePath, CsvContent.ToString(), System.Text.Encoding.UTF8)
-        Catch ex As Exception
-            Throw New ApplicationException("CSVファイルの保存中にエラーが発生しました。：" & ex.Message, ex)
-        End Try
+    Public Shared Sub Initialize(view As Form1)
+        _view = view
+
+        AddHandler _view.btnCsv.Click, AddressOf onLoadCsvClicked
+        AddHandler _view.btnOverWriteSave.Click, AddressOf onOverWriteClicked
+        AddHandler _view.btnNewWriteSave.Click, AddressOf onNewWriteClicked
+        AddHandler _view.btnDelete.Click, AddressOf onDeleteClicked
+        AddHandler _view.btnSearch.Click, AddressOf onSearchClicked
+        AddHandler _view.btnClear.Click, AddressOf onSearchClearClicked
+        AddHandler _view.btnOpenModal.Click, AddressOf onModalOpenClicked
+        AddHandler _view.btnEdit.Click, AddressOf onEditClicked
     End Sub
 
-    Public Shared Sub CsvNewSave(savePath As String, dgvEmployees As DataGridView)
-        Try
+    Public Shared Function GetBoundDataTable() As DataTable
+        Return TryCast(_view.DataGridView.DataSource, DataTable)
+    End Function
 
-            'ファイルのデータを格納
-            Dim csvContent As New Text.StringBuilder()
+    Public Shared Sub onEditClicked(sender As Object, e As EventArgs)
+        If _view.DataGridView.DataSource Is Nothing Then
+            MessageBox.Show("CSVファイルを読み込んでください")
+        ElseIf _view.DataGridView.SelectedRows.Count = 0 Then
+            MessageBox.Show("編集する行を選択してください")
+        Else
+            Dim formAdd As New FormAdd()
+            formAdd.Mode = FormMode.Edit
 
-            '各行を繰り返し処理
-            For Each row As DataGridViewRow In dgvEmployees.Rows
-                If Not row.IsNewRow Then
-                    Dim rowData As New List(Of String)
-                    For Each cell As DataGridViewCell In row.Cells
-                        If cell.Value IsNot Nothing Then
-                            rowData.Add(cell.Value.ToString())
-                        Else
-                            rowData.Add("")
-                        End If
-                    Next
-                    csvContent.AppendLine(String.Join(",", rowData))
-                End If
-            Next
-            System.IO.File.WriteAllText(savePath, csvContent.ToString(), System.Text.Encoding.UTF8)
-        Catch ex As Exception
-            Throw New ApplicationException("名前を付けて保存に失敗しました" & ex.Message, ex)
-        End Try
+            Dim selectedRow As DataGridViewRow = _view.DataGridView.SelectedRows(0)
+            Dim dt = GetBoundDataTable()
+            formAdd.selectedDataRow = dt.Rows(selectedRow.Index)
+            addInitialize(formAdd)
+            formAdd.ShowDialog()
+        End If
 
     End Sub
 
-    Public Shared Sub CsvSearch(searchResult As DataTable, dgvEmployees As DataGridView, num As String, ByRef searchCount As Integer)
-        'searchResultにカラムを反映
-        For Each column As DataGridViewColumn In dgvEmployees.Columns
-            searchResult.Columns.Add(column.HeaderText)
+    Public Shared Sub onCloseClicked(sender As Object, e As EventArgs)
+        _addView.Close()
+    End Sub
+    Public Shared Sub onAddClicked(sender As Object, e As EventArgs)
+        Dim dt = GetBoundDataTable()
+
+        If _addView.Mode = FormMode.Add Then
+            Dim newRow = dt.NewRow()
+            For i As Integer = 0 To Task5Model.CurrentHeaders.Count - 1
+                Dim header = Task5Model.CurrentHeaders(i)
+                Dim value = _addView.textBoxes(i).Text.Trim()
+                newRow(header) = value
+            Next
+            dt.Rows.Add(newRow)
+            MessageBox.Show("新しく追加しました")
+        ElseIf _addView.Mode = FormMode.Edit Then
+            For i As Integer = 0 To Task5Model.CurrentHeaders.Count - 1
+                Dim header = Task5Model.CurrentHeaders(i)
+                Dim value = _addView.textBoxes(i).Text.Trim()
+                _addView.selectedDataRow(header) = value
+            Next
+        End If
+    End Sub
+    Public Shared Sub onModalOpenClicked(sender As Object, e As EventArgs)
+        If _view.DataGridView.DataSource IsNot Nothing Then
+            Dim formAdd As New FormAdd()
+            formAdd.Mode = FormMode.Add
+            addInitialize(formAdd)
+            formAdd.ShowDialog()
+        Else
+            MessageBox.Show("CSVファイルを読み込んでください")
+        End If
+
+    End Sub
+
+    Public Shared Sub onSearchClearClicked(sender As Object, e As EventArgs)
+        _view.searchText.Clear()
+
+        Dim dt = GetBoundDataTable()
+        dt.DefaultView.RowFilter = ""
+    End Sub
+
+    Public Shared Sub onSearchClicked(sender As Object, e As EventArgs)
+        Dim keyword As String = _view.searchText.Text.Trim()
+        Dim dt = GetBoundDataTable()
+
+        If keyword = "" Then
+            dt.DefaultView.RowFilter = ""
+            Return
+        End If
+
+        Dim results As New List(Of String)
+        For Each col As DataColumn In dt.Columns
+            results.Add($"[{col.ColumnName}] like '%{keyword}%'")
         Next
+        dt.DefaultView.RowFilter = String.Join(" OR ", results)
+    End Sub
 
-        'datagridviewからrowに格納し繰り返し処理
-        For Each row As DataGridViewRow In dgvEmployees.Rows
+    Public Shared Sub onDeleteClicked(sender As Object, e As EventArgs)
+        Dim dt = GetBoundDataTable()
+
+        If dt Is Nothing Then
+            MessageBox.Show("CSVファイルが読み込まれていません")
+            Return
+        End If
+
+        If _view.DataGridView.SelectedRows.Count = 0 Then
+            MessageBox.Show("削除する行が選択されていません")
+            Return
+        End If
+
+        For Each row As DataGridViewRow In _view.DataGridView.SelectedRows
             If Not row.IsNewRow Then
-                'もし、入力された値と列の０番目（社員番号）が同じ時の処理
-                If row.Cells(0).Value.ToString().Trim() = num Then
-                    '検索結果に新しい行を追加
-                    Dim newRow As DataRow = searchResult.NewRow()
-                    'datagridviewのカラム数（０～のため-1）繰り返し処理
-                    For i As Integer = 0 To dgvEmployees.ColumnCount - 1
-                        '新しい列のi番目の行に値を追加
-                        newRow(i) = row.Cells(i).Value.ToString()
-                    Next
-                    '検索結果用の表に追加
-                    searchResult.Rows.Add(newRow)
-                    searchCount += 1
-                End If
+                _view.DataGridView.Rows.Remove(row)
             End If
         Next
 
+        MessageBox.Show("選択した行を削除しました")
     End Sub
 
-    Public Shared Function CsvRowDelete(dgvEmployees As DataGridView)
-        'dgvEnployeesで行を選択
-        If dgvEmployees.SelectedRows.Count > 0 Then
-            For Each row As DataGridViewRow In dgvEmployees.SelectedRows
-                If Not row.IsNewRow Then
-                    dgvEmployees.Rows.Remove(row)
+    Public Shared Sub onLoadCsvClicked(sener As Object, e As EventArgs)
+        Using ofd As New OpenFileDialog
+            ofd.Filter = "CSVファイル(*.csv) | *.csv"
+
+            If ofd.ShowDialog() = DialogResult.OK Then
+                Dim dt = Task5Model.LoadCsv(ofd.FileName)
+
+                If dt Is Nothing Then
+                    MessageBox.Show("ファイルの読み込みに失敗しました")
+                    Return
                 End If
-            Next
-            Return "行を削除しました"
-        Else
-            Return "行を削除できませんでした"
+                _view.DataGridView.DataSource = dt
+                _view.CurrentFilePath = ofd.FileName
+                _view.DataGridView.ReadOnly = True
+                _view.DataGridView.AllowUserToAddRows = False
+                _view.DataGridView.AllowUserToDeleteRows = False
+            End If
+        End Using
+    End Sub
+
+    Public Shared Sub onOverWriteClicked(sender As Object, e As EventArgs)
+        If String.IsNullOrWhiteSpace(_view.CurrentFilePath) Then
+            MessageBox.Show("CSVファイルが読み込まれていません")
+            Return
         End If
-    End Function
+
+        Dim dt As DataTable = GetBoundDataTable()
+        Dim errorMsg As String = ""
+        Dim success = Task5Model.SaveCsv(_view.CurrentFilePath, dt, errorMsg)
+
+        If success Then
+            MessageBox.Show("上書き保存しました")
+        Else
+            MessageBox.Show("上書き保存に失敗しました")
+        End If
+    End Sub
+
+    Public Shared Sub onNewWriteClicked(sender As Object, e As EventArgs)
+        If String.IsNullOrWhiteSpace(_view.CurrentFilePath) Then
+            MessageBox.Show("CSVファイルが読み込まれていません")
+            Return
+        End If
+
+        Dim ofd As New SaveFileDialog()
+        ofd.Filter = "CSVファイル(*.csv)|*.csv"
+        ofd.Title = "名前を付けて保存"
+        Dim dt As DataTable = GetBoundDataTable()
+
+        If ofd.ShowDialog() = DialogResult.OK Then
+            Dim errorMsg As String = ""
+            Dim success = Task5Model.SaveCsv(ofd.FileName, dt, errorMsg)
+
+            If success Then
+                MessageBox.Show("名前を付けて保存しました")
+            Else
+                MessageBox.Show("保存に失敗しました" & vbCrLf & errorMsg)
+            End If
+        End If
+    End Sub
+
 End Class

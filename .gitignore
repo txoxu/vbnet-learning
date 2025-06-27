@@ -1,4 +1,10 @@
 .vs/
+ConsoleApp1/obj/
+ConsoleApp1/bin/
+cumulative_task/bin/
+cumulative_task/obj/
+supplemental/bin/
+supplemental/obj/
 WinFormsTask1/obj/
 WinFormsTask1/bin/
 WinFormsTask2/obj/
