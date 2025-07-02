@@ -12,7 +12,7 @@ Public Class Task3Controller
         AddHandler _view.btnSearch.Click, AddressOf SearchFilter
     End Sub
 
-    Private Shared Sub onLoadCsvClicked(sender As Object, e As EventArgs)
+    Public Shared Sub onLoadCsvClicked(sender As Object, e As EventArgs)
         Using ofd As New OpenFileDialog()
             ofd.Filter = "csvƒtƒ@ƒCƒ‹(*.csv)|*.csv"
             If ofd.ShowDialog() = DialogResult.OK Then

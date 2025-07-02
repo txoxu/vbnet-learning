@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("cumulative_task"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Release"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+babef92a337d1f68eb79edced2fb6633880aa1d9"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b5e5f27a1e3b3c0f5ad032216008c2aacd8bdc18"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("cumulative_task"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("cumulative_task"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")> 
