@@ -1,22 +1,24 @@
 Public Class Task2Controller
     Private Shared _view As Form1
+    Private Shared _view2 As Form2
 
     Public Shared Sub Initialize(view As Form1)
         _view = view
-        AddHandler _view.Button1.Click, AddressOf onAddClicked
-        AddHandler _view.btnSave.Click, AddressOf onSaveClicked
+        '追加ボタン
+        AddHandler _view.btnAdd.Click, AddressOf onAddClicked
+
     End Sub
 
+    Public Shared Sub Initalize2(view As Form2)
+        _view2 = view
+
+
+    End Sub
     Public Shared Sub onAddClicked(sender As Object, e As EventArgs)
-        Dim arr As String() = SplitCsvLine(_view.textInput.Text)
-
-        _view.DataGridView1.DataSource.Rows.Add(arr)
+        Dim form2 As New Form2()
+        Initalize2(form2)
+        _view2.ShowDialog()
     End Sub
-
-    Public Shared Function SplitCsvLine(input As String) As String()
-        Return input.Split(","c)
-    End Function
-
     Public Shared Sub onSaveClicked(sender As Object, e As EventArgs)
         'もしdatagridviewのデータソースが設定されている場合,sqlに追加処理
         If _view.DataGridView1.DataSource.Rows.Count <> 0 Then

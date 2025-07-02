@@ -12,9 +12,11 @@
 
         DataGridView1.DataSource = dtb1
 
+
         Call sql_close()
         Task2Controller.Initialize(Me)
 
     End Sub
+
 
 End Class
