@@ -23,6 +23,7 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         DataGridView1 = New DataGridView()
+        Id = New DataGridViewTextBoxColumn()
         midleName = New DataGridViewTextBoxColumn()
         Kana = New DataGridViewTextBoxColumn()
         Age = New DataGridViewTextBoxColumn()
@@ -37,7 +38,7 @@ Partial Class Form1
         DataGridView1.AllowUserToAddRows = False
         DataGridView1.AllowUserToDeleteRows = False
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Columns.AddRange(New DataGridViewColumn() {midleName, Kana, Age})
+        DataGridView1.Columns.AddRange(New DataGridViewColumn() {Id, midleName, Kana, Age})
         DataGridView1.Location = New Point(12, 11)
         DataGridView1.Margin = New Padding(3, 2, 3, 2)
         DataGridView1.Name = "DataGridView1"
@@ -45,6 +46,13 @@ Partial Class Form1
         DataGridView1.RowHeadersWidth = 51
         DataGridView1.Size = New Size(350, 141)
         DataGridView1.TabIndex = 2
+        ' 
+        ' Id
+        ' 
+        Id.DataPropertyName = "Id"
+        Id.HeaderText = "ID"
+        Id.Name = "Id"
+        Id.ReadOnly = True
         ' 
         ' midleName
         ' 
@@ -73,7 +81,7 @@ Partial Class Form1
         btnAdd.Name = "btnAdd"
         btnAdd.Size = New Size(75, 23)
         btnAdd.TabIndex = 3
-        btnAdd.Text = "追加"
+        btnAdd.Text = "詳細"
         btnAdd.UseVisualStyleBackColor = True
         ' 
         ' btnUpdate
@@ -110,11 +118,12 @@ Partial Class Form1
         ResumeLayout(False)
     End Sub
     Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents midleName As DataGridViewTextBoxColumn
-    Friend WithEvents Kana As DataGridViewTextBoxColumn
-    Friend WithEvents Age As DataGridViewTextBoxColumn
     Friend WithEvents btnAdd As Button
     Friend WithEvents btnUpdate As Button
     Friend WithEvents btnDelete As Button
+    Friend WithEvents Id As DataGridViewTextBoxColumn
+    Friend WithEvents midleName As DataGridViewTextBoxColumn
+    Friend WithEvents Kana As DataGridViewTextBoxColumn
+    Friend WithEvents Age As DataGridViewTextBoxColumn
 
 End Class

@@ -21,7 +21,6 @@ Module Module1
         sqlsvCon.ConnectionString = ConStr
 
         sqlsvCon.Open() ' SQL Serverに接続
-        MessageBox.Show("SQL Serverに接続しました。", "接続成功", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Sub sql_close()
@@ -35,9 +34,7 @@ Module Module1
         Try
             Dim Adapter = New SqlDataAdapter(query, sqlsvCon)
 
-            Dim Ds As New DataSet
             Adapter.Fill(dt)
-
 
             Return dt
         Catch ex As Exception

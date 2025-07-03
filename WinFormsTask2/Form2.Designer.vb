@@ -22,39 +22,28 @@ Partial Class Form2
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        TextBox1 = New TextBox()
-        Label1 = New Label()
+        btnClose = New Button()
         SuspendLayout()
         ' 
-        ' TextBox1
+        ' btnClose
         ' 
-        TextBox1.Location = New Point(62, 50)
-        TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(125, 23)
-        TextBox1.TabIndex = 0
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(62, 32)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(41, 15)
-        Label1.TabIndex = 1
-        Label1.Text = "Label1"
+        btnClose.Location = New Point(694, 415)
+        btnClose.Name = "btnClose"
+        btnClose.Size = New Size(75, 23)
+        btnClose.TabIndex = 0
+        btnClose.Text = "閉じる"
+        btnClose.UseVisualStyleBackColor = True
         ' 
         ' Form2
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
-        Controls.Add(Label1)
-        Controls.Add(TextBox1)
+        Controls.Add(btnClose)
         Name = "Form2"
         Text = "Form2"
         ResumeLayout(False)
-        PerformLayout()
     End Sub
 
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents Label1 As Label
+    Friend WithEvents btnClose As Button
 End Class

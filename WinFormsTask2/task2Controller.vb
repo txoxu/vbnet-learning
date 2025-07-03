@@ -11,8 +11,13 @@ Public Class Task2Controller
 
     Public Shared Sub Initalize2(view As Form2)
         _view2 = view
+        AddHandler _view2.btnClose.Click, AddressOf onCloseClicked
 
+    End Sub
 
+    Public Shared Sub onCloseClicked(sender As Object, e As EventArgs)
+        'form2‚ð•Â‚¶‚é
+        _view2.Close()
     End Sub
     Public Shared Sub onAddClicked(sender As Object, e As EventArgs)
         Dim form2 As New Form2()
