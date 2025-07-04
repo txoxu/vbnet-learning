@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("WinFormsTask5"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b5e5f27a1e3b3c0f5ad032216008c2aacd8bdc18"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b31649de8fe8956168951224008808998a59fa8"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("WinFormsTask5"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("WinFormsTask5"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _

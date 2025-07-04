@@ -23,6 +23,7 @@ Partial Class Form2
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         btnClose = New Button()
+        btnNew = New Button()
         SuspendLayout()
         ' 
         ' btnClose
@@ -34,16 +35,29 @@ Partial Class Form2
         btnClose.Text = "閉じる"
         btnClose.UseVisualStyleBackColor = True
         ' 
+        ' btnNew
+        ' 
+        btnNew.Location = New Point(557, 415)
+        btnNew.Name = "btnNew"
+        btnNew.Size = New Size(120, 23)
+        btnNew.TabIndex = 1
+        btnNew.Text = "新しい行を追加"
+        btnNew.UseVisualStyleBackColor = True
+        btnNew.Visible = False
+        ' 
         ' Form2
         ' 
         AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(btnNew)
         Controls.Add(btnClose)
         Name = "Form2"
         Text = "Form2"
         ResumeLayout(False)
+
     End Sub
 
     Friend WithEvents btnClose As Button
+    Friend WithEvents btnNew As Button
 End Class

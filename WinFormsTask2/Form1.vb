@@ -17,6 +17,4 @@
         Task2Controller.Initialize(Me)
 
     End Sub
-
-
 End Class

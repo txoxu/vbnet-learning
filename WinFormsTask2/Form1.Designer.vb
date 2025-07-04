@@ -27,8 +27,8 @@ Partial Class Form1
         midleName = New DataGridViewTextBoxColumn()
         Kana = New DataGridViewTextBoxColumn()
         Age = New DataGridViewTextBoxColumn()
+        btnShow = New Button()
         btnAdd = New Button()
-        btnUpdate = New Button()
         btnDelete = New Button()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -75,27 +75,27 @@ Partial Class Form1
         Age.Name = "Age"
         Age.ReadOnly = True
         ' 
+        ' btnShow
+        ' 
+        btnShow.Location = New Point(12, 157)
+        btnShow.Name = "btnShow"
+        btnShow.Size = New Size(75, 23)
+        btnShow.TabIndex = 3
+        btnShow.Text = "詳細"
+        btnShow.UseVisualStyleBackColor = True
+        ' 
         ' btnAdd
         ' 
-        btnAdd.Location = New Point(29, 157)
+        btnAdd.Location = New Point(93, 157)
         btnAdd.Name = "btnAdd"
         btnAdd.Size = New Size(75, 23)
-        btnAdd.TabIndex = 3
-        btnAdd.Text = "詳細"
+        btnAdd.TabIndex = 4
+        btnAdd.Text = "追加"
         btnAdd.UseVisualStyleBackColor = True
-        ' 
-        ' btnUpdate
-        ' 
-        btnUpdate.Location = New Point(143, 157)
-        btnUpdate.Name = "btnUpdate"
-        btnUpdate.Size = New Size(75, 23)
-        btnUpdate.TabIndex = 4
-        btnUpdate.Text = "更新"
-        btnUpdate.UseVisualStyleBackColor = True
         ' 
         ' btnDelete
         ' 
-        btnDelete.Location = New Point(260, 157)
+        btnDelete.Location = New Point(174, 157)
         btnDelete.Name = "btnDelete"
         btnDelete.Size = New Size(75, 23)
         btnDelete.TabIndex = 5
@@ -108,8 +108,8 @@ Partial Class Form1
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(700, 338)
         Controls.Add(btnDelete)
-        Controls.Add(btnUpdate)
         Controls.Add(btnAdd)
+        Controls.Add(btnShow)
         Controls.Add(DataGridView1)
         Margin = New Padding(3, 2, 3, 2)
         Name = "Form1"
@@ -118,8 +118,8 @@ Partial Class Form1
         ResumeLayout(False)
     End Sub
     Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents btnShow As Button
     Friend WithEvents btnAdd As Button
-    Friend WithEvents btnUpdate As Button
     Friend WithEvents btnDelete As Button
     Friend WithEvents Id As DataGridViewTextBoxColumn
     Friend WithEvents midleName As DataGridViewTextBoxColumn
