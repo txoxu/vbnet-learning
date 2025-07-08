@@ -45,13 +45,21 @@ Module Module1
     End Function
 
 
-    Function sql_result_no(ByVal query As String)
+    Function sql_result_no(ByVal query As String, result As Integer)
         'delete, insert等値を返さない処理
         Try
             sqlCommand.Connection = sqlsvCon　'接続オブジェクト
             sqlCommand.CommandText = query　'sql文を設定
             sqlCommand.ExecuteNonQuery() '値を返さないsql文を実行する
-            Return MessageBox.Show("正常に保存しました")
+            Select Case result
+                Case 1
+                    Return MessageBox.Show("正常に保存しました")
+                Case 2
+                    Return MessageBox.Show("正常に更新しました")
+                Case 3
+                    Return MessageBox.Show("正常に削除しました")
+            End Select
+
         Catch ex As Exception
             Return ex.Message
         End Try

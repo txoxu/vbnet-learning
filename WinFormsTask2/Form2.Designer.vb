@@ -37,6 +37,7 @@ Partial Class Form2
         TelBox = New TextBox()
         IdBox = New TextBox()
         btnUpdate = New Button()
+        btnDestroy = New Button()
         SuspendLayout()
         ' 
         ' btnClose
@@ -156,19 +157,30 @@ Partial Class Form2
         ' 
         ' btnUpdate
         ' 
-        btnUpdate.Location = New Point(694, 386)
+        btnUpdate.Location = New Point(557, 415)
         btnUpdate.Name = "btnUpdate"
-        btnUpdate.Size = New Size(75, 23)
+        btnUpdate.Size = New Size(120, 23)
         btnUpdate.TabIndex = 14
         btnUpdate.Text = "更新"
         btnUpdate.UseVisualStyleBackColor = True
         btnUpdate.Visible = False
+        ' 
+        ' btnDestroy
+        ' 
+        btnDestroy.Location = New Point(557, 415)
+        btnDestroy.Name = "btnDestroy"
+        btnDestroy.Size = New Size(120, 23)
+        btnDestroy.TabIndex = 15
+        btnDestroy.Text = "削除"
+        btnDestroy.UseVisualStyleBackColor = True
+        btnDestroy.Visible = False
         ' 
         ' Form2
         ' 
         AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(btnDestroy)
         Controls.Add(btnUpdate)
         Controls.Add(TelBox)
         Controls.Add(AddBox)
@@ -206,4 +218,5 @@ Partial Class Form2
     Friend WithEvents TelBox As TextBox
     Friend WithEvents IdBox As TextBox
     Friend WithEvents btnUpdate As Button
+    Friend WithEvents btnDestroy As Button
 End Class

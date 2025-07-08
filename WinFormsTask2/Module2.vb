@@ -7,6 +7,8 @@
         Add
         '編集
         Edit
+        '削除
+        Delete
     End Enum
 
     'クリックイベントごとに分岐
@@ -14,22 +16,23 @@
         Dim val As [Enum]
         Dim txt As String = sender.Text.ToString
 
-        If txt = "詳細" Then
-            val = Task2Action.Show
-        ElseIf txt = "追加" Then
-            val = Task2Action.Add
-        ElseIf txt = "編集/更新" Then
-            val = Task2Action.Edit
-        End If
+        Select Case txt
+            Case "詳細"
+                val = Task2Action.Show
+            Case "追加"
+                val = Task2Action.Add
+            Case "編集/更新"
+                val = Task2Action.Edit
+            Case "削除"
+                val = Task2Action.Delete
+        End Select
+
         Return val
     End Function
 
     Public Sub FormRefresh()
 
-        Dim sql1 As String = "SELECT"
-        sql1 &= " Id, Name, Kana, Age"
-        sql1 &= " FROM [dbo].[Table];"
-
+        Dim sql1 As String = "SELECT Id, Name, Kana, Age FROM [dbo].[Table];"
         Dim dtb1 As DataTable = sql_result_return(sql1)
 
         Form1.DataGridView1.DataSource = dtb1
