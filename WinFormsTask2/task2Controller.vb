@@ -1,63 +1,107 @@
+Imports Microsoft.Data.SqlClient
 Public Class Task2Controller
     Private Shared _view As Form1
     Private Shared _view2 As Form2
-    Public Shared _action As [Enum]
 
     Public Shared Sub Initialize(view As Form1)
         _view = view
-        '詳細ボタン
+        '編集更新フォーム遷移ボタン
+        AddHandler _view.btnEdit.Click, AddressOf onEditClicked
+        '詳細フォーム遷移ボタン
         AddHandler _view.btnShow.Click, AddressOf onShowClicked
-        '追加ボタン
+        '追加フォーム遷移ボタン
         AddHandler _view.btnAdd.Click, AddressOf onAddClicked
-
+        'grid更新ボタン
+        AddHandler _view.btnRefresh.Click, AddressOf onRefreshClicked
     End Sub
 
-    Public Shared Sub Initalize2(view As Form2, action As [Enum])
-        _view2 = view
-        _action = action
-        AddHandler _view2.btnClose.Click, AddressOf onCloseClicked
-        AddHandler _view2.btnNew.Click, AddressOf onNewClicked
+    Public Shared Sub onEditClicked(sender As Object, e As EventArgs)
+        Dim Action As [Enum] = ChangeAction(sender, e)
+        Dim Form2 As New Form2()
+        Form2.Action = Action
+        Initalize2(Form2)
+
+        If _view.DataGridView1.SelectedRows.Count = 0 Then
+            MessageBox.Show("行を選択してください。")
+            Return
+        Else
+            Form2.SelectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
+        End If
+
+        _view2.ShowDialog()
     End Sub
 
-    Public Shared Sub onNewClicked(sender As Object, e As EventArgs)
-        Dim textBoxes As New List(Of TextBox)
-        For Each textbox As TextBox In _view2.Controls.OfType(Of TextBox)()
-            textBoxes.Add(textbox)
-        Next
+
+
+    Public Shared Sub onShowClicked(sender As Object, e As EventArgs)
+        Dim Action As [Enum] = ChangeAction(sender, e)
+        Dim Form2 As New Form2()
+        Form2.Action = Action
+
+        If _view.DataGridView1.SelectedRows.Count = 0 Then
+            MessageBox.Show("行を選択してください。")
+            Return
+        Else
+            Form2.SelectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
+        End If
+
+        Initalize2(Form2)
+        _view2.ShowDialog()
     End Sub
+
     Public Shared Sub onAddClicked(sender As Object, e As EventArgs)
         Dim Action As [Enum] = ChangeAction(sender, e)
         Dim Form2 As New Form2()
-        Initalize2(Form2, Action)
-        _view2.ShowDialog(_action)
+        Form2.Action = Action
+        Initalize2(Form2)
+        _view2.ShowDialog()
+    End Sub
+
+    Public Shared Sub onRefreshClicked(sender As Object, e As EventArgs)
+        FormRefresh()
+    End Sub
+
+    Public Shared Sub Initalize2(view As Form2)
+        _view2 = view
+        '更新ボタン
+        AddHandler _view2.btnUpdate.Click, AddressOf onUpdateClicked
+        '閉じるボタン
+        AddHandler _view2.btnClose.Click, AddressOf onCloseClicked
+        '新規追加ボタン
+        AddHandler _view2.btnNew.Click, AddressOf onNewClicked
+    End Sub
+
+    Public Shared Sub onUpdateClicked(sender As Object, e As EventArgs)
+        sqlCommand.CommandText = "UPDATE [dbo].[Table] SET Id = @Id, Name = @Name, Kana = @Kana, Age = @Age, Address = @Address, Tel = @Tel WHERE Id = @Id"
+
+        sqlCommand.Parameters.Clear()
+        sqlCommand.Parameters.AddWithValue("@Id", Integer.Parse(_view2.IdBox.Text))
+        sqlCommand.Parameters.AddWithValue("@Name", _view2.NameBox.Text)
+        sqlCommand.Parameters.AddWithValue("@Kana", _view2.KanaBox.Text)
+        sqlCommand.Parameters.AddWithValue("@Age", Integer.Parse(_view2.AgeBox.Text))
+        sqlCommand.Parameters.AddWithValue("@Address", _view2.AddBox.Text)
+        sqlCommand.Parameters.AddWithValue("@Tel", Integer.Parse(_view2.TelBox.Text))
+
+        sql_result_no(sqlCommand.CommandText)
+        Call sql_close()
     End Sub
 
     Public Shared Sub onCloseClicked(sender As Object, e As EventArgs)
         'form2を閉じる
         _view2.Close()
     End Sub
-    Public Shared Sub onShowClicked(sender As Object, e As EventArgs)
-        Dim Action As Task2Action = ChangeAction(sender, e)
-        Dim Form2 As New Form2()
-        Initalize2(Form2, Action)
-        _view2.ShowDialog()
-    End Sub
-    Public Shared Sub onSaveClicked(sender As Object, e As EventArgs)
-        'もしdatagridviewのデータソースが設定されている場合,sqlに追加処理
-        If _view.DataGridView1.DataSource.Rows.Count <> 0 Then
-            Dim dt = CType(_view.DataGridView1.DataSource, DataTable)
 
-            For Each row As DataGridViewRow In _view.DataGridView1.Rows
-                If Not row.IsNewRow Then
-                    Dim newRow As DataRow = dt.NewRow()
-                    newRow("Name") = row.Cells("midleName").Value
-                    newRow("Kana") = row.Cells("Kana").Value
-                    newRow("Age") = row.Cells("Age").Value
-                    dt.Rows.Add(newRow)
-                End If
-                Next
-                Task2Model.InsertQuery(dt)
-        End If
-    End Sub
+    Public Shared Sub onNewClicked(sender As Object, e As EventArgs)
+        sqlCommand.CommandText = "INSERT INTO [dbo].[Table] VALUES (@Id, @Name, @Kana, @Age, @Address, @Tel)"
+        sqlCommand.Parameters.Clear()
+        sqlCommand.Parameters.AddWithValue("@Id", Integer.Parse(_view2.IdBox.Text))
+        sqlCommand.Parameters.AddWithValue("@Name", _view2.NameBox.Text)
+        sqlCommand.Parameters.AddWithValue("@Kana", _view2.KanaBox.Text)
+        sqlCommand.Parameters.AddWithValue("@Age", Integer.Parse(_view2.AgeBox.Text))
+        sqlCommand.Parameters.AddWithValue("@Address", _view2.AddBox.Text)
+        sqlCommand.Parameters.AddWithValue("@Tel", Integer.Parse(_view2.TelBox.Text))
 
+        sql_result_no(sqlCommand.CommandText)
+
+    End Sub
 End Class

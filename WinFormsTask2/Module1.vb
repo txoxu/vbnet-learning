@@ -51,7 +51,7 @@ Module Module1
             sqlCommand.Connection = sqlsvCon　'接続オブジェクト
             sqlCommand.CommandText = query　'sql文を設定
             sqlCommand.ExecuteNonQuery() '値を返さないsql文を実行する
-            Return "完了"
+            Return MessageBox.Show("正常に保存しました")
         Catch ex As Exception
             Return ex.Message
         End Try

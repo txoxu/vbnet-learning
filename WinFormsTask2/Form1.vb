@@ -4,17 +4,11 @@
 
         Call sql_start()
 
-        Dim sql1 As String = "SELECT"
-        sql1 &= " Id, Name, Kana, Age"
-        sql1 &= " FROM [dbo].[Table];"
-
-        Dim dtb1 As DataTable = sql_result_return(sql1)
-
-        DataGridView1.DataSource = dtb1
-
+        FormRefresh()
 
         Call sql_close()
         Task2Controller.Initialize(Me)
 
     End Sub
+
 End Class

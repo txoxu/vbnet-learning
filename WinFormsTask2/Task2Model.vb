@@ -10,9 +10,9 @@ Public Class Task2Model
         sqlCommand.Connection = Module1.sqlsvCon
         ' データテーブルの各行をループして挿入
         For Each row As DataRow In dt.Rows
-            sqlCommand.CommandText = "INSERT INTO [dbo].[Table] (Name, Kana, Age) VALUES (@Name, @Kana, @Age)"
+            sqlCommand.CommandText = "INSERT INTO [dbo].[Table] (midleName, Kana, Age) VALUES (@midleName, @Kana, @Age)"
             sqlCommand.Parameters.Clear()
-            sqlCommand.Parameters.AddWithValue("@Name", row("Name"))
+            sqlCommand.Parameters.AddWithValue("@midleName", row("midleName"))
             sqlCommand.Parameters.AddWithValue("@Kana", row("Kana"))
             sqlCommand.Parameters.AddWithValue("@Age", row("Age"))
             sql_result_no(sqlCommand.CommandText)

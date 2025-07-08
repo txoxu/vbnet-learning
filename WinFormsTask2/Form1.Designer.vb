@@ -30,6 +30,9 @@ Partial Class Form1
         btnShow = New Button()
         btnAdd = New Button()
         btnDelete = New Button()
+        btnRefresh = New Button()
+        btnEdit = New Button()
+        Label2 = New Label()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -44,7 +47,7 @@ Partial Class Form1
         DataGridView1.Name = "DataGridView1"
         DataGridView1.ReadOnly = True
         DataGridView1.RowHeadersWidth = 51
-        DataGridView1.Size = New Size(350, 141)
+        DataGridView1.Size = New Size(453, 141)
         DataGridView1.TabIndex = 2
         ' 
         ' Id
@@ -86,7 +89,7 @@ Partial Class Form1
         ' 
         ' btnAdd
         ' 
-        btnAdd.Location = New Point(93, 157)
+        btnAdd.Location = New Point(12, 213)
         btnAdd.Name = "btnAdd"
         btnAdd.Size = New Size(75, 23)
         btnAdd.TabIndex = 4
@@ -95,18 +98,47 @@ Partial Class Form1
         ' 
         ' btnDelete
         ' 
-        btnDelete.Location = New Point(174, 157)
+        btnDelete.Location = New Point(12, 242)
         btnDelete.Name = "btnDelete"
         btnDelete.Size = New Size(75, 23)
         btnDelete.TabIndex = 5
         btnDelete.Text = "削除"
         btnDelete.UseVisualStyleBackColor = True
         ' 
+        ' btnRefresh
+        ' 
+        btnRefresh.Location = New Point(390, 157)
+        btnRefresh.Name = "btnRefresh"
+        btnRefresh.Size = New Size(75, 23)
+        btnRefresh.TabIndex = 6
+        btnRefresh.Text = "画面更新"
+        btnRefresh.UseVisualStyleBackColor = True
+        ' 
+        ' btnEdit
+        ' 
+        btnEdit.Location = New Point(12, 186)
+        btnEdit.Name = "btnEdit"
+        btnEdit.Size = New Size(75, 23)
+        btnEdit.TabIndex = 7
+        btnEdit.Text = "編集/更新"
+        btnEdit.UseVisualStyleBackColor = True
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Location = New Point(406, 173)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(0, 15)
+        Label2.TabIndex = 9
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(700, 338)
+        Controls.Add(Label2)
+        Controls.Add(btnEdit)
+        Controls.Add(btnRefresh)
         Controls.Add(btnDelete)
         Controls.Add(btnAdd)
         Controls.Add(btnShow)
@@ -116,6 +148,7 @@ Partial Class Form1
         Text = "Form1"
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
+        PerformLayout()
     End Sub
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents btnShow As Button
@@ -125,5 +158,8 @@ Partial Class Form1
     Friend WithEvents midleName As DataGridViewTextBoxColumn
     Friend WithEvents Kana As DataGridViewTextBoxColumn
     Friend WithEvents Age As DataGridViewTextBoxColumn
+    Friend WithEvents btnRefresh As Button
+    Friend WithEvents btnEdit As Button
+    Friend WithEvents Label2 As Label
 
 End Class
