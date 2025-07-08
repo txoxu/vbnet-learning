@@ -8,12 +8,7 @@ Public Class Form2
     Public Property Action As Task2Action
     Public Property SelectId As Integer
 
-
-
     Private Sub Fom2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-
-
         Select Case True
             '詳細フォーム
             Case Action = Task2Action.Show

@@ -115,17 +115,17 @@ Public Class Task2Controller
 
         Dim queryBuilder As New StringBuilder()
         queryBuilder.AppendLine("UPDATE [dbo].[Table]")
-        queryBuilder.AppendLine("SET Id = @Id, Name = @Name, Kana = @Kana, Age = @Age, Address = @Address, Tel = @Tel")
+        queryBuilder.AppendLine("SET Name = @Name, Kana = @Kana, Age = @Age, Address = @Address, Tel = @Tel")
         queryBuilder.AppendLine("WHERE Id = @Id")
         sqlCommand.CommandText = queryBuilder.ToString()
 
         sqlCommand.Parameters.Clear()
-        sqlCommand.Parameters.AddWithValue("@Id", Integer.Parse(_view2.IdBox.Text))
         sqlCommand.Parameters.AddWithValue("@Name", _view2.NameBox.Text)
         sqlCommand.Parameters.AddWithValue("@Kana", _view2.KanaBox.Text)
         sqlCommand.Parameters.AddWithValue("@Age", Integer.Parse(_view2.AgeBox.Text))
         sqlCommand.Parameters.AddWithValue("@Address", _view2.AddBox.Text)
         sqlCommand.Parameters.AddWithValue("@Tel", Integer.Parse(_view2.TelBox.Text))
+        sqlCommand.Parameters.AddWithValue("@Id", Integer.Parse(_view2.IdBox.Text))
 
         sql_result_no(sqlCommand.CommandText, result)
         Call sql_close()
@@ -141,12 +141,11 @@ Public Class Task2Controller
         Dim result As Integer = Task2Action.Add
 
         Dim queryBuilder As New StringBuilder()
-        queryBuilder.AppendLine("INSERT INTO [dbo].[Table] (Id, Name, Kana, Age, Address, Tel)")
-        queryBuilder.AppendLine("VALUES (@Id, @Name, @Kana, @Age, @Address, @Tel)")
+        queryBuilder.AppendLine("INSERT INTO [dbo].[Table] (Name, Kana, Age, Address, Tel)")
+        queryBuilder.AppendLine("VALUES (@Name, @Kana, @Age, @Address, @Tel)")
         sqlCommand.CommandText = queryBuilder.ToString()
 
         sqlCommand.Parameters.Clear()
-        sqlCommand.Parameters.AddWithValue("@Id", Integer.Parse(_view2.IdBox.Text))
         sqlCommand.Parameters.AddWithValue("@Name", _view2.NameBox.Text)
         sqlCommand.Parameters.AddWithValue("@Kana", _view2.KanaBox.Text)
         sqlCommand.Parameters.AddWithValue("@Age", Integer.Parse(_view2.AgeBox.Text))
@@ -154,6 +153,12 @@ Public Class Task2Controller
         sqlCommand.Parameters.AddWithValue("@Tel", Integer.Parse(_view2.TelBox.Text))
 
         sql_result_no(sqlCommand.CommandText, result)
+
+        For Each boxItem As Control In _view2.Controls
+            If TypeOf boxItem Is TextBox Then
+                CType(boxItem, TextBox).Text = String.Empty
+            End If
+        Next
 
     End Sub
 End Class

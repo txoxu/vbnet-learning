@@ -152,6 +152,7 @@ Partial Class Form2
         ' 
         IdBox.Location = New Point(12, 27)
         IdBox.Name = "IdBox"
+        IdBox.ReadOnly = True
         IdBox.Size = New Size(100, 23)
         IdBox.TabIndex = 8
         ' 
