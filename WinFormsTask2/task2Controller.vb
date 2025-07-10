@@ -1,8 +1,14 @@
+Imports System.Net
 Imports System.Text
+Imports Azure.Core.HttpHeader
 Imports Microsoft.Data.SqlClient
 Public Class Task2Controller
     Private Shared _view As Form1
     Private Shared _view2 As Form2
+    Private Shared _model As New Task2Model
+
+    Private Shared selectId As Integer
+
 
     Public Shared Sub Initialize(view As Form1)
         _view = view
@@ -19,14 +25,14 @@ Public Class Task2Controller
         'grid更新ボタン
         AddHandler _view.btnRefresh.Click, AddressOf onRefreshClicked
     End Sub
+
     Public Shared Sub Access(sender, e)
         Dim Action As [Enum] = ChangeAction(sender, e)
         Dim TsAction As Task2Action = Action
         Dim actionForm As New Form2()
         Initalize2(actionForm)
+
         actionForm.Action = Action
-
-
 
         Select Case TsAction
             Case Task2Action.Add
@@ -36,17 +42,18 @@ Public Class Task2Controller
                     MessageBox.Show("行を選択してください。")
                     Return
                 Else
-                    Dim selectId As Integer = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
-                    _view2.Show()
-                    Task2Model.FirstLoad(selectId, TsAction)
+                    selectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
+                    Dim Show As DataTable = _model.FirstLoad(selectId, TsAction)
+                    actionForm.ShowTable = Show
                 End If
         End Select
+        _view2.ShowDialog()
     End Sub
 
     Public Shared Sub onSearchClicked(sender As Object, e As EventArgs)
         Dim searchResult As String = _view.searchBox.Text()
 
-        Task2Model.Search()
+        _model.Search()
     End Sub
 
     Public Shared Sub onDeleteClicked(sender As Object, e As EventArgs)
@@ -66,7 +73,7 @@ Public Class Task2Controller
     End Sub
 
     Public Shared Sub onRefreshClicked(sender As Object, e As EventArgs)
-        Task2Model.FormRefresh()
+        _model.FormRefresh()
     End Sub
 
     Public Shared Sub Initalize2(view As Form2)
@@ -83,19 +90,28 @@ Public Class Task2Controller
 
     Public Shared Sub onDestroyClicked(sender As Object, e As EventArgs)
         MessageBox.Show("本当に削除しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.DefaultDesktopOnly)
-        '削除後メッセージの判定用変数
-        Dim result As Integer = Task2Action.Delete
-
-        Task2Model.Destroy(result)
+        _model.Destroy(selectId)
+        MessageBox.Show("正常に削除されました")
         _view2.Close()
 
     End Sub
+    Public Shared Function setDto()
+        Dim Dto As New DataDto()
+        If _view2.IdBox.Text IsNot "" Then
+            Dto.IdSg = Integer.Parse(_view2.IdBox.Text)
+        End If
+        Dto.NameSg = _view2.NameBox.Text
+        Dto.KanaSg = _view2.KanaBox.Text
+        Dto.AgeSg = Integer.Parse(_view2.AgeBox.Text)
+        Dto.AddressSg = _view2.AddBox.Text
+        Dto.TelSg = Integer.Parse(_view2.TelBox.Text)
+        Return Dto
+    End Function
 
     Public Shared Sub onUpdateClicked(sender As Object, e As EventArgs)
-        '編集/更新後のメッセージ判定用変数
-        Dim result As Integer = Task2Action.Edit
-
-        Task2Model.Update(result)
+        Dim DtoList As DataDto = setDto()
+        _model.Update(DtoList)
+        MessageBox.Show("正常に変更されました")
     End Sub
 
     Public Shared Sub onCloseClicked(sender As Object, e As EventArgs)
@@ -104,28 +120,9 @@ Public Class Task2Controller
     End Sub
 
     Public Shared Sub onNewClicked(sender As Object, e As EventArgs)
-
-        Dim result As Integer = Task2Action.Add
-
-        Dim queryBuilder As New StringBuilder()
-        queryBuilder.AppendLine("INSERT INTO [dbo].[Table] (Name, Kana, Age, Address, Tel)")
-        queryBuilder.AppendLine("VALUES (@Name, @Kana, @Age, @Address, @Tel)")
-        sqlCommand.CommandText = queryBuilder.ToString()
-
-        sqlCommand.Parameters.Clear()
-        sqlCommand.Parameters.AddWithValue("@Name", _view2.NameBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Kana", _view2.KanaBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Age", Integer.Parse(_view2.AgeBox.Text))
-        sqlCommand.Parameters.AddWithValue("@Address", _view2.AddBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Tel", Integer.Parse(_view2.TelBox.Text))
-
-        sql_result_no(sqlCommand.CommandText, result)
-
-        For Each boxItem As Control In _view2.Controls
-            If TypeOf boxItem Is TextBox Then
-                CType(boxItem, TextBox).Text = String.Empty
-            End If
-        Next
-
+        Dim DtoList As DataDto = setDto()
+        _model.Add(DtoList)
+        MessageBox.Show("新しく追加されました")
+        _view2.FormReset()
     End Sub
 End Class

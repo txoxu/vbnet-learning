@@ -4,8 +4,7 @@ Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports Microsoft.Data.SqlClient
 
 Public Class Task2Model
-
-    Public Shared Sub FirstLoad(selectId, TsAction)
+    Public Function FirstLoad(selectId As Integer, TsAction As Task2Action) As DataTable
         'form2のロード時にsql serverに接続
         Call sql_start()
 
@@ -14,22 +13,10 @@ Public Class Task2Model
 
         'sqlクエリからの結果をdatatableに格納
         Dim Show As DataTable = sql_result_return(sqlShow)
+        Return Show
+    End Function
 
-        Select Case TsAction
-            Case Task2Action.Show Or Task2Action.Delete
-                For i As Integer = 0 To Show.Columns.Count - 1
-                    Form2.TextBoxes(i).Text = Show.Rows(0).Item(i).ToString
-                    Form2.TextBoxes(i).ReadOnly = True
-                Next
-            Case Else
-                For i As Integer = 0 To Show.Columns.Count - 1
-                    Form2.TextBoxes(i).Text = Show.Rows(0).Item(i).ToString
-                Next
-        End Select
-
-    End Sub
-
-    Public Shared Sub FormRefresh()
+    Public Sub FormRefresh()
         sql_start()
 
         Dim sql1 As String = "SELECT Id, Name, Kana, Age FROM [dbo].[Table];"
@@ -39,7 +26,7 @@ Public Class Task2Model
         sql_close()
     End Sub
 
-    Public Shared Sub Search()
+    Public Sub Search()
         sql_start()
         Dim queryBuilder As New StringBuilder()
         queryBuilder.AppendLine("SELECT Id, Name, Kana, Age")
@@ -48,20 +35,20 @@ Public Class Task2Model
         sql_close()
     End Sub
 
-    Public Shared Sub Destroy(result)
+    Public Sub Destroy(selectId As Integer)
         Dim queryBuilder As New StringBuilder()
         queryBuilder.AppendLine("DELETE FROM [dbo].[Table]")
         queryBuilder.AppendLine("WHERE Id = @Id")
 
         sqlCommand.Parameters.Clear()
         sqlCommand.CommandText = queryBuilder.ToString()
-        sqlCommand.Parameters.AddWithValue("@Id", Integer.Parse(Form2.IdBox.Text))
-        sql_result_no(sqlCommand.CommandText, result)
+        sqlCommand.Parameters.AddWithValue("@Id", Integer.Parse(selectId))
+        sql_result_no(sqlCommand.CommandText)
 
         Call sql_close()
     End Sub
 
-    Public Shared Sub Update(result)
+    Public Sub Update(DtoList As DataDto)
         Dim queryBuilder As New StringBuilder()
         queryBuilder.AppendLine("UPDATE [dbo].[Table]")
         queryBuilder.AppendLine("SET Name = @Name, Kana = @Kana, Age = @Age, Address = @Address, Tel = @Tel")
@@ -69,14 +56,33 @@ Public Class Task2Model
         sqlCommand.CommandText = queryBuilder.ToString()
 
         sqlCommand.Parameters.Clear()
-        sqlCommand.Parameters.AddWithValue("@Name", Form2.NameBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Kana", Form2.KanaBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Age", Form2.AgeBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Address", Form2.AddBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Tel", Form2.TelBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Id", Form2.IdBox.Text)
+        sqlCommand.Parameters.AddWithValue("@Name", DtoList.NameSg)
+        sqlCommand.Parameters.AddWithValue("@Kana", DtoList.KanaSg)
+        sqlCommand.Parameters.AddWithValue("@Age", DtoList.AgeSg)
+        sqlCommand.Parameters.AddWithValue("@Address", DtoList.AddressSg)
+        sqlCommand.Parameters.AddWithValue("@Tel", DtoList.TelSg)
+        sqlCommand.Parameters.AddWithValue("@Id", DtoList.IdSg)
 
-        sql_result_no(sqlCommand.CommandText, result)
+        sql_result_no(sqlCommand.CommandText)
         Call sql_close()
+    End Sub
+
+    Public Sub Add(DtoList As DataDto)
+        Call sql_start()
+        Dim queryBuilder As New StringBuilder()
+        queryBuilder.AppendLine("INSERT INTO [dbo].[Table] (Name, Kana, Age, Address, Tel)")
+        queryBuilder.AppendLine("VALUES (@Name, @Kana, @Age, @Address, @Tel)")
+        sqlCommand.CommandText = queryBuilder.ToString()
+
+        sqlCommand.Parameters.Clear()
+        sqlCommand.Parameters.AddWithValue("@Name", DtoList.NameSg)
+        sqlCommand.Parameters.AddWithValue("@Kana", DtoList.KanaSg)
+        sqlCommand.Parameters.AddWithValue("@Age", DtoList.AgeSg)
+        sqlCommand.Parameters.AddWithValue("@Address", DtoList.AddressSg)
+        sqlCommand.Parameters.AddWithValue("@Tel", DtoList.TelSg)
+
+        sql_result_no(sqlCommand.CommandText)
+        Call sql_close()
+
     End Sub
 End Class
