@@ -6,6 +6,8 @@ Public Class Task2Controller
 
     Public Shared Sub Initialize(view As Form1)
         _view = view
+        '検索ボタン
+        AddHandler _view.btnSearch.Click, AddressOf onSearchClicked
         '削除確認フォームボタン
         AddHandler _view.btnDelete.Click, AddressOf onDeleteClicked
         '編集更新フォーム遷移ボタン
@@ -17,65 +19,54 @@ Public Class Task2Controller
         'grid更新ボタン
         AddHandler _view.btnRefresh.Click, AddressOf onRefreshClicked
     End Sub
+    Public Shared Sub Access(sender, e)
+        Dim Action As [Enum] = ChangeAction(sender, e)
+        Dim TsAction As Task2Action = Action
+        Dim actionForm As New Form2()
+        Initalize2(actionForm)
+        actionForm.Action = Action
+
+
+
+        Select Case TsAction
+            Case Task2Action.Add
+                '何もしない
+            Case Else
+                If _view.DataGridView1.SelectedRows.Count = 0 Then
+                    MessageBox.Show("行を選択してください。")
+                    Return
+                Else
+                    Dim selectId As Integer = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
+                    _view2.Show()
+                    Task2Model.FirstLoad(selectId, TsAction)
+                End If
+        End Select
+    End Sub
+
+    Public Shared Sub onSearchClicked(sender As Object, e As EventArgs)
+        Dim searchResult As String = _view.searchBox.Text()
+
+        Task2Model.Search()
+    End Sub
 
     Public Shared Sub onDeleteClicked(sender As Object, e As EventArgs)
-        Dim Action As [Enum] = ChangeAction(sender, e)
-        Dim Form2 As New Form2()
-        Form2.Action = Action
-        Initalize2(Form2)
-        If _view.DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("行を選択してください。")
-            Return
-        Else
-            Form2.SelectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
-        End If
-        _view2.ShowDialog()
+        Access(sender, e)
     End Sub
 
     Public Shared Sub onEditClicked(sender As Object, e As EventArgs)
-        Dim Action As [Enum] = ChangeAction(sender, e)
-        Dim Form2 As New Form2()
-        Form2.Action = Action
-        Initalize2(Form2)
-
-        If _view.DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("行を選択してください。")
-            Return
-        Else
-            Form2.SelectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
-        End If
-
-        _view2.ShowDialog()
+        Access(sender, e)
     End Sub
 
-
-
     Public Shared Sub onShowClicked(sender As Object, e As EventArgs)
-        Dim Action As [Enum] = ChangeAction(sender, e)
-        Dim Form2 As New Form2()
-        Form2.Action = Action
-
-        If _view.DataGridView1.SelectedRows.Count = 0 Then
-            MessageBox.Show("行を選択してください。")
-            Return
-        Else
-            Form2.SelectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
-        End If
-
-        Initalize2(Form2)
-        _view2.ShowDialog()
+        Access(sender, e)
     End Sub
 
     Public Shared Sub onAddClicked(sender As Object, e As EventArgs)
-        Dim Action As [Enum] = ChangeAction(sender, e)
-        Dim Form2 As New Form2()
-        Form2.Action = Action
-        Initalize2(Form2)
-        _view2.ShowDialog()
+        Access(sender, e)
     End Sub
 
     Public Shared Sub onRefreshClicked(sender As Object, e As EventArgs)
-        FormRefresh()
+        Task2Model.FormRefresh()
     End Sub
 
     Public Shared Sub Initalize2(view As Form2)
@@ -91,44 +82,20 @@ Public Class Task2Controller
     End Sub
 
     Public Shared Sub onDestroyClicked(sender As Object, e As EventArgs)
-        MessageBox.Show("削除しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.DefaultDesktopOnly)
-
+        MessageBox.Show("本当に削除しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.DefaultDesktopOnly)
+        '削除後メッセージの判定用変数
         Dim result As Integer = Task2Action.Delete
 
-        Dim queryBuilder As New StringBuilder()
-        queryBuilder.AppendLine("DELETE FROM [dbo].[Table]")
-        queryBuilder.AppendLine("WHERE Id = @Id")
-        sqlCommand.CommandText = queryBuilder.ToString()
-
-        sqlCommand.Parameters.Clear()
-        sqlCommand.Parameters.AddWithValue("@Id", Integer.Parse(_view2.IdBox.Text))
-        sql_result_no(sqlCommand.CommandText, result)
-
-        Call sql_close()
+        Task2Model.Destroy(result)
         _view2.Close()
 
     End Sub
 
     Public Shared Sub onUpdateClicked(sender As Object, e As EventArgs)
-
+        '編集/更新後のメッセージ判定用変数
         Dim result As Integer = Task2Action.Edit
 
-        Dim queryBuilder As New StringBuilder()
-        queryBuilder.AppendLine("UPDATE [dbo].[Table]")
-        queryBuilder.AppendLine("SET Name = @Name, Kana = @Kana, Age = @Age, Address = @Address, Tel = @Tel")
-        queryBuilder.AppendLine("WHERE Id = @Id")
-        sqlCommand.CommandText = queryBuilder.ToString()
-
-        sqlCommand.Parameters.Clear()
-        sqlCommand.Parameters.AddWithValue("@Name", _view2.NameBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Kana", _view2.KanaBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Age", Integer.Parse(_view2.AgeBox.Text))
-        sqlCommand.Parameters.AddWithValue("@Address", _view2.AddBox.Text)
-        sqlCommand.Parameters.AddWithValue("@Tel", Integer.Parse(_view2.TelBox.Text))
-        sqlCommand.Parameters.AddWithValue("@Id", Integer.Parse(_view2.IdBox.Text))
-
-        sql_result_no(sqlCommand.CommandText, result)
-        Call sql_close()
+        Task2Model.Update(result)
     End Sub
 
     Public Shared Sub onCloseClicked(sender As Object, e As EventArgs)

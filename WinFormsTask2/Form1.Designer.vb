@@ -33,6 +33,8 @@ Partial Class Form1
         btnRefresh = New Button()
         btnEdit = New Button()
         Label2 = New Label()
+        searchBox = New TextBox()
+        btnSearch = New Button()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -131,11 +133,29 @@ Partial Class Form1
         Label2.Size = New Size(0, 15)
         Label2.TabIndex = 9
         ' 
+        ' searchBox
+        ' 
+        searchBox.Location = New Point(132, 186)
+        searchBox.Name = "searchBox"
+        searchBox.Size = New Size(130, 23)
+        searchBox.TabIndex = 10
+        ' 
+        ' btnSearch
+        ' 
+        btnSearch.Location = New Point(154, 215)
+        btnSearch.Name = "btnSearch"
+        btnSearch.Size = New Size(75, 23)
+        btnSearch.TabIndex = 11
+        btnSearch.Text = "検索"
+        btnSearch.UseVisualStyleBackColor = True
+        ' 
         ' Form1
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(700, 338)
+        Controls.Add(btnSearch)
+        Controls.Add(searchBox)
         Controls.Add(Label2)
         Controls.Add(btnEdit)
         Controls.Add(btnRefresh)
@@ -161,5 +181,7 @@ Partial Class Form1
     Friend WithEvents btnRefresh As Button
     Friend WithEvents btnEdit As Button
     Friend WithEvents Label2 As Label
+    Friend WithEvents searchBox As TextBox
+    Friend WithEvents btnSearch As Button
 
 End Class

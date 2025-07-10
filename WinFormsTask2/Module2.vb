@@ -32,15 +32,4 @@ Public Module Module2
 
         Return val
     End Function
-
-    Public Sub FormRefresh()
-
-        Dim sql1 As String = "SELECT Id, Name, Kana, Age FROM [dbo].[Table];"
-        Dim dtb1 As DataTable = sql_result_return(sql1)
-
-        Form1.DataGridView1.DataSource = dtb1
-
-    End Sub
-
-
 End Module
