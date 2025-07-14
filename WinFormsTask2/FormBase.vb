@@ -1,9 +1,5 @@
 ﻿Imports Accessibility
-
-
-
-
-Public Class Form2
+Public Class FormBase
 
     'フォームごとのEnumの値をcontrollerから取得
     Public Property Action As Task2Action
@@ -13,7 +9,7 @@ Public Class Form2
 
     Public Shared TextBoxes As TextBox()
 
-    Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Protected Sub FormBase_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         TextBoxes = {IdBox, NameBox, KanaBox, AgeBox, AddBox, TelBox}
 
@@ -27,7 +23,7 @@ Public Class Form2
                 btnNew.Visible = True
                 '編集更新フォーム
             Case Action = Task2Action.Edit
-                Add_Edit_TextBox()
+                Edit_TextBox()
                 btnUpdate.Visible = True
                 '削除フォーム
             Case Action = Task2Action.Delete
@@ -44,7 +40,7 @@ Public Class Form2
         Next
     End Sub
 
-    Public Sub Add_Edit_TextBox()
+    Public Sub Edit_TextBox()
         For i As Integer = 0 To ShowTable.Columns.Count - 1
             TextBoxes(i).Text = ShowTable.Rows(0).Item(i).ToString
         Next

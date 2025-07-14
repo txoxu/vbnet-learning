@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel.Design.ObjectSelectorEditor
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
-Public Module Module2
+Public Module EnumAction
     '詳細、追加、編集の制御
     Public Enum Task2Action
         '詳細

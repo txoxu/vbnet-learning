@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Form2
+Partial Class FormBase
     Inherits System.Windows.Forms.Form
 
     'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
@@ -23,7 +23,6 @@ Partial Class Form2
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         btnClose = New Button()
-        btnNew = New Button()
         Id = New Label()
         midleName = New Label()
         Kana = New Label()
@@ -36,33 +35,24 @@ Partial Class Form2
         AddBox = New TextBox()
         TelBox = New TextBox()
         IdBox = New TextBox()
+        btnNew = New Button()
         btnUpdate = New Button()
         btnDestroy = New Button()
         SuspendLayout()
         ' 
         ' btnClose
         ' 
-        btnClose.Location = New Point(694, 415)
+        btnClose.Location = New Point(297, 326)
         btnClose.Name = "btnClose"
         btnClose.Size = New Size(75, 23)
         btnClose.TabIndex = 0
         btnClose.Text = "閉じる"
         btnClose.UseVisualStyleBackColor = True
         ' 
-        ' btnNew
-        ' 
-        btnNew.Location = New Point(557, 415)
-        btnNew.Name = "btnNew"
-        btnNew.Size = New Size(120, 23)
-        btnNew.TabIndex = 1
-        btnNew.Text = "新しい行を追加"
-        btnNew.UseVisualStyleBackColor = True
-        btnNew.Visible = False
-        ' 
         ' Id
         ' 
         Id.AutoSize = True
-        Id.Location = New Point(12, 9)
+        Id.Location = New Point(12, 52)
         Id.Name = "Id"
         Id.Size = New Size(18, 15)
         Id.TabIndex = 2
@@ -71,7 +61,7 @@ Partial Class Form2
         ' midleName
         ' 
         midleName.AutoSize = True
-        midleName.Location = New Point(145, 9)
+        midleName.Location = New Point(12, 102)
         midleName.Name = "midleName"
         midleName.Size = New Size(31, 15)
         midleName.TabIndex = 3
@@ -80,7 +70,7 @@ Partial Class Form2
         ' Kana
         ' 
         Kana.AutoSize = True
-        Kana.Location = New Point(276, 9)
+        Kana.Location = New Point(193, 105)
         Kana.Name = "Kana"
         Kana.Size = New Size(42, 15)
         Kana.TabIndex = 4
@@ -89,7 +79,7 @@ Partial Class Form2
         ' Age
         ' 
         Age.AutoSize = True
-        Age.Location = New Point(421, 9)
+        Age.Location = New Point(12, 159)
         Age.Name = "Age"
         Age.Size = New Size(31, 15)
         Age.TabIndex = 5
@@ -98,7 +88,7 @@ Partial Class Form2
         ' Address
         ' 
         Address.AutoSize = True
-        Address.Location = New Point(12, 76)
+        Address.Location = New Point(12, 218)
         Address.Name = "Address"
         Address.Size = New Size(31, 15)
         Address.TabIndex = 6
@@ -107,7 +97,7 @@ Partial Class Form2
         ' Tel
         ' 
         Tel.AutoSize = True
-        Tel.Location = New Point(12, 133)
+        Tel.Location = New Point(3, 271)
         Tel.Name = "Tel"
         Tel.Size = New Size(55, 15)
         Tel.TabIndex = 7
@@ -115,74 +105,85 @@ Partial Class Form2
         ' 
         ' NameBox
         ' 
-        NameBox.Location = New Point(145, 27)
+        NameBox.Location = New Point(77, 102)
         NameBox.Name = "NameBox"
         NameBox.Size = New Size(100, 23)
         NameBox.TabIndex = 9
         ' 
         ' KanaBox
         ' 
-        KanaBox.Location = New Point(276, 27)
+        KanaBox.Location = New Point(241, 102)
         KanaBox.Name = "KanaBox"
         KanaBox.Size = New Size(100, 23)
         KanaBox.TabIndex = 10
         ' 
         ' AgeBox
         ' 
-        AgeBox.Location = New Point(421, 27)
+        AgeBox.Location = New Point(77, 156)
         AgeBox.Name = "AgeBox"
         AgeBox.Size = New Size(100, 23)
         AgeBox.TabIndex = 11
         ' 
         ' AddBox
         ' 
-        AddBox.Location = New Point(12, 94)
+        AddBox.Location = New Point(77, 210)
         AddBox.Name = "AddBox"
         AddBox.Size = New Size(100, 23)
         AddBox.TabIndex = 12
         ' 
         ' TelBox
         ' 
-        TelBox.Location = New Point(12, 151)
+        TelBox.Location = New Point(77, 268)
         TelBox.Name = "TelBox"
         TelBox.Size = New Size(100, 23)
         TelBox.TabIndex = 13
         ' 
         ' IdBox
         ' 
-        IdBox.Location = New Point(12, 27)
+        IdBox.Location = New Point(77, 49)
         IdBox.Name = "IdBox"
         IdBox.ReadOnly = True
         IdBox.Size = New Size(100, 23)
         IdBox.TabIndex = 8
         ' 
+        ' btnNew
+        ' 
+        btnNew.Location = New Point(216, 326)
+        btnNew.Name = "btnNew"
+        btnNew.Size = New Size(75, 23)
+        btnNew.TabIndex = 14
+        btnNew.Text = "追加"
+        btnNew.UseVisualStyleBackColor = True
+        btnNew.Visible = False
+        ' 
         ' btnUpdate
         ' 
-        btnUpdate.Location = New Point(557, 415)
+        btnUpdate.Location = New Point(216, 300)
         btnUpdate.Name = "btnUpdate"
-        btnUpdate.Size = New Size(120, 23)
-        btnUpdate.TabIndex = 14
-        btnUpdate.Text = "更新"
+        btnUpdate.Size = New Size(75, 23)
+        btnUpdate.TabIndex = 15
+        btnUpdate.Text = "変更"
         btnUpdate.UseVisualStyleBackColor = True
         btnUpdate.Visible = False
         ' 
         ' btnDestroy
         ' 
-        btnDestroy.Location = New Point(557, 415)
+        btnDestroy.Location = New Point(216, 271)
         btnDestroy.Name = "btnDestroy"
-        btnDestroy.Size = New Size(120, 23)
-        btnDestroy.TabIndex = 15
+        btnDestroy.Size = New Size(75, 23)
+        btnDestroy.TabIndex = 16
         btnDestroy.Text = "削除"
         btnDestroy.UseVisualStyleBackColor = True
         btnDestroy.Visible = False
         ' 
-        ' Form2
+        ' FormBase
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(384, 361)
         Controls.Add(btnDestroy)
         Controls.Add(btnUpdate)
+        Controls.Add(btnNew)
         Controls.Add(TelBox)
         Controls.Add(AddBox)
         Controls.Add(AgeBox)
@@ -195,17 +196,15 @@ Partial Class Form2
         Controls.Add(Kana)
         Controls.Add(midleName)
         Controls.Add(Id)
-        Controls.Add(btnNew)
         Controls.Add(btnClose)
-        Name = "Form2"
-        Text = "Form2"
+        Name = "FormBase"
+        Text = "FormBase"
         ResumeLayout(False)
         PerformLayout()
 
     End Sub
 
     Friend WithEvents btnClose As Button
-    Friend WithEvents btnNew As Button
     Friend WithEvents Id As Label
     Friend WithEvents midleName As Label
     Friend WithEvents Kana As Label
@@ -218,6 +217,7 @@ Partial Class Form2
     Friend WithEvents AddBox As TextBox
     Friend WithEvents TelBox As TextBox
     Friend WithEvents IdBox As TextBox
+    Friend WithEvents btnNew As Button
     Friend WithEvents btnUpdate As Button
     Friend WithEvents btnDestroy As Button
 End Class
