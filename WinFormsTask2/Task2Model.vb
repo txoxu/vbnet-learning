@@ -37,14 +37,21 @@ Public Class Task2Model
 
     End Function
 
-    Public Sub Search() Implements IModel.Search
+    Public Function Search(keyword As String) As DataTable Implements IModel.Search
         sql_start()
+
         Dim queryBuilder As New StringBuilder()
         queryBuilder.AppendLine("SELECT Id, Name, Kana, Age")
         queryBuilder.AppendLine("FROM [dbo].[Table]")
-        queryBuilder.AppendLine("WHERE Id LIKE ")
+        queryBuilder.AppendLine("WHERE Id LIKE '@Name'")
+
+        sqlCommand.Parameters.Clear()
+        sqlCommand.CommandText = queryBuilder.ToString()
+        sqlCommand.Parameters.AddWithValue("@Name", "%" & keyword & "%")
+        Dim dtb As DataTable = sql_result_return(sqlCommand.CommandText)
+        Return dtb
         sql_close()
-    End Sub
+    End Function
 
     Public Sub Destroy(selectId As Integer) Implements IModel.Destroy
         Call sql_start()
@@ -61,7 +68,7 @@ Public Class Task2Model
         Call sql_close()
     End Sub
 
-    Public Sub Update(DtoList As DataDto) Implements IModel.update
+    Public Sub Update(data As DataDto) Implements IModel.update
         Call sql_start()
 
         Dim queryBuilder As New StringBuilder()
@@ -71,19 +78,19 @@ Public Class Task2Model
         sqlCommand.CommandText = queryBuilder.ToString()
 
         sqlCommand.Parameters.Clear()
-        sqlCommand.Parameters.AddWithValue("@Name", DtoList.NameSg)
-        sqlCommand.Parameters.AddWithValue("@Kana", DtoList.KanaSg)
-        sqlCommand.Parameters.AddWithValue("@Age", DtoList.AgeSg)
-        sqlCommand.Parameters.AddWithValue("@Address", DtoList.AddressSg)
-        sqlCommand.Parameters.AddWithValue("@Tel", DtoList.TelSg)
-        sqlCommand.Parameters.AddWithValue("@Id", DtoList.IdSg)
+        sqlCommand.Parameters.AddWithValue("@Name", data.NameData)
+        sqlCommand.Parameters.AddWithValue("@Kana", data.KanaData)
+        sqlCommand.Parameters.AddWithValue("@Age", data.AgeData)
+        sqlCommand.Parameters.AddWithValue("@Address", data.AddressData)
+        sqlCommand.Parameters.AddWithValue("@Tel", data.TelData)
+        sqlCommand.Parameters.AddWithValue("@Id", data.IdData)
 
         sql_result_no(sqlCommand.CommandText)
 
         Call sql_close()
     End Sub
 
-    Public Sub Add(DtoList As DataDto) Implements IModel.Add
+    Public Sub Add(data As DataDto) Implements IModel.Add
         Call sql_start()
 
         Dim queryBuilder As New StringBuilder()
@@ -92,11 +99,11 @@ Public Class Task2Model
         sqlCommand.CommandText = queryBuilder.ToString()
 
         sqlCommand.Parameters.Clear()
-        sqlCommand.Parameters.AddWithValue("@Name", DtoList.NameSg)
-        sqlCommand.Parameters.AddWithValue("@Kana", DtoList.KanaSg)
-        sqlCommand.Parameters.AddWithValue("@Age", DtoList.AgeSg)
-        sqlCommand.Parameters.AddWithValue("@Address", DtoList.AddressSg)
-        sqlCommand.Parameters.AddWithValue("@Tel", DtoList.TelSg)
+        sqlCommand.Parameters.AddWithValue("@Name", data.NameData)
+        sqlCommand.Parameters.AddWithValue("@Kana", data.KanaData)
+        sqlCommand.Parameters.AddWithValue("@Age", data.AgeData)
+        sqlCommand.Parameters.AddWithValue("@Address", data.AddressData)
+        sqlCommand.Parameters.AddWithValue("@Tel", data.TelData)
 
         sql_result_no(sqlCommand.CommandText)
 
@@ -153,6 +160,7 @@ Public Class Task2Model
             sqlCommand.Connection = sqlsvCon '接続オブジェクト
             sqlCommand.CommandText = query 'sql文を設定
             sqlCommand.ExecuteNonQuery() '値を返さないsql文を実行する
+            Return Nothing
         Catch ex As Exception
             Return ex.Message
         End Try

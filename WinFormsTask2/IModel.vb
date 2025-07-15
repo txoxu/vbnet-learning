@@ -2,8 +2,8 @@
 Public Interface IModel
         Function IdSelect(selectId As Integer) As DataTable
         Function FormRefresh() As DataTable
-        Sub Search()
-        Sub Destroy(selectId As Integer)
+    Function Search(selectId As String) As DataTable
+    Sub Destroy(selectId As Integer)
         Sub update(DtoList As DataDto)
         Sub Add(DtoList As DataDto)
         Sub sql_start()

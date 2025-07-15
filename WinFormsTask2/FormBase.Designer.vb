@@ -35,9 +35,6 @@ Partial Class FormBase
         AddBox = New TextBox()
         TelBox = New TextBox()
         IdBox = New TextBox()
-        btnNew = New Button()
-        btnUpdate = New Button()
-        btnDestroy = New Button()
         SuspendLayout()
         ' 
         ' btnClose
@@ -146,44 +143,12 @@ Partial Class FormBase
         IdBox.Size = New Size(100, 23)
         IdBox.TabIndex = 8
         ' 
-        ' btnNew
-        ' 
-        btnNew.Location = New Point(216, 326)
-        btnNew.Name = "btnNew"
-        btnNew.Size = New Size(75, 23)
-        btnNew.TabIndex = 14
-        btnNew.Text = "追加"
-        btnNew.UseVisualStyleBackColor = True
-        btnNew.Visible = False
-        ' 
-        ' btnUpdate
-        ' 
-        btnUpdate.Location = New Point(216, 300)
-        btnUpdate.Name = "btnUpdate"
-        btnUpdate.Size = New Size(75, 23)
-        btnUpdate.TabIndex = 15
-        btnUpdate.Text = "変更"
-        btnUpdate.UseVisualStyleBackColor = True
-        btnUpdate.Visible = False
-        ' 
-        ' btnDestroy
-        ' 
-        btnDestroy.Location = New Point(216, 271)
-        btnDestroy.Name = "btnDestroy"
-        btnDestroy.Size = New Size(75, 23)
-        btnDestroy.TabIndex = 16
-        btnDestroy.Text = "削除"
-        btnDestroy.UseVisualStyleBackColor = True
-        btnDestroy.Visible = False
-        ' 
         ' FormBase
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        components = New ComponentModel.Container
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(384, 361)
-        Controls.Add(btnDestroy)
-        Controls.Add(btnUpdate)
-        Controls.Add(btnNew)
         Controls.Add(TelBox)
         Controls.Add(AddBox)
         Controls.Add(AgeBox)
@@ -217,7 +182,4 @@ Partial Class FormBase
     Friend WithEvents AddBox As TextBox
     Friend WithEvents TelBox As TextBox
     Friend WithEvents IdBox As TextBox
-    Friend WithEvents btnNew As Button
-    Friend WithEvents btnUpdate As Button
-    Friend WithEvents btnDestroy As Button
 End Class

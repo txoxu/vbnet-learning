@@ -6,7 +6,7 @@
     Private address As String
     Private tel As Integer
 
-    Public Property IdSg() As Integer
+    Public Property IdData() As Integer
         Get
             Return id
         End Get
@@ -15,7 +15,7 @@
         End Set
     End Property
 
-    Public Property NameSg() As String
+    Public Property NameData() As String
         Get
             Return name
         End Get
@@ -24,7 +24,7 @@
         End Set
     End Property
 
-    Public Property KanaSg() As String
+    Public Property KanaData() As String
         Get
             Return kana
         End Get
@@ -33,7 +33,7 @@
         End Set
     End Property
 
-    Public Property AgeSg() As Integer
+    Public Property AgeData() As Integer
         Get
             Return age
         End Get
@@ -42,7 +42,7 @@
         End Set
     End Property
 
-    Public Property AddressSg() As String
+    Public Property AddressData() As String
         Get
             Return address
         End Get
@@ -51,7 +51,7 @@
         End Set
     End Property
 
-    Public Property TelSg() As Integer
+    Public Property TelData() As Integer
         Get
             Return tel
         End Get

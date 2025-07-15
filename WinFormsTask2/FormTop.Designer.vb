@@ -35,6 +35,7 @@ Partial Class FormTop
         Label2 = New Label()
         searchBox = New TextBox()
         btnSearch = New Button()
+        NameLbl = New Label()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -135,25 +136,36 @@ Partial Class FormTop
         ' 
         ' searchBox
         ' 
-        searchBox.Location = New Point(132, 186)
+        searchBox.Location = New Point(110, 187)
         searchBox.Name = "searchBox"
-        searchBox.Size = New Size(130, 23)
+        searchBox.Size = New Size(97, 23)
         searchBox.TabIndex = 10
+        searchBox.TextAlign = HorizontalAlignment.Center
         ' 
         ' btnSearch
         ' 
-        btnSearch.Location = New Point(154, 215)
+        btnSearch.Location = New Point(120, 216)
         btnSearch.Name = "btnSearch"
         btnSearch.Size = New Size(75, 23)
         btnSearch.TabIndex = 11
         btnSearch.Text = "検索"
         btnSearch.UseVisualStyleBackColor = True
         ' 
-        ' Form1
+        ' NameLbl
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        NameLbl.AutoSize = True
+        NameLbl.Location = New Point(110, 169)
+        NameLbl.Name = "NameLbl"
+        NameLbl.Size = New Size(31, 15)
+        NameLbl.TabIndex = 12
+        NameLbl.Text = "名前"
+        ' 
+        ' FormTop
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(700, 338)
+        Controls.Add(NameLbl)
         Controls.Add(btnSearch)
         Controls.Add(searchBox)
         Controls.Add(Label2)
@@ -164,7 +176,7 @@ Partial Class FormTop
         Controls.Add(btnShow)
         Controls.Add(DataGridView1)
         Margin = New Padding(3, 2, 3, 2)
-        Name = "Form1"
+        Name = "FormTop"
         Text = "Form1"
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
@@ -183,5 +195,6 @@ Partial Class FormTop
     Friend WithEvents Label2 As Label
     Friend WithEvents searchBox As TextBox
     Friend WithEvents btnSearch As Button
+    Friend WithEvents NameLbl As Label
 
 End Class

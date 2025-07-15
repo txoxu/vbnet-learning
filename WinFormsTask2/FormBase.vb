@@ -1,55 +1,39 @@
 ﻿Imports Accessibility
 Public Class FormBase
-
-    'フォームごとのEnumの値をcontrollerから取得
-    Public Property Action As Task2Action
-
     '初期のデータをdatatableでmodelから取得
     Public Property ShowTable As DataTable
 
     Public Shared TextBoxes As TextBox()
 
+    Overridable Sub readChange(ByVal TextBoxes As TextBox(), i As Integer)
+        'readOnlyの有無をオーバーライドで設定
+    End Sub
+
+    Overridable Sub btnChange()
+        '各ボタンの表示をオーバーライドで設定
+    End Sub
+
+
     Protected Sub FormBase_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         TextBoxes = {IdBox, NameBox, KanaBox, AgeBox, AddBox, TelBox}
 
+        Dim bindingSource As New BindingSource()
+        bindingSource.DataSource = ShowTable
 
-        Select Case True
-                '詳細フォーム
-            Case Action = Task2Action.Show
-                Show_Delete_TextBox()
-                '追加フォーム
-            Case Action = Task2Action.Add
-                btnNew.Visible = True
-                '編集更新フォーム
-            Case Action = Task2Action.Edit
-                Edit_TextBox()
-                btnUpdate.Visible = True
-                '削除フォーム
-            Case Action = Task2Action.Delete
-                Show_Delete_TextBox()
-                btnDestroy.Visible = True
-        End Select
+        If ShowTable IsNot Nothing Then
 
+            IdBox.DataBindings.Add("Text", bindingSource, "Id")
+            NameBox.DataBindings.Add("Text", bindingSource, "Name")
+            KanaBox.DataBindings.Add("Text", bindingSource, "Kana")
+            AgeBox.DataBindings.Add("Text", bindingSource, "Age")
+            AddBox.DataBindings.Add("Text", bindingSource, "Address")
+            TelBox.DataBindings.Add("Text", bindingSource, "Tel")
+
+            For i As Integer = 0 To ShowTable.Columns.Count - 1
+                readChange(TextBoxes, i)
+            Next
+        End If
+        btnChange()
     End Sub
-
-    Public Sub Show_Delete_TextBox()
-        For i As Integer = 0 To ShowTable.Columns.Count - 1
-            TextBoxes(i).Text = ShowTable.Rows(0).Item(i).ToString
-            TextBoxes(i).ReadOnly = True
-        Next
-    End Sub
-
-    Public Sub Edit_TextBox()
-        For i As Integer = 0 To ShowTable.Columns.Count - 1
-            TextBoxes(i).Text = ShowTable.Rows(0).Item(i).ToString
-        Next
-    End Sub
-
-    Public Sub FormReset()
-        For Each box As TextBox In TextBoxes
-            box.Clear()
-        Next
-    End Sub
-
 End Class

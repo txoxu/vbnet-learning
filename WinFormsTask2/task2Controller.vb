@@ -11,7 +11,6 @@ Public Class Task2Controller
     Private Shared _view As FormTop
     Private Shared _viewBase As FormBase
     Private Shared _viewAdd As FormAdd
-    Private Shared _viewShow As FormShow
     Private Shared _viewUpdate As FormUpdate
     Private Shared _viewDelete As FormDelete
 
@@ -38,68 +37,64 @@ Public Class Task2Controller
     End Sub
 
 
-    Public Shared Function Access(sender, e) As DataTable
-        Dim Action As [Enum] = ChangeAction(sender, e)
-        Dim TsAction As Task2Action = Action
+    Public Shared Function Access() As DataTable
         Dim actionForm As New FormBase()
 
-        Select Case TsAction
-            Case Task2Action.Add
-                '何もしない
-            Case Else
-                If _view.DataGridView1.SelectedRows.Count = 0 Then
-                    MessageBox.Show("行を選択してください。")
-                Else
-                    selectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
-                    Dim sqlShow As DataTable = _model.IdSelect(selectId)
-                    Return sqlShow
-                End If
-        End Select
+
+        If _view.DataGridView1.SelectedRows.Count = 0 Then
+            MessageBox.Show("行を選択してください。")
+            Return Nothing
+        Else
+            selectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
+            Dim sqlShow As DataTable = _model.IdSelect(selectId)
+            Return sqlShow
+        End If
     End Function
 
     Public Shared Sub onSearchClicked(sender As Object, e As EventArgs)
-        Dim searchResult As String = _view.searchBox.Text()
+        Dim keyword As String = _view.searchBox.Text()
 
-        _model.Search()
+        Dim dt As DataTable = _model.Search(keyword)
+
     End Sub
 
     Public Shared Sub onDeleteClicked(sender As Object, e As EventArgs)
-        Dim sqlShow = Access(sender, e)
-        Dim actionForm As New FormDelete()
-        InitializeDelete(actionForm)
-        InitializeBase(actionForm)
-        actionForm.Action = Task2Action.Delete
-        actionForm.ShowTable = sqlShow
-        _viewDelete.ShowDialog()
+        Dim sqlShow = Access()
+        If sqlShow IsNot Nothing Then
+            Dim actionForm As New FormDelete()
+            InitializeDelete(actionForm)
+            InitializeBase(actionForm)
+            actionForm.ShowTable = sqlShow
+            _viewBase.ShowDialog()
+        End If
     End Sub
 
     Public Shared Sub onEditClicked(sender As Object, e As EventArgs)
-        Dim sqlShow = Access(sender, e)
-        Dim actionForm As New FormUpdate()
-        InitializeUpdate(actionForm)
-        InitializeBase(actionForm)
-        actionForm.Action = Task2Action.Edit
-        actionForm.ShowTable = sqlShow
-        _viewUpdate.ShowDialog()
+        Dim sqlShow = Access()
+        If sqlShow IsNot Nothing Then
+            Dim actionForm As New FormUpdate()
+            InitializeUpdate(actionForm)
+            InitializeBase(actionForm)
+            actionForm.ShowTable = sqlShow
+            _viewBase.ShowDialog()
+        End If
     End Sub
 
     Public Shared Sub onShowClicked(sender As Object, e As EventArgs)
-        Dim sqlShow = Access(sender, e)
-        Dim actionform As New FormShow()
-        InitializeShow(actionform)
-        InitializeBase(actionform)
-        actionform.Action = Task2Action.Show
-        actionform.ShowTable = sqlShow
-        _viewShow.ShowDialog()
+        Dim sqlShow = Access()
+        If sqlShow IsNot Nothing Then
+            Dim actionform As New FormShow()
+            InitializeBase(actionform)
+            actionform.ShowTable = sqlShow
+            _viewBase.ShowDialog()
+        End If
     End Sub
 
     Public Shared Sub onAddClicked(sender As Object, e As EventArgs)
-        Access(sender, e)
         Dim actionform As New FormAdd()
         InitializeAdd(actionform)
         InitializeBase(actionform)
-        actionform.Action = Task2Action.Add
-        _viewAdd.ShowDialog()
+        _viewBase.ShowDialog()
     End Sub
 
     Public Shared Sub onRefreshClicked(sender As Object, e As EventArgs)
@@ -116,28 +111,20 @@ Public Class Task2Controller
 
     Public Shared Sub InitializeDelete(view As FormDelete)
         _viewDelete = view
-        _viewBase = _viewDelete
         '削除ボタン
-        AddHandler _viewBase.btnDestroy.Click, AddressOf onDestroyClicked
-    End Sub
-
-    Public Shared Sub InitializeUpdate(view As FormUpdate)
-        _viewUpdate = view
-        _viewBase = _viewUpdate
-        '更新ボタン
-        AddHandler _viewBase.btnUpdate.Click, AddressOf onUpdateClicked
-    End Sub
-
-    Public Shared Sub InitializeShow(view As FormShow)
-        _viewShow = view
-        _viewBase = _viewShow
+        AddHandler _viewDelete.btnDestroy.Click, AddressOf onDestroyClicked
     End Sub
 
     Public Shared Sub InitializeAdd(view As FormAdd)
         _viewAdd = view
-        _viewBase = _viewAdd
         '新規追加ボタン
-        AddHandler _viewBase.btnNew.Click, AddressOf onNewClicked
+        AddHandler _viewAdd.btnNew.Click, AddressOf onNewClicked
+    End Sub
+
+    Public Shared Sub InitializeUpdate(view As FormUpdate)
+        _viewUpdate = view
+        '更新ボタン
+        AddHandler _viewUpdate.btnUpdate.Click, AddressOf onUpdateClicked
     End Sub
 
     Public Shared Sub onDestroyClicked(sender As Object, e As EventArgs)
@@ -147,37 +134,33 @@ Public Class Task2Controller
         _viewBase.Close()
 
     End Sub
-    Public Shared Function setDto(sender As Object)
-
-
-
+    Public Shared Function setDto()
         Dim Dto As New DataDto()
         If _viewBase.IdBox.Text IsNot "" Then
-            Dto.IdSg = Integer.Parse(_viewBase.IdBox.Text)
+            Dto.IdData = Integer.Parse(_viewBase.IdBox.Text)
         End If
-        Dto.NameSg = _viewBase.NameBox.Text
-        Dto.KanaSg = _viewBase.KanaBox.Text
-        Dto.AgeSg = Integer.Parse(_viewBase.AgeBox.Text)
-        Dto.AddressSg = _viewBase.AddBox.Text
-        Dto.TelSg = Integer.Parse(_viewBase.TelBox.Text)
+        Dto.NameData = _viewBase.NameBox.Text
+        Dto.KanaData = _viewBase.KanaBox.Text
+        Dto.AgeData = Integer.Parse(_viewBase.AgeBox.Text)
+        Dto.AddressData = _viewBase.AddBox.Text
+        Dto.TelData = Integer.Parse(_viewBase.TelBox.Text)
         Return Dto
     End Function
 
     Public Shared Sub onUpdateClicked(sender As Object, e As EventArgs)
-        Dim DtoList As DataDto = setDto(sender)
-        _model.update(DtoList)
+        Dim data As DataDto = setDto()
+        _model.update(data)
         MessageBox.Show("正常に変更されました")
     End Sub
 
     Public Shared Sub onCloseClicked(sender As Object, e As EventArgs)
-        'form2を閉じる
         _viewBase.Close()
     End Sub
 
     Public Shared Sub onNewClicked(sender As Object, e As EventArgs)
-        Dim DtoList As DataDto = setDto(sender)
-        _model.Add(DtoList)
+        Dim data As DataDto = setDto()
+        _model.Add(data)
         MessageBox.Show("新しく追加されました")
-        _viewBase.FormReset()
+        _viewAdd.FormReset()
     End Sub
 End Class

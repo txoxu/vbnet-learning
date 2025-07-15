@@ -7,6 +7,5 @@ Module AppStart
         Dim Controller As New Task2Controller()
         Controller.Initialize(MyForm)
         Application.Run(MyForm)
-
     End Sub
 End Module
