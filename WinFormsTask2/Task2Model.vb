@@ -28,29 +28,35 @@ Public Class Task2Model
     Public Function FormRefresh() As DataTable Implements IModel.FormRefresh
         sql_start()
 
-        Dim sql1 As String = "SELECT Id, Name, Kana, Age FROM [dbo].[Table];"
-        Dim dtb1 As DataTable = sql_result_return(sql1)
+        Dim sql As String = "SELECT Id, Name, Kana, Age, Date FROM [dbo].[Table];"
+        Dim dt As DataTable = sql_result_return(sql)
 
         sql_close()
 
-        Return dtb1
+        Return dt
 
     End Function
 
-    Public Function Search(keyword As String) As DataTable Implements IModel.Search
+    Public Function Search(keyword As String, dateKeyword As String) As DataTable Implements IModel.Search
         sql_start()
 
+
+
         Dim queryBuilder As New StringBuilder()
-        queryBuilder.AppendLine("SELECT Id, Name, Kana, Age")
+        queryBuilder.AppendLine("SELECT Id, Name, Kana, Age, Date")
         queryBuilder.AppendLine("FROM [dbo].[Table]")
-        queryBuilder.AppendLine("WHERE Id LIKE '@Name'")
+        queryBuilder.AppendLine("WHERE Name LIKE N'" & "%" & keyword & "%" & "'")
+        queryBuilder.AppendLine("AND Date LIKE N'" & dateKeyword & "'")
+        'queryBuilder.AppendLine("AND Age BETWEEN '" & firstnum & "' AND '" & lastnum & "'")
 
         sqlCommand.Parameters.Clear()
         sqlCommand.CommandText = queryBuilder.ToString()
-        sqlCommand.Parameters.AddWithValue("@Name", "%" & keyword & "%")
-        Dim dtb As DataTable = sql_result_return(sqlCommand.CommandText)
-        Return dtb
+
+
+        Dim dt As DataTable = sql_result_return(sqlCommand.CommandText)
         sql_close()
+        Return dt
+
     End Function
 
     Public Sub Destroy(selectId As Integer) Implements IModel.Destroy
@@ -73,7 +79,8 @@ Public Class Task2Model
 
         Dim queryBuilder As New StringBuilder()
         queryBuilder.AppendLine("UPDATE [dbo].[Table]")
-        queryBuilder.AppendLine("SET Name = @Name, Kana = @Kana, Age = @Age, Address = @Address, Tel = @Tel")
+        queryBuilder.AppendLine("SET Name = @Name, Kana = @Kana, Age = @Age")
+        queryBuilder.AppendLine(", Address = @Address, Tel = @Tel, Date = @Date")
         queryBuilder.AppendLine("WHERE Id = @Id")
         sqlCommand.CommandText = queryBuilder.ToString()
 
@@ -84,6 +91,8 @@ Public Class Task2Model
         sqlCommand.Parameters.AddWithValue("@Address", data.AddressData)
         sqlCommand.Parameters.AddWithValue("@Tel", data.TelData)
         sqlCommand.Parameters.AddWithValue("@Id", data.IdData)
+        '編集した時刻を登録
+        sqlCommand.Parameters.AddWithValue("@Date", data.DateData)
 
         sql_result_no(sqlCommand.CommandText)
 
@@ -94,8 +103,8 @@ Public Class Task2Model
         Call sql_start()
 
         Dim queryBuilder As New StringBuilder()
-        queryBuilder.AppendLine("INSERT INTO [dbo].[Table] (Name, Kana, Age, Address, Tel)")
-        queryBuilder.AppendLine("VALUES (@Name, @Kana, @Age, @Address, @Tel)")
+        queryBuilder.AppendLine("INSERT INTO [dbo].[Table] (Name, Kana, Age, Address, Tel, Date)")
+        queryBuilder.AppendLine("VALUES (@Name, @Kana, @Age, @Address, @Tel, @Date)")
         sqlCommand.CommandText = queryBuilder.ToString()
 
         sqlCommand.Parameters.Clear()
@@ -104,6 +113,8 @@ Public Class Task2Model
         sqlCommand.Parameters.AddWithValue("@Age", data.AgeData)
         sqlCommand.Parameters.AddWithValue("@Address", data.AddressData)
         sqlCommand.Parameters.AddWithValue("@Tel", data.TelData)
+        '新規追加日時を登録
+        sqlCommand.Parameters.AddWithValue("@Date", data.DateData)
 
         sql_result_no(sqlCommand.CommandText)
 

@@ -35,11 +35,13 @@ Partial Class FormBase
         AddBox = New TextBox()
         TelBox = New TextBox()
         IdBox = New TextBox()
+        Datetime = New Label()
+        DateBox = New TextBox()
         SuspendLayout()
         ' 
         ' btnClose
         ' 
-        btnClose.Location = New Point(297, 326)
+        btnClose.Location = New Point(308, 336)
         btnClose.Name = "btnClose"
         btnClose.Size = New Size(75, 23)
         btnClose.TabIndex = 0
@@ -49,7 +51,7 @@ Partial Class FormBase
         ' Id
         ' 
         Id.AutoSize = True
-        Id.Location = New Point(12, 52)
+        Id.Location = New Point(25, 27)
         Id.Name = "Id"
         Id.Size = New Size(18, 15)
         Id.TabIndex = 2
@@ -58,7 +60,7 @@ Partial Class FormBase
         ' midleName
         ' 
         midleName.AutoSize = True
-        midleName.Location = New Point(12, 102)
+        midleName.Location = New Point(25, 82)
         midleName.Name = "midleName"
         midleName.Size = New Size(31, 15)
         midleName.TabIndex = 3
@@ -67,7 +69,7 @@ Partial Class FormBase
         ' Kana
         ' 
         Kana.AutoSize = True
-        Kana.Location = New Point(193, 105)
+        Kana.Location = New Point(197, 87)
         Kana.Name = "Kana"
         Kana.Size = New Size(42, 15)
         Kana.TabIndex = 4
@@ -76,7 +78,7 @@ Partial Class FormBase
         ' Age
         ' 
         Age.AutoSize = True
-        Age.Location = New Point(12, 159)
+        Age.Location = New Point(25, 139)
         Age.Name = "Age"
         Age.Size = New Size(31, 15)
         Age.TabIndex = 5
@@ -85,7 +87,7 @@ Partial Class FormBase
         ' Address
         ' 
         Address.AutoSize = True
-        Address.Location = New Point(12, 218)
+        Address.Location = New Point(25, 201)
         Address.Name = "Address"
         Address.Size = New Size(31, 15)
         Address.TabIndex = 6
@@ -94,7 +96,7 @@ Partial Class FormBase
         ' Tel
         ' 
         Tel.AutoSize = True
-        Tel.Location = New Point(3, 271)
+        Tel.Location = New Point(1, 254)
         Tel.Name = "Tel"
         Tel.Size = New Size(55, 15)
         Tel.TabIndex = 7
@@ -102,53 +104,71 @@ Partial Class FormBase
         ' 
         ' NameBox
         ' 
-        NameBox.Location = New Point(77, 102)
+        NameBox.Location = New Point(77, 79)
         NameBox.Name = "NameBox"
         NameBox.Size = New Size(100, 23)
         NameBox.TabIndex = 9
         ' 
         ' KanaBox
         ' 
-        KanaBox.Location = New Point(241, 102)
+        KanaBox.Location = New Point(254, 82)
         KanaBox.Name = "KanaBox"
         KanaBox.Size = New Size(100, 23)
         KanaBox.TabIndex = 10
         ' 
         ' AgeBox
         ' 
-        AgeBox.Location = New Point(77, 156)
+        AgeBox.Location = New Point(77, 136)
         AgeBox.Name = "AgeBox"
         AgeBox.Size = New Size(100, 23)
         AgeBox.TabIndex = 11
         ' 
         ' AddBox
         ' 
-        AddBox.Location = New Point(77, 210)
+        AddBox.Location = New Point(77, 198)
         AddBox.Name = "AddBox"
         AddBox.Size = New Size(100, 23)
         AddBox.TabIndex = 12
         ' 
         ' TelBox
         ' 
-        TelBox.Location = New Point(77, 268)
+        TelBox.Location = New Point(77, 251)
         TelBox.Name = "TelBox"
         TelBox.Size = New Size(100, 23)
         TelBox.TabIndex = 13
         ' 
         ' IdBox
         ' 
-        IdBox.Location = New Point(77, 49)
+        IdBox.Location = New Point(77, 24)
         IdBox.Name = "IdBox"
         IdBox.ReadOnly = True
         IdBox.Size = New Size(100, 23)
         IdBox.TabIndex = 8
         ' 
+        ' Datetime
+        ' 
+        Datetime.AutoSize = True
+        Datetime.Location = New Point(1, 308)
+        Datetime.Name = "Datetime"
+        Datetime.Size = New Size(55, 15)
+        Datetime.TabIndex = 14
+        Datetime.Text = "登録日時"
+        ' 
+        ' DateBox
+        ' 
+        DateBox.Location = New Point(77, 305)
+        DateBox.Name = "DateBox"
+        DateBox.ReadOnly = True
+        DateBox.Size = New Size(137, 23)
+        DateBox.TabIndex = 15
+        ' 
         ' FormBase
         ' 
-        components = New ComponentModel.Container
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(384, 361)
+        Controls.Add(DateBox)
+        Controls.Add(Datetime)
         Controls.Add(TelBox)
         Controls.Add(AddBox)
         Controls.Add(AgeBox)
@@ -182,4 +202,6 @@ Partial Class FormBase
     Friend WithEvents AddBox As TextBox
     Friend WithEvents TelBox As TextBox
     Friend WithEvents IdBox As TextBox
+    Friend WithEvents Datetime As Label
+    Friend WithEvents DateBox As TextBox
 End Class

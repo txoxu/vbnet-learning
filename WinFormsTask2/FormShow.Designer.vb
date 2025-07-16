@@ -22,9 +22,16 @@ Partial Class FormShow
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Text = "FormShow"
+        SuspendLayout()
+        ' 
+        ' FormShow
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(384, 361)
+        Name = "FormShow"
+        Text = "FormShow"
+        ResumeLayout(False)
+        PerformLayout()
     End Sub
 End Class

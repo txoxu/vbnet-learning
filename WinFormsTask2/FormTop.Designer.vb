@@ -27,6 +27,7 @@ Partial Class FormTop
         midleName = New DataGridViewTextBoxColumn()
         Kana = New DataGridViewTextBoxColumn()
         Age = New DataGridViewTextBoxColumn()
+        time = New DataGridViewTextBoxColumn()
         btnShow = New Button()
         btnAdd = New Button()
         btnDelete = New Button()
@@ -36,6 +37,8 @@ Partial Class FormTop
         searchBox = New TextBox()
         btnSearch = New Button()
         NameLbl = New Label()
+        DateTimePicker1 = New DateTimePicker()
+        AgeComboBox = New ComboBox()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -44,13 +47,13 @@ Partial Class FormTop
         DataGridView1.AllowUserToAddRows = False
         DataGridView1.AllowUserToDeleteRows = False
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Columns.AddRange(New DataGridViewColumn() {Id, midleName, Kana, Age})
-        DataGridView1.Location = New Point(12, 11)
+        DataGridView1.Columns.AddRange(New DataGridViewColumn() {Id, midleName, Kana, Age, time})
+        DataGridView1.Location = New Point(24, 11)
         DataGridView1.Margin = New Padding(3, 2, 3, 2)
         DataGridView1.Name = "DataGridView1"
         DataGridView1.ReadOnly = True
         DataGridView1.RowHeadersWidth = 51
-        DataGridView1.Size = New Size(453, 141)
+        DataGridView1.Size = New Size(550, 141)
         DataGridView1.TabIndex = 2
         ' 
         ' Id
@@ -81,9 +84,16 @@ Partial Class FormTop
         Age.Name = "Age"
         Age.ReadOnly = True
         ' 
+        ' time
+        ' 
+        time.DataPropertyName = "Date"
+        time.HeaderText = "登録日時"
+        time.Name = "time"
+        time.ReadOnly = True
+        ' 
         ' btnShow
         ' 
-        btnShow.Location = New Point(12, 157)
+        btnShow.Location = New Point(599, 11)
         btnShow.Name = "btnShow"
         btnShow.Size = New Size(75, 23)
         btnShow.TabIndex = 3
@@ -92,7 +102,7 @@ Partial Class FormTop
         ' 
         ' btnAdd
         ' 
-        btnAdd.Location = New Point(12, 213)
+        btnAdd.Location = New Point(599, 69)
         btnAdd.Name = "btnAdd"
         btnAdd.Size = New Size(75, 23)
         btnAdd.TabIndex = 4
@@ -101,7 +111,7 @@ Partial Class FormTop
         ' 
         ' btnDelete
         ' 
-        btnDelete.Location = New Point(12, 242)
+        btnDelete.Location = New Point(599, 98)
         btnDelete.Name = "btnDelete"
         btnDelete.Size = New Size(75, 23)
         btnDelete.TabIndex = 5
@@ -110,7 +120,7 @@ Partial Class FormTop
         ' 
         ' btnRefresh
         ' 
-        btnRefresh.Location = New Point(390, 157)
+        btnRefresh.Location = New Point(599, 129)
         btnRefresh.Name = "btnRefresh"
         btnRefresh.Size = New Size(75, 23)
         btnRefresh.TabIndex = 6
@@ -119,7 +129,7 @@ Partial Class FormTop
         ' 
         ' btnEdit
         ' 
-        btnEdit.Location = New Point(12, 186)
+        btnEdit.Location = New Point(599, 40)
         btnEdit.Name = "btnEdit"
         btnEdit.Size = New Size(75, 23)
         btnEdit.TabIndex = 7
@@ -136,7 +146,7 @@ Partial Class FormTop
         ' 
         ' searchBox
         ' 
-        searchBox.Location = New Point(110, 187)
+        searchBox.Location = New Point(24, 172)
         searchBox.Name = "searchBox"
         searchBox.Size = New Size(97, 23)
         searchBox.TabIndex = 10
@@ -144,7 +154,7 @@ Partial Class FormTop
         ' 
         ' btnSearch
         ' 
-        btnSearch.Location = New Point(120, 216)
+        btnSearch.Location = New Point(433, 174)
         btnSearch.Name = "btnSearch"
         btnSearch.Size = New Size(75, 23)
         btnSearch.TabIndex = 11
@@ -154,17 +164,37 @@ Partial Class FormTop
         ' NameLbl
         ' 
         NameLbl.AutoSize = True
-        NameLbl.Location = New Point(110, 169)
+        NameLbl.Location = New Point(24, 154)
         NameLbl.Name = "NameLbl"
         NameLbl.Size = New Size(31, 15)
         NameLbl.TabIndex = 12
         NameLbl.Text = "名前"
+        ' 
+        ' DateTimePicker1
+        ' 
+        DateTimePicker1.Format = DateTimePickerFormat.Short
+        DateTimePicker1.Location = New Point(299, 172)
+        DateTimePicker1.Name = "DateTimePicker1"
+        DateTimePicker1.Size = New Size(101, 23)
+        DateTimePicker1.TabIndex = 13
+        ' 
+        ' AgeComboBox
+        ' 
+        AgeComboBox.FormattingEnabled = True
+        AgeComboBox.Items.AddRange(New Object() {"10代未満", "10代", "20代", "30代", "40代", "50代", "60代", "60代以上"})
+        AgeComboBox.Location = New Point(150, 172)
+        AgeComboBox.Name = "AgeComboBox"
+        AgeComboBox.Size = New Size(121, 23)
+        AgeComboBox.TabIndex = 14
+        AgeComboBox.Text = "指定しない"
         ' 
         ' FormTop
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(700, 338)
+        Controls.Add(AgeComboBox)
+        Controls.Add(DateTimePicker1)
         Controls.Add(NameLbl)
         Controls.Add(btnSearch)
         Controls.Add(searchBox)
@@ -186,15 +216,18 @@ Partial Class FormTop
     Friend WithEvents btnShow As Button
     Friend WithEvents btnAdd As Button
     Friend WithEvents btnDelete As Button
-    Friend WithEvents Id As DataGridViewTextBoxColumn
-    Friend WithEvents midleName As DataGridViewTextBoxColumn
-    Friend WithEvents Kana As DataGridViewTextBoxColumn
-    Friend WithEvents Age As DataGridViewTextBoxColumn
     Friend WithEvents btnRefresh As Button
     Friend WithEvents btnEdit As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents searchBox As TextBox
     Friend WithEvents btnSearch As Button
     Friend WithEvents NameLbl As Label
+    Friend WithEvents Id As DataGridViewTextBoxColumn
+    Friend WithEvents midleName As DataGridViewTextBoxColumn
+    Friend WithEvents Kana As DataGridViewTextBoxColumn
+    Friend WithEvents Age As DataGridViewTextBoxColumn
+    Friend WithEvents time As DataGridViewTextBoxColumn
+    Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents AgeComboBox As ComboBox
 
 End Class

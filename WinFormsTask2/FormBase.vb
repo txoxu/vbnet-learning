@@ -16,7 +16,7 @@ Public Class FormBase
 
     Protected Sub FormBase_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        TextBoxes = {IdBox, NameBox, KanaBox, AgeBox, AddBox, TelBox}
+        TextBoxes = {IdBox, NameBox, KanaBox, AgeBox, AddBox, TelBox, DateBox}
 
         Dim bindingSource As New BindingSource()
         bindingSource.DataSource = ShowTable
@@ -29,6 +29,7 @@ Public Class FormBase
             AgeBox.DataBindings.Add("Text", bindingSource, "Age")
             AddBox.DataBindings.Add("Text", bindingSource, "Address")
             TelBox.DataBindings.Add("Text", bindingSource, "Tel")
+            DateBox.DataBindings.Add("Text", bindingSource, "Date")
 
             For i As Integer = 0 To ShowTable.Columns.Count - 1
                 readChange(TextBoxes, i)

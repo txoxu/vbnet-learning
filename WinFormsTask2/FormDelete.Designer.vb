@@ -23,22 +23,29 @@ Partial Class FormDelete
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         btnDestroy = New Button()
+        SuspendLayout()
         ' 
         ' btnDestroy
         ' 
-        btnDestroy.Location = New Point(205, 326)
+        btnDestroy.Location = New Point(227, 336)
         btnDestroy.Name = "btnDestroy"
         btnDestroy.Size = New Size(75, 23)
         btnDestroy.TabIndex = 16
         btnDestroy.Text = "削除"
         btnDestroy.UseVisualStyleBackColor = True
         btnDestroy.Visible = False
-
-        components = New System.ComponentModel.Container
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Text = "FormDelete"
+        ' 
+        ' FormDelete
+        ' 
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(384, 361)
         Controls.Add(btnDestroy)
+        Name = "FormDelete"
+        Text = "FormDelete"
+        Controls.SetChildIndex(btnDestroy, 0)
+        ResumeLayout(False)
+        PerformLayout()
 
     End Sub
     Friend WithEvents btnDestroy As Button

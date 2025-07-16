@@ -5,6 +5,7 @@
     Private age As Integer
     Private address As String
     Private tel As Integer
+    Private time As DateTime
 
     Public Property IdData() As Integer
         Get
@@ -57,6 +58,15 @@
         End Get
         Set(value As Integer)
             tel = value
+        End Set
+    End Property
+
+    Public Property DateData() As String
+        Get
+            Return time
+        End Get
+        Set(value As String)
+            time = value
         End Set
     End Property
 End Class

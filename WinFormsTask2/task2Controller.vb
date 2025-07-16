@@ -52,9 +52,20 @@ Public Class Task2Controller
     End Function
 
     Public Shared Sub onSearchClicked(sender As Object, e As EventArgs)
+        'ñºëOåüçı
         Dim keyword As String = _view.searchBox.Text()
 
-        Dim dt As DataTable = _model.Search(keyword)
+        'ì˙ïtåüçı
+        _view.DateTimePicker1.Format = DateTimePickerFormat.Custom
+        _view.DateTimePicker1.CustomFormat = "yyyy-MM-dd"
+        Dim dateKeyword As String = _view.DateTimePicker1.Text
+
+        'îNë„åüçı
+        Dim AgeKeyword As String = _view.AgeComboBox.SelectedIndex
+
+
+        Dim dt As DataTable = _model.Search(keyword, dateKeyword)
+        _view.DataGridView1.DataSource = dt
 
     End Sub
 
@@ -100,6 +111,7 @@ Public Class Task2Controller
     Public Shared Sub onRefreshClicked(sender As Object, e As EventArgs)
         Dim dtb1 As DataTable = _model.FormRefresh()
         _view.DataGridView1.DataSource = dtb1
+        _view.searchBox.Clear()
 
     End Sub
 
@@ -135,16 +147,17 @@ Public Class Task2Controller
 
     End Sub
     Public Shared Function setDto()
-        Dim Dto As New DataDto()
+        Dim data As New DataDto()
         If _viewBase.IdBox.Text IsNot "" Then
-            Dto.IdData = Integer.Parse(_viewBase.IdBox.Text)
+            data.IdData = Integer.Parse(_viewBase.IdBox.Text)
         End If
-        Dto.NameData = _viewBase.NameBox.Text
-        Dto.KanaData = _viewBase.KanaBox.Text
-        Dto.AgeData = Integer.Parse(_viewBase.AgeBox.Text)
-        Dto.AddressData = _viewBase.AddBox.Text
-        Dto.TelData = Integer.Parse(_viewBase.TelBox.Text)
-        Return Dto
+        data.NameData = _viewBase.NameBox.Text
+        data.KanaData = _viewBase.KanaBox.Text
+        data.AgeData = Integer.Parse(_viewBase.AgeBox.Text)
+        data.AddressData = _viewBase.AddBox.Text
+        data.TelData = Integer.Parse(_viewBase.TelBox.Text)
+        data.DateData = Date.Now.ToLongDateString
+        Return data
     End Function
 
     Public Shared Sub onUpdateClicked(sender As Object, e As EventArgs)

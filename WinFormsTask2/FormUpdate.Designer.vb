@@ -27,7 +27,7 @@ Partial Class FormUpdate
         ' 
         ' btnUpdate
         ' 
-        btnUpdate.Location = New Point(205, 326)
+        btnUpdate.Location = New Point(218, 336)
         btnUpdate.Name = "btnUpdate"
         btnUpdate.Size = New Size(75, 23)
         btnUpdate.TabIndex = 15
@@ -37,9 +37,9 @@ Partial Class FormUpdate
         ' 
         ' FormUpdate
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(384, 361)
         Controls.Add(btnUpdate)
         Name = "FormUpdate"
         Text = "FormUpdate"
