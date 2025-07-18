@@ -15,6 +15,7 @@ Public Class Controller
     Private Shared _viewDelete As FormDelete
 
     Private Shared _model As IModel
+    Private Shared _csvModel As CsvModel
 
     Private Shared selectId As Integer
 
@@ -22,6 +23,8 @@ Public Class Controller
         _view = view
         _model = New PgsqlModel
 
+        'CSVファイルボタン
+        AddHandler _view.btnCsvWriter.Click, AddressOf onCsvWriteClicked
         '検索ボタン
         AddHandler _view.btnSearch.Click, AddressOf onSearchClicked
         '削除確認フォームボタン
@@ -34,6 +37,18 @@ Public Class Controller
         AddHandler _view.btnAdd.Click, AddressOf onAddClicked
         'grid更新ボタン
         AddHandler _view.btnRefresh.Click, AddressOf onRefreshClicked
+    End Sub
+
+    Public Shared Sub onCsvWriteClicked(sender As Object, e As EventArgs)
+        _csvModel = New CsvModel
+
+        Using ofd As New OpenFileDialog()
+            ofd.Filter = "csvファイル(*.csv)|*.csv"
+            If ofd.ShowDialog() = DialogResult.OK Then
+                Dim dt As DataTable = _csvModel.ReadCsv(ofd.FileName)
+                _view.DataGridView1.DataSource = dt
+            End If
+        End Using
     End Sub
 
 
