@@ -6,7 +6,7 @@ Imports Microsoft.Data.SqlClient
 
 
 
-Public Class Task2Controller
+Public Class Controller
 
     Private Shared _view As FormTop
     Private Shared _viewBase As FormBase
@@ -20,7 +20,7 @@ Public Class Task2Controller
 
     Public Sub Initialize(view As FormTop)
         _view = view
-        _model = New Task2Model
+        _model = New PgsqlModel
 
         '検索ボタン
         AddHandler _view.btnSearch.Click, AddressOf onSearchClicked
@@ -52,19 +52,21 @@ Public Class Task2Controller
     End Function
 
     Public Shared Sub onSearchClicked(sender As Object, e As EventArgs)
+        Dim data As New SearchData()
         '名前検索
-        Dim keyword As String = _view.searchBox.Text()
+        data.NameData = _view.searchBox.Text()
 
         '日付検索
-        _view.DateTimePicker1.Format = DateTimePickerFormat.Custom
-        _view.DateTimePicker1.CustomFormat = "yyyy-MM-dd"
-        Dim dateKeyword As String = _view.DateTimePicker1.Text
+        If _view.invalidCheck.Checked = False Then
+            data.DateData = _view.DateTimePicker1.Text
+        End If
 
         '年代検索
-        Dim AgeKeyword As String = _view.AgeComboBox.SelectedIndex
+        data.AgeData = _view.AgeComboBox.SelectedIndex
+        AgeGroup.agegroup(data)
 
 
-        Dim dt As DataTable = _model.Search(keyword, dateKeyword)
+        Dim dt As DataTable = _model.Search(data)
         _view.DataGridView1.DataSource = dt
 
     End Sub
@@ -147,7 +149,7 @@ Public Class Task2Controller
 
     End Sub
     Public Shared Function setDto()
-        Dim data As New DataDto()
+        Dim data As New SqlData()
         If _viewBase.IdBox.Text IsNot "" Then
             data.IdData = Integer.Parse(_viewBase.IdBox.Text)
         End If
@@ -161,8 +163,8 @@ Public Class Task2Controller
     End Function
 
     Public Shared Sub onUpdateClicked(sender As Object, e As EventArgs)
-        Dim data As DataDto = setDto()
-        _model.update(data)
+        Dim data As SqlData = setDto()
+        _model.Update(data)
         MessageBox.Show("正常に変更されました")
     End Sub
 
@@ -171,7 +173,7 @@ Public Class Task2Controller
     End Sub
 
     Public Shared Sub onNewClicked(sender As Object, e As EventArgs)
-        Dim data As DataDto = setDto()
+        Dim data As SqlData = setDto()
         _model.Add(data)
         MessageBox.Show("新しく追加されました")
         _viewAdd.FormReset()

@@ -39,6 +39,8 @@ Partial Class FormTop
         NameLbl = New Label()
         DateTimePicker1 = New DateTimePicker()
         AgeComboBox = New ComboBox()
+        invalidCheck = New CheckBox()
+        btnCsvWriter = New Button()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -173,7 +175,7 @@ Partial Class FormTop
         ' DateTimePicker1
         ' 
         DateTimePicker1.Format = DateTimePickerFormat.Short
-        DateTimePicker1.Location = New Point(299, 172)
+        DateTimePicker1.Location = New Point(299, 169)
         DateTimePicker1.Name = "DateTimePicker1"
         DateTimePicker1.Size = New Size(101, 23)
         DateTimePicker1.TabIndex = 13
@@ -181,18 +183,39 @@ Partial Class FormTop
         ' AgeComboBox
         ' 
         AgeComboBox.FormattingEnabled = True
-        AgeComboBox.Items.AddRange(New Object() {"10代未満", "10代", "20代", "30代", "40代", "50代", "60代", "60代以上"})
+        AgeComboBox.Items.AddRange(New Object() {"指定しない", "0代～20代", "30代～50代", "60代以降"})
         AgeComboBox.Location = New Point(150, 172)
         AgeComboBox.Name = "AgeComboBox"
         AgeComboBox.Size = New Size(121, 23)
         AgeComboBox.TabIndex = 14
-        AgeComboBox.Text = "指定しない"
+        AgeComboBox.Text = "年代"
+        ' 
+        ' invalidCheck
+        ' 
+        invalidCheck.AutoSize = True
+        invalidCheck.Location = New Point(299, 198)
+        invalidCheck.Name = "invalidCheck"
+        invalidCheck.Size = New Size(78, 19)
+        invalidCheck.TabIndex = 15
+        invalidCheck.Text = "無効にする"
+        invalidCheck.UseVisualStyleBackColor = True
+        ' 
+        ' btnCsvWriter
+        ' 
+        btnCsvWriter.Location = New Point(567, 303)
+        btnCsvWriter.Name = "btnCsvWriter"
+        btnCsvWriter.Size = New Size(121, 23)
+        btnCsvWriter.TabIndex = 16
+        btnCsvWriter.Text = "CSVファイルとして保存"
+        btnCsvWriter.UseVisualStyleBackColor = True
         ' 
         ' FormTop
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(700, 338)
+        Controls.Add(btnCsvWriter)
+        Controls.Add(invalidCheck)
         Controls.Add(AgeComboBox)
         Controls.Add(DateTimePicker1)
         Controls.Add(NameLbl)
@@ -229,5 +252,7 @@ Partial Class FormTop
     Friend WithEvents time As DataGridViewTextBoxColumn
     Friend WithEvents DateTimePicker1 As DateTimePicker
     Friend WithEvents AgeComboBox As ComboBox
+    Friend WithEvents invalidCheck As CheckBox
+    Friend WithEvents btnCsvWriter As Button
 
 End Class

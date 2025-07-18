@@ -1,4 +1,4 @@
-﻿Public Class DataDto
+﻿Public Class SqlData
     Private id As Integer
     Private name As String
     Private kana As String

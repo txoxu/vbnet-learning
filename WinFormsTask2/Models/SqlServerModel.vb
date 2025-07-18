@@ -2,65 +2,74 @@
 Imports System.Text
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports Microsoft.Data.SqlClient
+Imports Npgsql
 
 
 
-Public Class Task2Model
+Public Class SqlServerModel
     Implements IModel
 
+    'sql serverにアクセスする接続オブジェクト
+    Public Shared sqlsvCon As New SqlConnection
+    'sql serverに対してSQL文を実行できるようにする
+    Public Shared sqlCommand As New SqlCommand
+
+
+
     Public Function IdSelect(selectId As Integer) As DataTable Implements IModel.IdSelect
+        Call sql_connect()
 
-        'form2のロード時にsql serverに接続
-        Call sql_start()
+        Dim _sqlShow As String = "SELECT * FROM [dbo].[Table] WHERE Id = " & selectId.ToString & ";"
 
-        '選択したIｄを使ってSQLクエリを作成
-        Dim _sqlShow As String = "SELECT * FROM [dbo].[Table]WHERE Id = " & selectId.ToString & ";"
+        Dim sqlShow As DataTable = result_return(_sqlShow)
 
-        'sqlクエリからの結果をdatatableに格納
-        Dim sqlShow As DataTable = sql_result_return(_sqlShow)
-
-        Call sql_close()
+        Call sql_disconnect()
 
         Return sqlShow
 
     End Function
 
     Public Function FormRefresh() As DataTable Implements IModel.FormRefresh
-        sql_start()
+        sql_connect()
 
         Dim sql As String = "SELECT Id, Name, Kana, Age, Date FROM [dbo].[Table];"
-        Dim dt As DataTable = sql_result_return(sql)
+        Dim dt As DataTable = result_return(sql)
 
-        sql_close()
+        sql_disconnect()
 
         Return dt
 
     End Function
 
-    Public Function Search(keyword As String, dateKeyword As String) As DataTable Implements IModel.Search
-        sql_start()
-
+    Public Function Search(data As SearchData) As DataTable Implements IModel.Search
+        sql_connect()
 
 
         Dim queryBuilder As New StringBuilder()
         queryBuilder.AppendLine("SELECT Id, Name, Kana, Age, Date")
         queryBuilder.AppendLine("FROM [dbo].[Table]")
-        queryBuilder.AppendLine("WHERE Name LIKE N'" & "%" & keyword & "%" & "'")
-        queryBuilder.AppendLine("AND Date LIKE N'" & dateKeyword & "'")
-        'queryBuilder.AppendLine("AND Age BETWEEN '" & firstnum & "' AND '" & lastnum & "'")
+        queryBuilder.AppendLine("WHERE Name LIKE N'" & "%" & data.NameData & "%" & "'")
+
+        If data.DateData IsNot Nothing Then
+            queryBuilder.AppendLine("AND Date = '" & data.DateData & "'")
+        End If
+
+        If data.FirstNumData <> Nothing Or data.LastNumData <> Nothing Then
+            queryBuilder.AppendLine("AND Age BETWEEN '" & data.FirstNumData & "' AND '" & data.LastNumData & "'")
+        End If
 
         sqlCommand.Parameters.Clear()
         sqlCommand.CommandText = queryBuilder.ToString()
 
 
-        Dim dt As DataTable = sql_result_return(sqlCommand.CommandText)
-        sql_close()
+        Dim dt As DataTable = result_return(sqlCommand.CommandText)
+        sql_disconnect()
         Return dt
 
     End Function
 
     Public Sub Destroy(selectId As Integer) Implements IModel.Destroy
-        Call sql_start()
+        Call sql_connect()
 
         Dim queryBuilder As New StringBuilder()
         queryBuilder.AppendLine("DELETE FROM [dbo].[Table]")
@@ -69,13 +78,13 @@ Public Class Task2Model
         sqlCommand.Parameters.Clear()
         sqlCommand.CommandText = queryBuilder.ToString()
         sqlCommand.Parameters.AddWithValue("@Id", Integer.Parse(selectId))
-        sql_result_no(sqlCommand.CommandText)
+        result_no(sqlCommand.CommandText)
 
-        Call sql_close()
+        Call sql_disconnect()
     End Sub
 
-    Public Sub Update(data As DataDto) Implements IModel.update
-        Call sql_start()
+    Public Sub Update(data As SqlData) Implements IModel.Update
+        Call sql_connect()
 
         Dim queryBuilder As New StringBuilder()
         queryBuilder.AppendLine("UPDATE [dbo].[Table]")
@@ -94,13 +103,13 @@ Public Class Task2Model
         '編集した時刻を登録
         sqlCommand.Parameters.AddWithValue("@Date", data.DateData)
 
-        sql_result_no(sqlCommand.CommandText)
+        result_no(sqlCommand.CommandText)
 
-        Call sql_close()
+        Call sql_disconnect()
     End Sub
 
-    Public Sub Add(data As DataDto) Implements IModel.Add
-        Call sql_start()
+    Public Sub Add(data As SqlData) Implements IModel.Add
+        Call sql_connect()
 
         Dim queryBuilder As New StringBuilder()
         queryBuilder.AppendLine("INSERT INTO [dbo].[Table] (Name, Kana, Age, Address, Tel, Date)")
@@ -116,18 +125,13 @@ Public Class Task2Model
         '新規追加日時を登録
         sqlCommand.Parameters.AddWithValue("@Date", data.DateData)
 
-        sql_result_no(sqlCommand.CommandText)
+        result_no(sqlCommand.CommandText)
 
-        Call sql_close()
+        Call sql_disconnect()
 
     End Sub
 
-    'sql serverにアクセスする接続オブジェクト
-    Public sqlsvCon As New SqlConnection
-    'sql serverに対してSQL文を実行できるようにする
-    Public sqlCommand As New SqlCommand
-
-    Sub sql_start() Implements IModel.sql_start
+    Sub sql_connect()
         'sql serverの設定を付与、ConnectionString（接続文字列）
         Dim Builder = New SqlConnectionStringBuilder()
 
@@ -144,11 +148,11 @@ Public Class Task2Model
         sqlsvCon.Open() ' SQL Serverに接続
     End Sub
 
-    Sub sql_close() Implements IModel.sql_close
+    Sub sql_disconnect()
         sqlsvCon.Close() ' SQL Serverの接続を閉じる
     End Sub
 
-    Function sql_result_return(ByVal query As String) As DataTable Implements IModel.sql_result_return
+    Function result_return(ByVal query As String) As DataTable Implements IModel.result_return
 
         Dim dt As New DataTable()
 
@@ -160,20 +164,19 @@ Public Class Task2Model
             Return dt
         Catch ex As Exception
             Return dt
-            MessageBox.Show("実行できませんでした" & ex.Message)
+            MessageBox.Show("データベースから値を取得できませんでした" & ex.Message)
         End Try
 
     End Function
 
-    Function sql_result_no(ByVal query As String) Implements IModel.sql_result_no
+    Sub result_no(ByVal query As String) Implements IModel.result_no
         'delete, insert等値を返さない処理
         Try
             sqlCommand.Connection = sqlsvCon '接続オブジェクト
             sqlCommand.CommandText = query 'sql文を設定
             sqlCommand.ExecuteNonQuery() '値を返さないsql文を実行する
-            Return Nothing
         Catch ex As Exception
-            Return ex.Message
+            MessageBox.Show("データベースへの変更を実行できませんでした。" & ex.Message)
         End Try
-    End Function
+    End Sub
 End Class

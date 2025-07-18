@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Compile Update="FormAdd.vb">
+    <Compile Update="Forms\FormAdd.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormBase.vb">
+    <Compile Update="Forms\FormBase.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormDelete.vb">
+    <Compile Update="Forms\FormDelete.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormShow.vb">
+    <Compile Update="Forms\FormShow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormTop.vb">
+    <Compile Update="Forms\FormTop.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormUpdate.vb">
+    <Compile Update="Forms\FormUpdate.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
