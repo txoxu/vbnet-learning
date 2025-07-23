@@ -1,0 +1,77 @@
+﻿Imports System.IO
+Imports System.Text
+Imports Microsoft.VisualBasic.FileIO
+
+Public Class CsvModel
+
+    Private Shared dt As New DataTable()
+
+    Public Function ReadCsv(filePath As String) As DataTable
+
+        Try
+            Using parser As New TextFieldParser(filePath, Encoding.UTF8)
+
+                '区切り文字形式として設定
+                parser.SetDelimiters(",")
+                Dim headers As String() = parser.ReadFields()
+                If headers Is Nothing Then Return dt
+
+                For Each header As String In headers
+                    dt.Columns.Add(header)
+                Next
+
+                dt.Columns("名前").ColumnName = "Name"
+                dt.Columns("読み方").ColumnName = "Kana"
+                dt.Columns("年齢").ColumnName = "Age"
+                dt.Columns("住所").ColumnName = "Address"
+                dt.Columns("電話番号").ColumnName = "Tel"
+                dt.Columns("登録日時").ColumnName = "Date"
+
+                While Not parser.EndOfData
+                    Dim row As String() = parser.ReadFields()
+                    If row IsNot Nothing Then dt.Rows.Add(row)
+                End While
+            End Using
+
+
+            Return dt
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
+
+    Public Function RowSelect(selectId As Integer) As DataTable
+        Dim table As New DataTable()
+
+        Dim filteredRows As DataRow() = dt.Select("Id = " & selectId.ToString())
+        table = filteredRows.CopyToDataTable()
+        Return table
+
+
+    End Function
+    Public Sub Add(data As PersonData)
+        Dim row As DataRow = dt.NewRow()
+
+        Dim lastrow As DataRow = dt.Rows(dt.Rows.Count - 1)
+        Dim lastId As Integer = lastrow(dt.Columns("Id")).ToString()
+        lastId += 1
+
+        row("Id") = lastId
+        row("名前") = data.NameData
+        row("読み方") = data.KanaData
+        row("年齢") = data.AgeData
+        row("住所") = data.AddressData
+        row("電話番号") = data.TelData
+        row("登録日時") = data.DateData
+        dt.Rows.Add(row)
+    End Sub
+
+    Public Sub Update(data As PersonData)
+
+
+
+    End Sub
+
+
+
+End Class

@@ -10,11 +10,11 @@ Public Class PgsqlModel
     'postgresqlに対してSQL文を実行できるようにする
     Public sqlCommand As New NpgsqlCommand
 
-    Public Function IdSelect(selectId As Integer) As DataTable Implements IModel.IdSelect
+    Public Function RowSelect(selectid As Integer) As DataTable Implements IModel.RowSelect
         Call sql_connect()
 
         '選択したIｄを使ってSQLクエリを作成
-        Dim _sqlShow As String = "SELECT * FROM person WHERE Id = " & selectId.ToString & ";"
+        Dim _sqlShow As String = "SELECT * FROM person WHERE Id = " & selectid.ToString & ";"
 
         'sqlクエリからの結果をdatatableに格納
         Dim sqlShow As DataTable = result_return(_sqlShow)
@@ -77,7 +77,7 @@ Public Class PgsqlModel
         Call sql_disconnect()
     End Sub
 
-    Public Sub Update(data As SqlData) Implements IModel.Update
+    Public Sub Update(data As PersonData) Implements IModel.Update
         Call sql_connect()
 
         Dim queryBuilder As New StringBuilder()
@@ -102,7 +102,7 @@ Public Class PgsqlModel
         Call sql_disconnect()
     End Sub
 
-    Public Sub Add(data As SqlData) Implements IModel.Add
+    Public Sub Add(data As PersonData) Implements IModel.Add
         Call sql_connect()
 
         Dim queryBuilder As New StringBuilder()

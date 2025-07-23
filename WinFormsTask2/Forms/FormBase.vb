@@ -13,6 +13,10 @@ Public Class FormBase
         '各ボタンの表示をオーバーライドで設定
     End Sub
 
+    Overridable Sub SetCsvIdEditable()
+        'CSVファイルのIDを編集可能にするかどうかをオーバーライドで設定
+    End Sub
+
 
     Protected Sub FormBase_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 

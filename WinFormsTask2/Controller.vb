@@ -15,9 +15,10 @@ Public Class Controller
     Private Shared _viewDelete As FormDelete
 
     Private Shared _model As IModel
-    Private Shared _csvModel As CsvModel
+    Private Shared _modelCsv As CsvModel
 
-    Private Shared selectId As Integer
+
+    Private Shared SelectId As Integer
 
     Public Sub Initialize(view As FormTop)
         _view = view
@@ -40,13 +41,16 @@ Public Class Controller
     End Sub
 
     Public Shared Sub onCsvWriteClicked(sender As Object, e As EventArgs)
-        _csvModel = New CsvModel
+        _modelCsv = New CsvModel()
 
         Using ofd As New OpenFileDialog()
             ofd.Filter = "csvファイル(*.csv)|*.csv"
             If ofd.ShowDialog() = DialogResult.OK Then
-                Dim dt As DataTable = _csvModel.ReadCsv(ofd.FileName)
+                Dim dt As DataTable = _modelCsv.ReadCsv(ofd.FileName)
+                _view.DataGridView1.Columns.Clear()
                 _view.DataGridView1.DataSource = dt
+                _view.DataGridView1.Columns("Address").Visible = False
+                _view.DataGridView1.Columns("Tel").Visible = False
             End If
         End Using
     End Sub
@@ -60,9 +64,9 @@ Public Class Controller
             MessageBox.Show("行を選択してください。")
             Return Nothing
         Else
-            selectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
-            Dim sqlShow As DataTable = _model.IdSelect(selectId)
-            Return sqlShow
+            Dim SelectId As Integer = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
+            Dim SelectData As DataTable = _modelCsv.RowSelect(SelectId)
+            Return SelectData
         End If
     End Function
 
@@ -158,13 +162,13 @@ Public Class Controller
 
     Public Shared Sub onDestroyClicked(sender As Object, e As EventArgs)
         MessageBox.Show("本当に削除しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.DefaultDesktopOnly)
-        _model.Destroy(selectId)
+        _model.Destroy(SelectId)
         MessageBox.Show("正常に削除されました")
         _viewBase.Close()
 
     End Sub
     Public Shared Function setDto()
-        Dim data As New SqlData()
+        Dim data As New PersonData()
         If _viewBase.IdBox.Text IsNot "" Then
             data.IdData = Integer.Parse(_viewBase.IdBox.Text)
         End If
@@ -178,8 +182,8 @@ Public Class Controller
     End Function
 
     Public Shared Sub onUpdateClicked(sender As Object, e As EventArgs)
-        Dim data As SqlData = setDto()
-        _model.Update(data)
+        Dim data As PersonData = setDto()
+        _modelCsv.Update(data)
         MessageBox.Show("正常に変更されました")
     End Sub
 
@@ -188,8 +192,8 @@ Public Class Controller
     End Sub
 
     Public Shared Sub onNewClicked(sender As Object, e As EventArgs)
-        Dim data As SqlData = setDto()
-        _model.Add(data)
+        Dim data As PersonData = setDto()
+        _modelCsv.Add(data)
         MessageBox.Show("新しく追加されました")
         _viewAdd.FormReset()
     End Sub

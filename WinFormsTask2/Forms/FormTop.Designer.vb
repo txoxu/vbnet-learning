@@ -23,11 +23,6 @@ Partial Class FormTop
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         DataGridView1 = New DataGridView()
-        Id = New DataGridViewTextBoxColumn()
-        midleName = New DataGridViewTextBoxColumn()
-        Kana = New DataGridViewTextBoxColumn()
-        Age = New DataGridViewTextBoxColumn()
-        time = New DataGridViewTextBoxColumn()
         btnShow = New Button()
         btnAdd = New Button()
         btnDelete = New Button()
@@ -41,6 +36,11 @@ Partial Class FormTop
         AgeComboBox = New ComboBox()
         invalidCheck = New CheckBox()
         btnCsvWriter = New Button()
+        Id = New DataGridViewTextBoxColumn()
+        midleName = New DataGridViewTextBoxColumn()
+        Kana = New DataGridViewTextBoxColumn()
+        Age = New DataGridViewTextBoxColumn()
+        Time = New DataGridViewTextBoxColumn()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -49,7 +49,7 @@ Partial Class FormTop
         DataGridView1.AllowUserToAddRows = False
         DataGridView1.AllowUserToDeleteRows = False
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Columns.AddRange(New DataGridViewColumn() {Id, midleName, Kana, Age, time})
+        DataGridView1.Columns.AddRange(New DataGridViewColumn() {Id, midleName, Kana, Age, Time})
         DataGridView1.Location = New Point(24, 11)
         DataGridView1.Margin = New Padding(3, 2, 3, 2)
         DataGridView1.Name = "DataGridView1"
@@ -57,41 +57,6 @@ Partial Class FormTop
         DataGridView1.RowHeadersWidth = 51
         DataGridView1.Size = New Size(550, 141)
         DataGridView1.TabIndex = 2
-        ' 
-        ' Id
-        ' 
-        Id.DataPropertyName = "Id"
-        Id.HeaderText = "ID"
-        Id.Name = "Id"
-        Id.ReadOnly = True
-        ' 
-        ' midleName
-        ' 
-        midleName.DataPropertyName = "Name"
-        midleName.HeaderText = "名前"
-        midleName.Name = "midleName"
-        midleName.ReadOnly = True
-        ' 
-        ' Kana
-        ' 
-        Kana.DataPropertyName = "Kana"
-        Kana.HeaderText = "読み方"
-        Kana.Name = "Kana"
-        Kana.ReadOnly = True
-        ' 
-        ' Age
-        ' 
-        Age.DataPropertyName = "Age"
-        Age.HeaderText = "年齢"
-        Age.Name = "Age"
-        Age.ReadOnly = True
-        ' 
-        ' time
-        ' 
-        time.DataPropertyName = "Date"
-        time.HeaderText = "登録日時"
-        time.Name = "time"
-        time.ReadOnly = True
         ' 
         ' btnShow
         ' 
@@ -202,12 +167,47 @@ Partial Class FormTop
         ' 
         ' btnCsvWriter
         ' 
-        btnCsvWriter.Location = New Point(567, 303)
+        btnCsvWriter.Location = New Point(558, 303)
         btnCsvWriter.Name = "btnCsvWriter"
-        btnCsvWriter.Size = New Size(121, 23)
+        btnCsvWriter.Size = New Size(130, 23)
         btnCsvWriter.TabIndex = 16
-        btnCsvWriter.Text = "CSVファイルとして保存"
+        btnCsvWriter.Text = "CSVファイルを読み込む"
         btnCsvWriter.UseVisualStyleBackColor = True
+        ' 
+        ' Id
+        ' 
+        Id.DataPropertyName = "Id"
+        Id.HeaderText = "ID"
+        Id.Name = "Id"
+        Id.ReadOnly = True
+        ' 
+        ' Name
+        ' 
+        midleName.DataPropertyName = "Name"
+        midleName.HeaderText = "名前"
+        midleName.Name = "Name"
+        midleName.ReadOnly = True
+        ' 
+        ' Kana
+        ' 
+        Kana.DataPropertyName = "Kana"
+        Kana.HeaderText = "読み方"
+        Kana.Name = "Kana"
+        Kana.ReadOnly = True
+        ' 
+        ' Age
+        ' 
+        Age.DataPropertyName = "Age"
+        Age.HeaderText = "年齢"
+        Age.Name = "Age"
+        Age.ReadOnly = True
+        ' 
+        ' Time
+        ' 
+        Time.DataPropertyName = "Date"
+        Time.HeaderText = "登録日時"
+        Time.Name = "Time"
+        Time.ReadOnly = True
         ' 
         ' FormTop
         ' 
@@ -230,7 +230,7 @@ Partial Class FormTop
         Controls.Add(DataGridView1)
         Margin = New Padding(3, 2, 3, 2)
         Name = "FormTop"
-        Text = "Form1"
+        Text = "FormTop"
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
@@ -245,14 +245,14 @@ Partial Class FormTop
     Friend WithEvents searchBox As TextBox
     Friend WithEvents btnSearch As Button
     Friend WithEvents NameLbl As Label
-    Friend WithEvents Id As DataGridViewTextBoxColumn
-    Friend WithEvents midleName As DataGridViewTextBoxColumn
-    Friend WithEvents Kana As DataGridViewTextBoxColumn
-    Friend WithEvents Age As DataGridViewTextBoxColumn
-    Friend WithEvents time As DataGridViewTextBoxColumn
     Friend WithEvents DateTimePicker1 As DateTimePicker
     Friend WithEvents AgeComboBox As ComboBox
     Friend WithEvents invalidCheck As CheckBox
     Friend WithEvents btnCsvWriter As Button
+    Friend WithEvents Id As DataGridViewTextBoxColumn
+    Friend WithEvents midleName As DataGridViewTextBoxColumn
+    Friend WithEvents Kana As DataGridViewTextBoxColumn
+    Friend WithEvents Age As DataGridViewTextBoxColumn
+    Friend WithEvents Time As DataGridViewTextBoxColumn
 
 End Class

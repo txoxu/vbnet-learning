@@ -16,7 +16,7 @@ Public Class SqlServerModel
 
 
 
-    Public Function IdSelect(selectId As Integer) As DataTable Implements IModel.IdSelect
+    Public Function RowSelect(selectId As Integer) As DataTable Implements IModel.RowSelect
         Call sql_connect()
 
         Dim _sqlShow As String = "SELECT * FROM [dbo].[Table] WHERE Id = " & selectId.ToString & ";"
@@ -83,7 +83,7 @@ Public Class SqlServerModel
         Call sql_disconnect()
     End Sub
 
-    Public Sub Update(data As SqlData) Implements IModel.Update
+    Public Sub Update(data As PersonData) Implements IModel.Update
         Call sql_connect()
 
         Dim queryBuilder As New StringBuilder()
@@ -108,7 +108,7 @@ Public Class SqlServerModel
         Call sql_disconnect()
     End Sub
 
-    Public Sub Add(data As SqlData) Implements IModel.Add
+    Public Sub Add(data As PersonData) Implements IModel.Add
         Call sql_connect()
 
         Dim queryBuilder As New StringBuilder()
