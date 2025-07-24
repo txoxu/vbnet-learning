@@ -1,3 +1,4 @@
+Imports System.ClientModel.Primitives
 Imports System.Linq.Expressions
 Imports System.Net
 Imports System.Text
@@ -15,17 +16,13 @@ Public Class Controller
     Private Shared _viewDelete As FormDelete
 
     Private Shared _model As IModel
-    Private Shared _modelCsv As CsvModel
-
 
     Public Shared SelectId As Integer
 
     Public Sub Initialize(view As FormTop)
         _view = view
-        _model = New PgsqlModel
+        _model = New CsvModel
 
-        'CSVファイルボタン
-        AddHandler _view.btnCsvWriter.Click, AddressOf onCsvWriteClicked
         '検索ボタン
         AddHandler _view.btnSearch.Click, AddressOf onSearchClicked
         '削除確認フォームボタン
@@ -40,20 +37,6 @@ Public Class Controller
         AddHandler _view.btnRefresh.Click, AddressOf onRefreshClicked
     End Sub
 
-    Public Shared Sub onCsvWriteClicked(sender As Object, e As EventArgs)
-        _modelCsv = New CsvModel()
-
-        Using ofd As New OpenFileDialog()
-            ofd.Filter = "csvファイル(*.csv)|*.csv"
-            If ofd.ShowDialog() = DialogResult.OK Then
-                Dim dt As DataTable = _modelCsv.ReadCsv(ofd.FileName)
-                _view.DataGridView1.DataSource = dt
-                _view.DataGridView1.Columns("Address").Visible = False
-                _view.DataGridView1.Columns("Tel").Visible = False
-            End If
-        End Using
-    End Sub
-
 
     Public Shared Function Access() As DataTable
         Dim actionForm As New FormBase()
@@ -64,7 +47,7 @@ Public Class Controller
             Return Nothing
         Else
             SelectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
-            Dim SelectData As DataTable = _modelCsv.RowSelect(SelectId)
+            Dim SelectData As DataTable = _model.RowSelect(SelectId)
             Return SelectData
         End If
     End Function
@@ -129,9 +112,14 @@ Public Class Controller
     End Sub
 
     Public Shared Sub onRefreshClicked(sender As Object, e As EventArgs)
-        Dim dtb1 As DataTable = _model.FormRefresh()
-        _view.DataGridView1.DataSource = dtb1
+        Dim dt As DataTable = _model.FormRefresh()
+        _view.DataGridView1.DataSource = dt
         _view.searchBox.Clear()
+
+        If _view.DataGridView1.Columns.Contains("Address") Or _view.DataGridView1.Columns.Contains("Tel") Then
+            _view.DataGridView1.Columns("Address").Visible = False
+            _view.DataGridView1.Columns("Tel").Visible = False
+        End If
 
     End Sub
 
@@ -161,12 +149,12 @@ Public Class Controller
 
     Public Shared Sub onDestroyClicked(sender As Object, e As EventArgs)
         MessageBox.Show("本当に削除しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.DefaultDesktopOnly)
-        _modelCsv.Destroy(SelectId)
+        _model.Destroy(SelectId)
         MessageBox.Show("正常に削除されました")
         _viewBase.Close()
 
     End Sub
-    Public Shared Function setDto()
+    Public Shared Function setData()
         Dim data As New PersonData()
         If _viewBase.IdBox.Text IsNot "" Then
             data.IdData = Integer.Parse(_viewBase.IdBox.Text)
@@ -181,8 +169,8 @@ Public Class Controller
     End Function
 
     Public Shared Sub onUpdateClicked(sender As Object, e As EventArgs)
-        Dim data As PersonData = setDto()
-        _modelCsv.Update(data)
+        Dim data As PersonData = setData()
+        _model.Update(data)
         MessageBox.Show("正常に変更されました")
     End Sub
 
@@ -191,8 +179,8 @@ Public Class Controller
     End Sub
 
     Public Shared Sub onNewClicked(sender As Object, e As EventArgs)
-        Dim data As PersonData = setDto()
-        _modelCsv.Add(data)
+        Dim data As PersonData = setData()
+        _model.Add(data)
         MessageBox.Show("新しく追加されました")
         _viewAdd.FormReset()
     End Sub

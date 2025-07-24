@@ -132,18 +132,12 @@ Public Class SqlServerModel
     End Sub
 
     Sub sql_connect()
-        'sql serverの設定を付与、ConnectionString（接続文字列）
-        Dim Builder = New SqlConnectionStringBuilder()
-
-        Builder.DataSource = "(localdb)\MSSQLLocalDB" ' SQL Serverのホスト名
-        Builder.InitialCatalog = "test_db" ' データベース名
-        Builder.IntegratedSecurity = True ' Windows認証
 
         '接続文字列を配列の型に設定
-        Dim ConStr = Builder.ToString()
+        Dim Builder As String = My.Settings.sqlServer
 
         '接続オブジェクトに接続文字列を設定
-        sqlsvCon.ConnectionString = ConStr
+        sqlsvCon.ConnectionString = Builder
 
         sqlsvCon.Open() ' SQL Serverに接続
     End Sub
@@ -152,7 +146,7 @@ Public Class SqlServerModel
         sqlsvCon.Close() ' SQL Serverの接続を閉じる
     End Sub
 
-    Function result_return(ByVal query As String) As DataTable Implements IModel.result_return
+    Function result_return(ByVal query As String) As DataTable
 
         Dim dt As New DataTable()
 
@@ -169,7 +163,7 @@ Public Class SqlServerModel
 
     End Function
 
-    Sub result_no(ByVal query As String) Implements IModel.result_no
+    Sub result_no(ByVal query As String)
         'delete, insert等値を返さない処理
         Try
             sqlCommand.Connection = sqlsvCon '接続オブジェクト

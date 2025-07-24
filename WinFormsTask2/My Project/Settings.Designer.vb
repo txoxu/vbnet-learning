@@ -64,6 +64,25 @@ Namespace My
                 Return CType(Me("sqlServer"),String)
             End Get
         End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Users\PC063\Documents\sample3.csv")>  _
+        Public ReadOnly Property CsvFilePath() As String
+            Get
+                Return CType(Me("CsvFilePath"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Host=localhost;Port=5432;Username=postgres;Password=post2025;Database=testdb")>  _
+        Public ReadOnly Property Postgres() As String
+            Get
+                Return CType(Me("Postgres"),String)
+            End Get
+        End Property
     End Class
 End Namespace
 

@@ -23,6 +23,11 @@ Partial Class FormTop
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         DataGridView1 = New DataGridView()
+        Id = New DataGridViewTextBoxColumn()
+        midleName = New DataGridViewTextBoxColumn()
+        Kana = New DataGridViewTextBoxColumn()
+        Age = New DataGridViewTextBoxColumn()
+        Time = New DataGridViewTextBoxColumn()
         btnShow = New Button()
         btnAdd = New Button()
         btnDelete = New Button()
@@ -35,12 +40,6 @@ Partial Class FormTop
         DateTimePicker1 = New DateTimePicker()
         AgeComboBox = New ComboBox()
         invalidCheck = New CheckBox()
-        btnCsvWriter = New Button()
-        Id = New DataGridViewTextBoxColumn()
-        midleName = New DataGridViewTextBoxColumn()
-        Kana = New DataGridViewTextBoxColumn()
-        Age = New DataGridViewTextBoxColumn()
-        Time = New DataGridViewTextBoxColumn()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -57,6 +56,41 @@ Partial Class FormTop
         DataGridView1.RowHeadersWidth = 51
         DataGridView1.Size = New Size(550, 141)
         DataGridView1.TabIndex = 2
+        ' 
+        ' Id
+        ' 
+        Id.DataPropertyName = "Id"
+        Id.HeaderText = "ID"
+        Id.Name = "Id"
+        Id.ReadOnly = True
+        ' 
+        ' midleName
+        ' 
+        midleName.DataPropertyName = "Name"
+        midleName.HeaderText = "名前"
+        midleName.Name = "midleName"
+        midleName.ReadOnly = True
+        ' 
+        ' Kana
+        ' 
+        Kana.DataPropertyName = "Kana"
+        Kana.HeaderText = "読み方"
+        Kana.Name = "Kana"
+        Kana.ReadOnly = True
+        ' 
+        ' Age
+        ' 
+        Age.DataPropertyName = "Age"
+        Age.HeaderText = "年齢"
+        Age.Name = "Age"
+        Age.ReadOnly = True
+        ' 
+        ' Time
+        ' 
+        Time.DataPropertyName = "Date"
+        Time.HeaderText = "登録日時"
+        Time.Name = "Time"
+        Time.ReadOnly = True
         ' 
         ' btnShow
         ' 
@@ -165,56 +199,11 @@ Partial Class FormTop
         invalidCheck.Text = "無効にする"
         invalidCheck.UseVisualStyleBackColor = True
         ' 
-        ' btnCsvWriter
-        ' 
-        btnCsvWriter.Location = New Point(558, 303)
-        btnCsvWriter.Name = "btnCsvWriter"
-        btnCsvWriter.Size = New Size(130, 23)
-        btnCsvWriter.TabIndex = 16
-        btnCsvWriter.Text = "CSVファイルを読み込む"
-        btnCsvWriter.UseVisualStyleBackColor = True
-        ' 
-        ' Id
-        ' 
-        Id.DataPropertyName = "Id"
-        Id.HeaderText = "ID"
-        Id.Name = "Id"
-        Id.ReadOnly = True
-        ' 
-        ' Name
-        ' 
-        midleName.DataPropertyName = "Name"
-        midleName.HeaderText = "名前"
-        midleName.Name = "Name"
-        midleName.ReadOnly = True
-        ' 
-        ' Kana
-        ' 
-        Kana.DataPropertyName = "Kana"
-        Kana.HeaderText = "読み方"
-        Kana.Name = "Kana"
-        Kana.ReadOnly = True
-        ' 
-        ' Age
-        ' 
-        Age.DataPropertyName = "Age"
-        Age.HeaderText = "年齢"
-        Age.Name = "Age"
-        Age.ReadOnly = True
-        ' 
-        ' Time
-        ' 
-        Time.DataPropertyName = "Date"
-        Time.HeaderText = "登録日時"
-        Time.Name = "Time"
-        Time.ReadOnly = True
-        ' 
         ' FormTop
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(700, 338)
-        Controls.Add(btnCsvWriter)
         Controls.Add(invalidCheck)
         Controls.Add(AgeComboBox)
         Controls.Add(DateTimePicker1)
@@ -248,7 +237,6 @@ Partial Class FormTop
     Friend WithEvents DateTimePicker1 As DateTimePicker
     Friend WithEvents AgeComboBox As ComboBox
     Friend WithEvents invalidCheck As CheckBox
-    Friend WithEvents btnCsvWriter As Button
     Friend WithEvents Id As DataGridViewTextBoxColumn
     Friend WithEvents midleName As DataGridViewTextBoxColumn
     Friend WithEvents Kana As DataGridViewTextBoxColumn

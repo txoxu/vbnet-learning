@@ -127,21 +127,10 @@ Public Class PgsqlModel
 
     Sub sql_connect()
 
-        '接続文字列
-        Dim builder = New NpgsqlConnectionStringBuilder()
-
-        'builderに情報を付与
-        builder.Host = "localhost"
-        builder.Port = 5432
-        builder.Username = "postgres"
-        builder.Password = "post2025"
-        builder.Database = "testdb"
-
-        'sqlconnectionクラスのプロパティ(ConnectionString)がstring型のため
-        Dim Constr As String = builder.ToString()
+        Dim builder As String = My.Settings.Postgres
 
         '付与済み情報を接続オブジェクトに設定
-        pgsqlCon.ConnectionString = Constr
+        pgsqlCon.ConnectionString = builder
 
         pgsqlCon.Open()
     End Sub
@@ -150,7 +139,7 @@ Public Class PgsqlModel
         pgsqlCon.Close()
     End Sub
 
-    Function result_return(ByVal query As String) As DataTable Implements IModel.result_return
+    Function result_return(ByVal query As String) As DataTable
         'select系のSQLクエリ
 
         Dim dt As New DataTable()
@@ -169,7 +158,7 @@ Public Class PgsqlModel
         End Try
     End Function
 
-    Sub result_no(ByVal query As String) Implements IModel.result_no
+    Sub result_no(ByVal query As String)
         'delete, insert, update系のSQLクエリ
 
         Try
