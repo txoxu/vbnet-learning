@@ -18,7 +18,7 @@ Public Class Controller
     Private Shared _modelCsv As CsvModel
 
 
-    Private Shared SelectId As Integer
+    Public Shared SelectId As Integer
 
     Public Sub Initialize(view As FormTop)
         _view = view
@@ -47,7 +47,6 @@ Public Class Controller
             ofd.Filter = "csvファイル(*.csv)|*.csv"
             If ofd.ShowDialog() = DialogResult.OK Then
                 Dim dt As DataTable = _modelCsv.ReadCsv(ofd.FileName)
-                _view.DataGridView1.Columns.Clear()
                 _view.DataGridView1.DataSource = dt
                 _view.DataGridView1.Columns("Address").Visible = False
                 _view.DataGridView1.Columns("Tel").Visible = False
@@ -64,7 +63,7 @@ Public Class Controller
             MessageBox.Show("行を選択してください。")
             Return Nothing
         Else
-            Dim SelectId As Integer = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
+            SelectId = _view.DataGridView1.SelectedRows(0).Cells("Id").Value
             Dim SelectData As DataTable = _modelCsv.RowSelect(SelectId)
             Return SelectData
         End If
@@ -162,7 +161,7 @@ Public Class Controller
 
     Public Shared Sub onDestroyClicked(sender As Object, e As EventArgs)
         MessageBox.Show("本当に削除しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.DefaultDesktopOnly)
-        _model.Destroy(SelectId)
+        _modelCsv.Destroy(SelectId)
         MessageBox.Show("正常に削除されました")
         _viewBase.Close()
 

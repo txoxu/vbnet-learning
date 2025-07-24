@@ -57,19 +57,32 @@ Public Class CsvModel
         lastId += 1
 
         row("Id") = lastId
-        row("名前") = data.NameData
-        row("読み方") = data.KanaData
-        row("年齢") = data.AgeData
-        row("住所") = data.AddressData
-        row("電話番号") = data.TelData
-        row("登録日時") = data.DateData
+        row("Name") = data.NameData
+        row("Kana") = data.KanaData
+        row("Age") = data.AgeData
+        row("Address") = data.AddressData
+        row("Tel") = data.TelData
+        row("Date") = data.DateData
         dt.Rows.Add(row)
     End Sub
 
     Public Sub Update(data As PersonData)
 
+        Dim row As DataRow() = dt.Select("Id = " & data.IdData.ToString())
 
+        row(0)("Name") = data.NameData
+        row(0)("Kana") = data.KanaData
+        row(0)("Age") = data.AgeData
+        row(0)("Address") = data.AddressData
+        row(0)("Tel") = data.TelData
+        row(0)("Date") = data.DateData
+        dt.AcceptChanges()
+    End Sub
 
+    Sub Destroy(selectId As Integer)
+
+        Dim row As DataRow() = dt.Select("Id = " & selectId.ToString())
+        row(0).Delete()
     End Sub
 
 
