@@ -1,8 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <ItemGroup>
-        <Compile Update="Form1.vb">
-            <SubType>Form</SubType>
-        </Compile>
-    </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Forms\FormAdd.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormDelete.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormShow.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormTop.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormUpdate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>
