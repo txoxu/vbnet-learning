@@ -1,6 +1,7 @@
 Imports System.ClientModel.Primitives
 Imports System.Linq.Expressions
 Imports System.Net
+Imports System.Reflection
 Imports System.Text
 Imports Azure.Core.HttpHeader
 Imports Microsoft.Data.SqlClient
@@ -19,9 +20,19 @@ Public Class Controller
 
     Public Shared SelectId As Integer
 
+    Public Function ModelChange()
+        Dim modelType As String = My.Settings.ModelType
+        Dim assembly As Assembly = Assembly.GetExecutingAssembly()
+        Dim name = assembly.GetExportedTypes()
+
+        _model = CType(assembly.CreateInstance("WinFormsTask2." & modelType, BindingFlags.CreateInstance), IModel)
+
+        Return _model
+    End Function
+
     Public Sub Initialize(view As FormTop)
         _view = view
-        _model = New CsvModel
+        ModelChange()
 
         'åüçıÉ{É^Éì
         AddHandler _view.btnSearch.Click, AddressOf onSearchClicked

@@ -83,6 +83,15 @@ Namespace My
                 Return CType(Me("Postgres"),String)
             End Get
         End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("CsvModel")>  _
+        Public ReadOnly Property ModelType() As String
+            Get
+                Return CType(Me("ModelType"),String)
+            End Get
+        End Property
     End Class
 End Namespace
 

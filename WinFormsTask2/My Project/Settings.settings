@@ -20,5 +20,8 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Host=localhost;Port=5432;Username=postgres;Password=post2025;Database=testdb</Value>
     </Setting>
+    <Setting Name="ModelType" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">CsvModel</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

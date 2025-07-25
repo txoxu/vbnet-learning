@@ -108,8 +108,8 @@ Public Class CsvModel
     Public Function Search(data As SearchData) As DataTable Implements IModel.Search
         Dim resultTable As New DataTable()
 
-
-        resultTable = dt.Select("Name LIKE '%" & data.NameData & "%'").CopyToDataTable()
+        Try
+            resultTable = dt.Select("Name LIKE '%" & data.NameData & "%'").CopyToDataTable()
 
             If data.DateData IsNot Nothing Then
                 resultTable = resultTable.Select("Date = '" & data.DateData & "'").CopyToDataTable()
@@ -119,7 +119,10 @@ Public Class CsvModel
                 resultTable = resultTable.Select(data.FirstNumData & " <= Age AND " & data.LastNumData & " >= Age").CopyToDataTable()
             End If
             Return resultTable
-
+        Catch ex As Exception
+            MessageBox.Show("検索に失敗しました: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return Nothing
+        End Try
 
     End Function
 
