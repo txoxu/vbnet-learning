@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# SQL Server Management Studio Version 21
+# Visual Studio Version 17
 VisualStudioVersion = 17.14.36202.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "cumulative_task", "cumulative_task\cumulative_task.vbproj", "{69AD283F-8609-458F-85C3-EF4CB0CA7F30}"
@@ -11,7 +11,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "supplemental", "supplementa
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WinFormsTask1", "WinFormsTask1\WinFormsTask1.vbproj", "{4A06EF94-5327-47D6-8055-C9983044BE9D}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WinFormsTask2", "WinFormsTask2\WinFormsTask2.vbproj", "{FCF1538A-3B3F-4650-8AD5-96DFC81D9234}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "assignment", "WinFormsTask2\assignment.vbproj", "{FCF1538A-3B3F-4650-8AD5-96DFC81D9234}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WinFormsTask3", "WinFormsTask3\WinFormsTask3.vbproj", "{7FBEC23F-CC3E-4B6B-91B4-903A20963B2E}"
 EndProject
@@ -66,9 +66,6 @@ Global
 		{68A45312-6455-50DE-31B1-2646BC242C8E}.Default|Any CPU.ActiveCfg = Release|Any CPU
 		{68A45312-6455-50DE-31B1-2646BC242C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68A45312-6455-50DE-31B1-2646BC242C8E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C2F11B8-30AD-404E-AE15-0A480DD38058}.Debug|Any CPU.ActiveCfg = Default
-		{0C2F11B8-30AD-404E-AE15-0A480DD38058}.Default|Any CPU.ActiveCfg = Default
-		{0C2F11B8-30AD-404E-AE15-0A480DD38058}.Release|Any CPU.ActiveCfg = Default
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

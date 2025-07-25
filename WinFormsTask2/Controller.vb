@@ -25,7 +25,7 @@ Public Class Controller
         Dim assembly As Assembly = Assembly.GetExecutingAssembly()
         Dim name = assembly.GetExportedTypes()
 
-        _model = CType(assembly.CreateInstance("WinFormsTask2." & modelType, BindingFlags.CreateInstance), IModel)
+        _model = CType(assembly.CreateInstance("WinFormsTask2." & modelType), IModel)
 
         Return _model
     End Function
