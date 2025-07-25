@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.FileIO
 
+
 Public Class CsvModel
     Implements IModel
 
@@ -37,6 +38,7 @@ Public Class CsvModel
         dt.Clear()
         dt.Columns.Clear()
         Try
+
             filePath = My.Settings.CsvFilePath
             Using parser As New TextFieldParser(filePath, Encoding.UTF8)
 

@@ -159,7 +159,9 @@ Public Class Controller
     End Sub
 
     Public Shared Sub onDestroyClicked(sender As Object, e As EventArgs)
-        MessageBox.Show("本当に削除しますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.DefaultDesktopOnly)
+        MessageBox.Show("本当に削除しますか？", "確認", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question, MessageBoxDefaultButton.Button2, MessageBoxOptions.DefaultDesktopOnly)
+
         _model.Destroy(SelectId)
         MessageBox.Show("正常に削除されました")
         _viewBase.Close()
